@@ -1,0 +1,113 @@
+@keyframes slide {
+    0% {
+      left: 100%;
+    }
+    100% {
+      left: -100%
+    }
+  }
+.home-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.home-wrapper .home-img {
+    width: 100%;
+    position: relative;
+    /* animation: slide 30s linear infinite; */
+    background-size: contain;
+    height: 53vh;
+    -webkit-mask-image: radial-gradient(circle, rgb(16 16 14) 1%, rgba(0, 0, 0, 0.3) 90%);
+    mask-image: radial-gradient(circle, black 1%, rgba(0, 0, 0, 0.5) 90%);
+}
+.home-wrapper:after {
+    position: absolute;
+    content: '';
+    display: block;
+    top: 0;
+    left: 0;
+    height: 53vh;
+    width: 100%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgb(16 16 14));
+    mask-image: linear-gradient(to bottom, transparent, rgb(16 16 14));
+    -webkit-mask-image: linear-gradient(to bottom, transparent, rgb(16 16 14));
+}
+.home-container {
+    width: 63%;
+    margin: 0 auto;
+}
+.home-header {
+    padding: 1rem 5rem 0rem 5rem;
+}
+.homepage-wrapper {
+    display: flex;
+    position: fixed;
+    flex-direction: column;
+    align-items: center;
+    margin-top: -5rem;
+    width: 100%;
+    height: 100%;
+}
+.homepage-wrapper::after {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: -1;
+    left: 7rem;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgb(16 16 14));
+    mask-image: linear-gradient(to bottom, transparent, rgb(16 16 14));
+    -webkit-mask-image: linear-gradient(to bottom, transparent, rgb(16 16 14));
+    content: '';
+    background: url('../img/back.svg');
+}
+.home-hero {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+.homepage-title {
+    color: #fff;
+    text-align: center;
+    font-size: 2.6rem;
+}
+.home-features {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+}
+.home-features li {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    align-items: center;
+    color: var(--gray-color);
+}
+.home-features i {
+    color: var(--main-color);
+    font-size: 1.5rem;
+}
+
+.home-button {
+    padding: 1rem;
+    font-size: 1.3rem;
+    color: var(--body-color);
+    width: 50%;
+    font-family: 'Josefin Sans';
+    font-weight: 700;
+    align-self: center;
+    border: none;
+    background-color: var(--main-color);
+    border-radius: 1rem;
+    text-align: center;
+}
+.home-header {
+    justify-content: space-between!important;
+}
+.get-app {
+    display: flex;
+}
+.get-app img {
+    height: 38px;
+}

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://cdn.jsdelivr.net/npm/segoe-fonts@1.0.1/segoe-fonts.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="style/user.css">
+    <link rel="stylesheet" href="style/queries.css">
+    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="style/swiper-bundle.min.css">
+
+
+    <title>Document</title>
+</head> 
+
+<div>
+    <h2 class="loader-logo">Dolu</h2>
+    <div id="loader" class="center"></div>
+</div>
+<body class="loading">
+
+  
+    <div class="auth-container">
+      <h2 class="auth-page-title">Ready to watch?!</h2>
+        <div class="tab-wrapper">
+         <div class="tab">
+          <button class="tablinks active" onclick="openForm(event, 'login')">Login</button>
+          <button class="tablinks" onclick="openForm(event, 'register')">Register</button>
+        </div>
+        
+        <div id="login" class="tabcontent">
+          <h2>Login</h2>
+          <form>
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
+            
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+            
+            <button>Login</button>
+          </form>
+        </div>
+        
+        <div id="register" class="tabcontent">
+          <h2>Register</h2>
+          <form>
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+            
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+            
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+            
+            <button>Register</button>
+          </form>
+        </div> 
+        </div>
+        
+        <div class="companies">
+            <img src="img/companies/netflix.png" alt="">
+            <img src="img/companies/hbo.png" alt="">
+            <img src="img/companies/disney.png" alt="">
+            <img src="img/companies/hbomax.png" alt="">
+            <img src="img/companies/pixar.png" alt="">
+          </div>
+       
+    </div>
+
+</body>
+<script src="style/swiper-bundle.min.js"></script>
+<script src="style/main.js"></script>
+<script src="style/navigator.js"></script>
+
+</html>
