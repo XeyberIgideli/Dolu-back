@@ -4,9 +4,11 @@ import dotenv from 'dotenv'
 
 // Routes
 import pageRoute from './routes/pageRoute.js'
+import homeRoute from './routes/homeRoute.js'
 import authRoute from './routes/authRoute.js'
 
 import {errorHandlerMiddleware} from './middlewares/Error.js'
+import {verifyToken} from './middlewares/Auth.js'
 
 // PORT
 const port = 8300
@@ -31,6 +33,7 @@ app.use(express.urlencoded({extended:true}))
 // Routes
 app.use('/',pageRoute)
 app.use('/auth',authRoute)
+app.use('/',verifyToken,homeRoute)
 
 app.use(errorHandlerMiddleware)
 app.listen(port)

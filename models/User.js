@@ -37,7 +37,7 @@ userSchema.pre('save', function (next){
 
 // Creating JWT
 userSchema.methods.createJWT = function () {
-    return jwt.sign({userId:this.id,name:this.name},process.env.JWT_SECRET,{expiresIn: process.env.JWT_LIFETIME})
+    return jwt.sign({userId:this.id,username:this.username},process.env.JWT_SECRET,{expiresIn: process.env.JWT_LIFETIME})
 }
 
 // Comparing passwords
