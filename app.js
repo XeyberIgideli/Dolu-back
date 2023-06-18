@@ -1,13 +1,19 @@
 import express from 'express'
 import mongoose from 'mongoose'
+import dotenv from 'dotenv'
 
 // Routes
 import pageRoute from './routes/pageRoute.js'
+import authRoute from './routes/authRoute.js'
+
+import {errorHandlerMiddleware} from './middlewares/Error.js'
 
 // PORT
 const port = 8300
 
 const app = express()
+
+dotenv.config()
 
 // DB
 mongoose.connect('mongodb://127.0.0.1:27017/dolu-db', {
@@ -24,7 +30,9 @@ app.use(express.urlencoded({extended:true}))
  
 // Routes
 app.use('/',pageRoute)
+app.use('/auth',authRoute)
 
+app.use(errorHandlerMiddleware)
 app.listen(port)
 
 
