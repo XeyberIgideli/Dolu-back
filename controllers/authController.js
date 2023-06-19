@@ -1,4 +1,5 @@
 import User from '../models/User.js'
+import jwt from 'jsonwebtoken'
 import { BadRequestError,UnauthenticatedError } from '../utils/Error.js'
 
 async function register (req,res,next) {
@@ -35,4 +36,13 @@ async function login(req,res,next) {
     }
 }
 
-export {register,login}
+async function logout(req,res) {
+    const authHeader = req.headers.authorization
+    jwt.sign(authHeader,{expiresIn:1}, (logout) => {
+        if(logout) {
+            res.send('Logged out!')
+        }
+    })
+}
+
+export {register,login,logout}
