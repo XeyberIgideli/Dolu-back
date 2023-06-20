@@ -22,8 +22,7 @@ async function login(req,res,next) {
             throw new BadRequestError('The password is not correct!')
         }
 
-        const token = role.createJWT()
-
+        const token = role.createJWT() 
 
         res.json({token,msg:'You are logged in!'})
     } catch (err) {

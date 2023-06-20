@@ -57,7 +57,7 @@ function openForm(evt, formName) {
 }
 
 
-// POPULAR TV SHOWS SECTION
+// CONTENT-1 SWIPER JS
 var swiper = new Swiper(".content-1", {
     slidesPerView: 1,
     spaceBetween: 10, 
@@ -65,16 +65,7 @@ var swiper = new Swiper(".content-1", {
     //   delay: 5500,
     //   disableOnInteraction: false,
     // },
-    grabCursor: true,
-
-    pagination: {
-      el: ".swiper-pagination",
-      clickable: true,
-    },
-    navigation: {
-      nextEl: ".swiper-button-next",
-      prevEl: ".swiper-button-prev",
-    },
+    grabCursor: true, 
     breakpoints: {
         280: {
             slidesPerView: 1,
@@ -452,3 +443,4 @@ function keyNavigateList(e) {
 }
 
 document.addEventListener('keydown', keyNavigateList);
+
