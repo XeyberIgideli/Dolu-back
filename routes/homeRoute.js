@@ -4,7 +4,7 @@ import { verifyToken } from '../middlewares/Auth.js'
 
 const router = express.Router()
 
-router.get('/home',homePages.getHomePage)
-router.get('/movies',homePages.getMoviesPage)
+router.get('/home',verifyToken,homePages.getHomePage)
+router.get('/movies',verifyToken,homePages.getMoviesPage)
 
 export default router

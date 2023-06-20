@@ -5,6 +5,9 @@ class get_Pages {
     getAuthPage (req,res) {
         res.render('auth')
     }
+    getDashboardPage(req,res) {
+        res.render('dashboard/index')
+    }
 }
 
 let getPages = new get_Pages()

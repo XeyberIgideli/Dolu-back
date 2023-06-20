@@ -33,7 +33,7 @@ app.use(express.urlencoded({extended:true}))
 // Routes
 app.use('/',pageRoute)
 app.use('/auth',authRoute)
-app.use('/',verifyToken,homeRoute) // Home pages route handling
+app.use('/',homeRoute) // Home pages route handling
 
 app.use(errorHandlerMiddleware)
 app.listen(port)
