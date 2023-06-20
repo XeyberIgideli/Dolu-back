@@ -7,6 +7,11 @@ import pageRoute from './routes/pageRoute.js'
 import homeRoute from './routes/homeRoute.js'
 import authRoute from './routes/authRoute.js'
 
+// Dashboard routes
+import dashboardAuthRoute from './routes/dashboard/dashAuthRoute.js'
+import dashPageRoute from './routes/dashboard/dashPageRoute.js'
+
+
 import {errorHandlerMiddleware} from './middlewares/Error.js'
 import {verifyToken} from './middlewares/Auth.js'
 
@@ -30,10 +35,16 @@ app.use(express.json())
 app.use(express.static('public'))
 app.use(express.urlencoded({extended:true}))
  
-// Routes
+// General routes
 app.use('/',pageRoute)
 app.use('/auth',authRoute)
-app.use('/',homeRoute) // Home pages route handling
+app.use('/', homeRoute) // Home pages route handling
+
+// Dashboard routes
+app.use('/dashboard', dashPageRoute)
+
+// Admin route
+app.use('/admin', dashboardAuthRoute) 
 
 app.use(errorHandlerMiddleware)
 app.listen(port)

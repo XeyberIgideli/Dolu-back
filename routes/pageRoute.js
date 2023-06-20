@@ -5,6 +5,8 @@ const router = express.Router()
 
 router.get('/',getPages.getIndexPage) 
 router.get('/auth',getPages.getAuthPage)
-router.get('/dashboard',getPages.getDashboardPage)
+
+// Admin login page
+router.get('/admin',getPages.getAdminLoginPage)
 
 export default router

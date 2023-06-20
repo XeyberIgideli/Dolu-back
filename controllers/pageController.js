@@ -4,9 +4,9 @@ class get_Pages {
     }  
     getAuthPage (req,res) {
         res.render('auth')
-    }
-    getDashboardPage(req,res) {
-        res.render('dashboard/index')
+    } 
+    getAdminLoginPage(req,res) {
+        res.render('dashboard/login')
     }
 }
 
