@@ -6,7 +6,7 @@ function verifyRole(req,res,next) {
 
     if(!authHeader || !authHeader.startsWith("Bearer")) {
         // throw new UnauthenticatedError('Invalid Authentication!')
-        res.redirect('../admin')
+        return res.redirect('../admin')
     }
 
     const token = authHeader.split(' ')[1]
@@ -24,7 +24,7 @@ function verifyToken(req,res,next) {
     const authHeader = req.headers.authorization
 
     if(!authHeader || !authHeader.startsWith("Bearer")) {
-        res.redirect('auth')
+       return res.redirect('auth')
     }
 
     const token = authHeader.split(' ')[1]
