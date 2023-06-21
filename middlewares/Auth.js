@@ -4,7 +4,6 @@ import { UnauthenticatedError } from '../utils/Error.js'
 
 function verifyRole(req,res,next) {
     const authHeader = req.headers.authorization
-
     if(!authHeader || !authHeader.startsWith("Bearer")) {
         return res.redirect('../admin')
     }
@@ -21,13 +20,12 @@ function verifyRole(req,res,next) {
 }
 
 function verifyToken(req,res,next) {
-    const authHeader = req.headers.authorization
-
+    const authHeader = req.cookies.token 
     if(!authHeader || !authHeader.startsWith("Bearer")) {
        return res.redirect('auth')
     }
 
-    const token = authHeader.split(' ')[1]
+    const token = authHeader.split(' ')[1] 
 
     try {
         const payload = jwt.verify(token, process.env.JWT_SECRET)
@@ -35,6 +33,15 @@ function verifyToken(req,res,next) {
         next()
     } catch(err) {
         throw new UnauthenticatedError('Invalid Authentication!')
+    }
+}
+
+function userRedirect(req,res,next) {
+    const authHeader = req.cookies.token 
+    if(authHeader) {
+       res.redirect('home')
+    } else {
+       next()
     }
 }
 
@@ -63,4 +70,4 @@ async function checkForm(req,res,next) {
 }
    
 
-export {verifyToken,verifyRole,isEmailExist,checkForm}
+export {verifyToken,verifyRole,isEmailExist,checkForm,userRedirect}

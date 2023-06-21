@@ -1,6 +1,8 @@
 class home_Pages { 
-     getHomePage(req,res) {
-         res.render('home')
+     getHomePage(req,res) { 
+         res.render('home',{
+            user:req.user
+         })
      } 
      getMoviesPage(req,res) {
          res.render('movies')

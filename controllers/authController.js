@@ -6,7 +6,9 @@ async function register (req,res,next) {
     try { 
         const user = await User.create(req.body)
         const token = user.createJWT()
-        res.json(token)
+        console.log(token)
+        res.cookie('token',`Bearer: ${token}`, {maxAge: 1000*60*60*24,httpOnly:true,secure:true})
+        res.redirect('../home')
     } catch(err) {
         next(err)
     }
@@ -15,7 +17,6 @@ async function register (req,res,next) {
 async function login(req,res,next) {
     try {
         const {username,password} = req.body
-
         if(!username) {
             res.json('Please provide your username!')
         } else if (!password) {
@@ -34,21 +35,21 @@ async function login(req,res,next) {
             throw new BadRequestError('The passwords is not correct!')
         }
 
-        const token = user.createJWT()
+        const token = user.createJWT() 
+ 
+        res.cookie('token',`Bearer: ${token}`, {maxAge: 1000*60*60*24,httpOnly:true,secure:true})
 
-        res.json(token)
+        res.redirect('../home')
     } catch (err) {
         next(err)
     }
 }
 
 async function logout(req,res) {
-    const authHeader = req.headers.authorization
-    jwt.sign(authHeader,{expiresIn:1}, (logout) => {
-        if(logout) {
-            res.send('Logged out!')
-        }
-    })
+    const authHeader = req.cookies.token
+    if(authHeader) {
+        res.clearCookie('token')
+    }
 }
 
 export {register,login,logout}

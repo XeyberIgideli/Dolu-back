@@ -121,6 +121,10 @@ body {
     color:#ee4c4c;
     font-size: 0.8rem;
 }
+.successMsg {
+    color:#40e477;
+    font-size: 0.8rem;
+}
 
 /* KEYFRAMES */
 

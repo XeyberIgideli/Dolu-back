@@ -3,6 +3,8 @@ import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import session from 'express-session'
 import flash from 'connect-flash'
+import cors from 'cors'
+import cookieParser from 'cookie-parser'
 
 // Path
 import path from 'path'
@@ -41,6 +43,7 @@ app.set('view engine', 'ejs')
 
 // Middlewares
 app.use(express.json()) 
+app.use(cookieParser())
 app.use(express.static(__dirname + '/public'))
 app.use(express.urlencoded({extended:true}))
 
@@ -58,7 +61,13 @@ app.use((req,res,next) => {
     res.locals.flashMessages = req.flash()
     next()
 })
- 
+
+// Security
+app.use(cors({
+    origin: 'http://localhost:8300',
+	credentials: true
+}))
+
 // General routes
 app.use('/',pageRoute)
 app.use('/auth',authRoute)
