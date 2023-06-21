@@ -14,7 +14,13 @@ async function register (req,res,next) {
 
 async function login(req,res,next) {
     try {
-        const {username,password,email} = req.body
+        const {username,password} = req.body
+
+        if(!username) {
+            res.json('Please provide your username!')
+        } else if (!password) {
+            res.json('Please provide your password!')
+        }
 
         const user = await User.findOne({username})
 

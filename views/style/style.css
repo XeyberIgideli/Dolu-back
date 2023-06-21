@@ -96,6 +96,7 @@ body {
     border: 1px solid var(--text-color);
     transition: all .6s;
 }
+
 .hidden {
     opacity: 0;
     transform: translateY(8rem);
@@ -115,6 +116,12 @@ body {
     transform: translateX(8rem);
     visibility: hidden;
 }
+/* Notifications */
+.errorMsg {
+    color:#ee4c4c;
+    font-size: 0.8rem;
+}
+
 /* KEYFRAMES */
 
 @keyframes bounceinRight {

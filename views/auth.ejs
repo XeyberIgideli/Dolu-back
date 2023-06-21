@@ -10,9 +10,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;600;700&display=swap"
     rel="stylesheet">
-    <link rel="stylesheet" href="style/style.css">
-    <link rel="stylesheet" href="style/user.css">
-    <link rel="stylesheet" href="style/queries.css">
+    <link rel="stylesheet" type="text/css" href="style/style.css">
+    <link rel="stylesheet" type="text/css" href="style/user.css">
+    <link rel="stylesheet" type="text/css" href="style/queries.css">
     <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
 
 
@@ -23,11 +23,9 @@
     <h2 class="loader-logo">Dolu</h2>
     <div id="loader" class="center"></div>
 </div>
-<body class="loading">
-
-  
+<body class="loading"> 
     <div class="auth-container">
-      <h2 class="auth-page-title">Ready to watch?!</h2>
+      <h2 class="auth-page-title">Ready to watch?!</h2> 
         <div class="tab-wrapper">
          <div class="tab">
           <button class="tablinks active" onclick="openForm(event, 'login')">Login</button>
@@ -36,30 +34,35 @@
         
         <div id="login" class="tabcontent">
           <h2>Login</h2>
-          <form>
+          <form action="auth/login" method="POST">
             <label for="username">Username</label>
-            <input type="text" id="username" name="username" required>
+            <% if (flashMessages) { %>
+              <% if (flashMessages.error) { %>
+                <p class="errorMsg"><%= flashMessages.error %></p>
+              <% } %>
+            <% } %>
+            <input type="text" id="username" name="username">
             
             <label for="password">Password</label>
-            <input type="password" id="password" name="password" required>
+            <input type="password" id="password" name="password">
             
-            <button>Login</button>
+            <button type="submit">Login</button>
           </form>
         </div>
         
         <div id="register" class="tabcontent">
           <h2>Register</h2>
-          <form>
+          <form action="auth/register" method="POST">
             <label for="name">Name</label>
-            <input type="text" id="name" name="name" required>
+            <input type="text" id="name" name="name" >
             
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" required>
+            <input type="email" id="email" name="email" >
             
             <label for="password">Password</label>
-            <input type="password" id="password" name="password" required>
+            <input type="password" id="password" name="password" >
             
-            <button>Register</button>
+            <button type="submit">Register</button>
           </form>
         </div> 
         </div>
@@ -75,6 +78,6 @@
       </div>
       
 </body>
-<script src="style/main.js"></script>
+<script type="text/javascript" src="style/main.js"></script>
 
 </html>

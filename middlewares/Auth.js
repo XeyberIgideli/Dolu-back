@@ -1,11 +1,11 @@
 import jwt from 'jsonwebtoken'
+import User from '../models/User.js'
 import { UnauthenticatedError } from '../utils/Error.js'
 
 function verifyRole(req,res,next) {
     const authHeader = req.headers.authorization
 
     if(!authHeader || !authHeader.startsWith("Bearer")) {
-        // throw new UnauthenticatedError('Invalid Authentication!')
         return res.redirect('../admin')
     }
 
@@ -37,6 +37,30 @@ function verifyToken(req,res,next) {
         throw new UnauthenticatedError('Invalid Authentication!')
     }
 }
+
+async function isEmailExist(req,res,next) {
+    const email = await User.find({email:req.body.email})
+    if(email.length > 0) {
+        res.json('Email already in use!')
+    } else {
+        next()
+    }
+}
+
+async function checkForm(req,res,next) {
+    if(!req.body.username) {
+        req.flash('error', 'Please provide your username!')
+        res.redirect('../auth')
+    } else if(!req.body.email) {
+        req.flash('error', 'Please provide your email address!')
+        res.redirect('../auth')
+    } else if(!req.body.password) {
+        req.flash('error', 'Please provide a password!')
+        res.redirect('../auth')
+    } else {
+        next()
+    }
+}
    
 
-export {verifyToken,verifyRole}
+export {verifyToken,verifyRole,isEmailExist,checkForm}

@@ -1,6 +1,15 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
+import session from 'express-session'
+import flash from 'connect-flash'
+
+// Path
+import path from 'path'
+import { fileURLToPath } from 'url'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 // Routes
 import pageRoute from './routes/pageRoute.js'
@@ -31,9 +40,24 @@ mongoose.connect('mongodb://127.0.0.1:27017/dolu-db', {
 app.set('view engine', 'ejs')
 
 // Middlewares
-app.use(express.json())
-app.use(express.static('public'))
+app.use(express.json()) 
+app.use(express.static(__dirname + '/public'))
 app.use(express.urlencoded({extended:true}))
+
+// Connect Flash Messages
+app.set('trust proxy', 1)
+app.use(session({
+    secret:'bookworm',   
+    resave: false,
+    saveUninitialized: true,  
+    cookie: {maxAge: Date().now + (60 * 1000 * 30) }
+}));
+
+app.use(flash())
+app.use((req,res,next) => {
+    res.locals.flashMessages = req.flash()
+    next()
+})
  
 // General routes
 app.use('/',pageRoute)
