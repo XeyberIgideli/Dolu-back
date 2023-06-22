@@ -3,7 +3,7 @@ import User from '../models/User.js'
 import { UnauthenticatedError } from '../utils/Error.js'
 
 function verifyRole(req,res,next) {
-    const authHeader = req.headers.authorization
+    const authHeader = req.cookies.adToken
     if(!authHeader || !authHeader.startsWith("Bearer")) {
         return res.redirect('../admin')
     }
@@ -12,7 +12,7 @@ function verifyRole(req,res,next) {
 
     try {
         const payload = jwt.verify(token, process.env.JWT_SECRET)
-        req.role = {roleId:payload.roleId,username: payload.username}
+        req.role = {roleId:payload.roleId,username: payload.username,admin:true}
         next()
     } catch(err) {
         throw new UnauthenticatedError('You are not authorized to perform this action!')

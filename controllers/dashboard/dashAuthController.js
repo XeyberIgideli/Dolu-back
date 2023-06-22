@@ -13,7 +13,7 @@ async function login(req,res,next) {
         const role = await Roles.findOne({username})
 
         if(!role) {
-            throw new UnauthenticatedError('There is not a user like that!')
+            throw new UnauthenticatedError('There is not an admin like that!')
         }
 
         const checkedPass = await role.isPasswordCorrect(password)
@@ -24,7 +24,8 @@ async function login(req,res,next) {
 
         const token = role.createJWT() 
 
-        res.json({token,msg:'You are logged in!'})
+        res.cookie('adToken',`Bearer: ${token}`, {maxAge: 1000*60*60*24,httpOnly:true,secure:true})
+        res.redirect('../dashboard')
     } catch (err) {
         next(err)
     }
