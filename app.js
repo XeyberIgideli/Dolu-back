@@ -21,6 +21,7 @@ import authRoute from './routes/authRoute.js'
 // Dashboard routes
 import dashboardAuthRoute from './routes/dashboard/dashAuthRoute.js'
 import dashPageRoute from './routes/dashboard/dashPageRoute.js'
+import dashMediaRoute from './routes/dashboard/dashMediaRoute.js'
 
 
 import {errorHandlerMiddleware} from './middlewares/Error.js'
@@ -44,7 +45,7 @@ app.set('view engine', 'ejs')
 // Middlewares
 app.use(express.json()) 
 app.use(cookieParser())
-app.use(express.static(__dirname + '/public'))
+app.use(express.static(path.join(__dirname, '/public')))
 app.use(express.urlencoded({extended:true}))
 
 // Connect Flash Messages
@@ -75,6 +76,7 @@ app.use('/', homeRoute) // Home pages route handling
 
 // Dashboard routes
 app.use('/dashboard', dashPageRoute)
+app.use('/dashboard', dashMediaRoute)
 
 // Admin route
 app.use('/admin', dashboardAuthRoute) 

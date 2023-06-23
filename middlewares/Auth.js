@@ -5,7 +5,7 @@ import { UnauthenticatedError } from '../utils/Error.js'
 function verifyRole(req,res,next) {
     const authHeader = req.cookies.adToken
     if(!authHeader || !authHeader.startsWith("Bearer")) {
-        return res.redirect('../admin')
+        return res.redirect('/admin')
     }
 
     const token = authHeader.split(' ')[1]
