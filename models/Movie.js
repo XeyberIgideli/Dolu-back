@@ -62,7 +62,7 @@ const movieSchema = new mongoose.Schema({
         required: [true,"Please provide the media's director!"],
         trim:true,
     },
-    mediaLanguage: {
+    language: {
         type: String,
         required: [true,"Please provide the media's language!"],
         trim:true,

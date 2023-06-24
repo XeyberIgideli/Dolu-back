@@ -16,19 +16,23 @@ class movieController {
             fs.mkdirSync(uploadDir,{recursive:true})
         }
         const files = req.files
+        let arr = {}
 
         for(let file in files) {
             let uploadedImage = req.files[file]
             let imageExt = uploadedImage.name.substring(uploadedImage.name.lastIndexOf('.'))
             let uniqueImageName = uniqueID(uploadedImage.name.substring(0,uploadedImage.name.lastIndexOf('.')),8)
-            let uploadPath = globalDirName + '/public/uploads/movie' + uniqueImageName + imageExt
+            let uploadPath = globalDirName + '/public/uploads/movie/' + uniqueImageName + imageExt
 
-            uploadedImage.mv(uploadPath, async() => {
-                await Movie.create({
-                    ...req.body
-            })
-            })
+            await uploadedImage.mv(uploadPath); // Dosya yükleme işleminin tamamlanmasını bekleyin
+
+            arr[file] = uploadPath
         }
+    const movie = await Movie.create({
+              ...req.body,
+              ...arr,
+            });
+        res.json(req.body)
     } catch(err) {
         res.json(err)
     }
