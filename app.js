@@ -5,6 +5,7 @@ import session from 'express-session'
 import flash from 'connect-flash'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
+import fileUpload from 'express-fileupload'
 
 // Path
 import path from 'path'
@@ -21,7 +22,7 @@ import authRoute from './routes/authRoute.js'
 // Dashboard routes
 import dashboardAuthRoute from './routes/dashboard/dashAuthRoute.js'
 import dashPageRoute from './routes/dashboard/dashPageRoute.js'
-import dashMediaRoute from './routes/dashboard/dashMediaRoute.js'
+import dashMovieRoute from './routes/dashboard/dashMovieRoute.js'
 
 
 import {errorHandlerMiddleware} from './middlewares/Error.js'
@@ -42,11 +43,23 @@ mongoose.connect('mongodb://127.0.0.1:27017/dolu-db', {
 
 app.set('view engine', 'ejs')
 
+// Globals
+global.globalDirName = null
+global.globalOriginalUrl = null
+
+app.use('*', (req,res,next) => {
+    globalDirName = __dirname
+    globalOriginalUrl = req.originalUrl
+    next()
+})
+
 // Middlewares
 app.use(express.json()) 
 app.use(cookieParser())
-app.use(express.static(path.join(__dirname, '/public')))
 app.use(express.urlencoded({extended:true}))
+app.use(fileUpload())
+
+app.use(express.static('public')) 
 
 // Connect Flash Messages
 app.set('trust proxy', 1)
@@ -76,7 +89,7 @@ app.use('/', homeRoute) // Home pages route handling
 
 // Dashboard routes
 app.use('/dashboard', dashPageRoute)
-app.use('/dashboard', dashMediaRoute)
+app.use('/dashboard', dashMovieRoute)
 
 // Admin route
 app.use('/admin', dashboardAuthRoute) 

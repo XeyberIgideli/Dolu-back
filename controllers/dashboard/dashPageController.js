@@ -5,12 +5,9 @@ class get_DashPages {
      getDashMoviesPage(req,res) {
         res.render('dashboard/movies')
      }
-     getAddNewMoviePage(req,res) {
-        res.render('dashboard/add-new-movie')
-     }
      
      getDashShowsPage(req,res) {
-        res.render('dashboard/movies')
+        res.render('dashboard/tv-shows')
      }
      getAddNewShowPage(req,res) {
         res.render('dashboard/add-new-show')

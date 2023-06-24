@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-const mediaSchema = new mongoose.Schema({
+const movieSchema = new mongoose.Schema({
     title: {
         type:String,
         required:[true,"Please provide the media's title!"],
@@ -50,7 +50,7 @@ const mediaSchema = new mongoose.Schema({
         type: String,
         required: [true,"Please provide the media's type!"],
         trim:true,
-        enum: ['Movie','TV Show','Documentary','Animation']
+        enum: ['Movie','Documentary','Animation']
     },
     genres: {
         type: [String],
@@ -84,6 +84,6 @@ const mediaSchema = new mongoose.Schema({
     }
 })
 
-const Media = mongoose.model('Media',mediaSchema)
+const Movie = mongoose.model('Movie',movieSchema)
 
-export default Media
+export default Movie

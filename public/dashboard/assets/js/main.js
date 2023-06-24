@@ -7,16 +7,17 @@
 const tagContainer = document.querySelector(".tag-container");
 const input = document.querySelector(".tag-container input");
 const btnRemoveAll = document.querySelector("#removeAll");
+const btnSend = document.querySelector("#send");
 const btnCopy = document.querySelector("#copy");
+const form = document.getElementById('myForm');
+form?.addEventListener('keypress', function(e) {
+  if (e.keyCode === 13) {
+    e.preventDefault();
+  }
+});
 
-let tags = [];
+let tags = []; 
 
-/*
-<div class="tag">
-  <span>HTML</span>
-  <ion-icon name="close-circle-outline"></ion-icon>
-</div>
-*/
 function createTag(tag) {
   const div = document.createElement("div");
   div.setAttribute("class", "tag");
@@ -37,7 +38,7 @@ function reset() {
   });
 }
 
-btnRemoveAll.addEventListener("click", function () {
+btnRemoveAll?.addEventListener("click", function () {
   tags = [];
   reset();
 });
@@ -49,12 +50,16 @@ function addTags() {
     .reverse()
     .forEach((tag) => {
       tagContainer.prepend(createTag(tag));
-    });
+    }); 
 }
 
-input.addEventListener("keyup", function (event) {
+let test;
+
+input?.addEventListener("keyup", function (event) {
   if (event.key == "Enter") {
     const data = input.value.trim();
+    if(!data) return
+
     if (data.includes(",")) {
       const list_of_tags = data.split(",");
       // list_of_tags.forEach((element) => {
@@ -62,26 +67,31 @@ input.addEventListener("keyup", function (event) {
       // });
       tags.push(...list_of_tags);
     } else {
-      // console.log(createTag(data));
       tags.push(data);
     }
-    tags = [...new Set(tags)];
-    input.value = "";
-    addTags();
+    tags = [...new Set(tags)]; 
+    input.value = ''  
+    addTags(); 
   }
 });
-document.addEventListener("click", function (e) {
+ 
+
+// Removing tag item
+document?.addEventListener("click", function (e) {
   if (e.target.tagName == "I") { 
     const data = e.target.getAttribute("data-item");
     const filterTags = tags.filter((tag) => {
       return tag != data;
     });
     tags = filterTags;
-    addTags();
+    if(input) {
+      input.value = ''
+    }
+    addTags(); 
   }
 });
 
-btnCopy.addEventListener("click", function () {
+btnCopy?.addEventListener("click", function () {
   if (tags.length) {
     navigator.clipboard
       .writeText(tags.toString())
@@ -93,6 +103,11 @@ btnCopy.addEventListener("click", function () {
       });
   }
 });
+
+btnSend?.addEventListener('click', () => {
+  input.style.display = 'none'
+  input.value = tags
+})
 
 let menu, animate;
 

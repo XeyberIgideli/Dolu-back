@@ -7,7 +7,8 @@ const router = express.Router()
 router.get('/',verifyRole,getDashPages.getDashboardPage)  
 // Movies
 router.get('/movies',verifyRole,getDashPages.getDashMoviesPage) 
-router.get('/movies/add-new-movie',verifyRole,getDashPages.getAddNewMoviePage) 
+router.get('/tv-shows',verifyRole,getDashPages.getDashShowsPage) 
+// router.get('/tv-shows/add-new-show',verifyRole,getDashPages.getAddNewShowPage) 
 
 // TV Shows
 
