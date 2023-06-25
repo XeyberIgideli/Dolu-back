@@ -53,8 +53,12 @@ const movieSchema = new mongoose.Schema({
         enum: ['Movie','Documentary','Animation']
     },
     genres: {
-        type: [String],
+        type: Array,
         required: [true,"Please provide the media's genres!"],
+        validate: {
+            validator: function(array) {
+              return array.every((v) => typeof v === 'string');
+        }},
         trim:true,
     },
     director: {
@@ -69,12 +73,10 @@ const movieSchema = new mongoose.Schema({
     },
     portraitImage: {
         type: String,
-        required: [true,"Please provide the media's portrait image!"],
         trim:true,
     },
     landscapeImage: {
         type: String,
-        required: [true,"Please provide the media's landscape image!"],
         trim:true,
     },
     trailer: {

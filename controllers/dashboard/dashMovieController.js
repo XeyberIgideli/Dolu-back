@@ -7,7 +7,7 @@ class movieController {
         res.render('dashboard/add-new-movie')
      }
 
-    async createMovie(req,res) {
+    async createMovie(req,res,next) {
       
       try {  
         const uploadDir = 'public/uploads/movie'
@@ -17,24 +17,27 @@ class movieController {
         }
         const files = req.files
         let arr = {}
+        var hasError = true
+        let genresArr = req.body['genres[]'] ? req.body['genres[]'].split(',') : null
+        let directorArr = req.body.director ? req.body.director.split(',') : null
 
+        const movie = await Movie.create({...req.body,...arr,genres:genresArr,director: directorArr})
+        hasError = false
+        
         for(let file in files) {
-            let uploadedImage = req.files[file]
-            let imageExt = uploadedImage.name.substring(uploadedImage.name.lastIndexOf('.'))
-            let uniqueImageName = uniqueID(uploadedImage.name.substring(0,uploadedImage.name.lastIndexOf('.')),8)
-            let uploadPath = globalDirName + '/public/uploads/movie/' + uniqueImageName + imageExt
+                let uploadedImage = req.files[file]
+                let imageExt = uploadedImage.name.substring(uploadedImage.name.lastIndexOf('.'))
+                let uniqueImageName = uniqueID(uploadedImage.name.substring(0,uploadedImage.name.lastIndexOf('.')),8)
+                let uploadPath = globalDirName + '/public/uploads/movie/' + uniqueImageName + imageExt
+                
+                arr[file] = uploadPath
+                if(!hasError) {
+                    await uploadedImage.mv(uploadPath)
+                }
+        } 
 
-            await uploadedImage.mv(uploadPath); // Dosya yükleme işleminin tamamlanmasını bekleyin
-
-            arr[file] = uploadPath
-        }
-    const movie = await Movie.create({
-              ...req.body,
-              ...arr,
-            });
-        res.json(req.body)
     } catch(err) {
-        res.json(err)
+        next(err)
     }
   }
 }
