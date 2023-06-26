@@ -1,13 +1,21 @@
+import Movie from "../../models/Movie.js"
+import Show from "../../models/Show.js"
+
 class get_DashPages { 
      getDashboardPage(req,res) {
          res.render('dashboard/index')
      } 
-     getDashMoviesPage(req,res) {
-        res.render('dashboard/movies')
+     async getDashMoviesPage(req,res) {
+         const movies = await Movie.find()
+        res.render('dashboard/movies', {
+        movies
+        })
      }
      
-     getDashShowsPage(req,res) {
-        res.render('dashboard/tv-shows')
+    async getDashShowsPage(req,res) {
+      const shows = await Show.find()
+
+      res.render('dashboard/tv-shows', {shows})
      }
      getAddNewShowPage(req,res) {
         res.render('dashboard/add-new-show')

@@ -88,6 +88,12 @@ const movieSchema = new mongoose.Schema({
         type: String,
         required: [true,"Please provide the media's embed link!"],
         trim:true
+    },
+    mode: {
+        type: String,
+        required: [true,"Please provide the media's embed link!"],
+        trim:true,
+        enum: ['Featured','Popular', 'None']
     }
 })
 

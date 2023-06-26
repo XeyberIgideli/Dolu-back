@@ -77,6 +77,12 @@ const showSchema = new mongoose.Schema({
         type: String,
         required: [true,"Please provide the show's trailer link!"],
         trim:true,
+    },
+    mode: {
+        type: String,
+        required: [true,"Please provide the show's embed link!"],
+        trim:true,
+        enum: ['Featured','Popular', 'None']
     }
 
 })
