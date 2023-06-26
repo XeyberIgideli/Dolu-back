@@ -8,21 +8,22 @@ class movieController {
      }
 
     async createMovie(req,res,next) {
-      
       try {  
         const uploadDir = 'public/uploads/movie'
 
         if(!fs.existsSync(uploadDir)) {
             fs.mkdirSync(uploadDir,{recursive:true})
         }
+
         const files = req.files
         let arr = {}
         let uniqueImageName
         let uploadedImage
         let imageExt
         let uploadPath
-        let moveFiles = {}
+
         var hasError = true
+
         let genresArr = req.body['genres[]'] ? req.body['genres[]'].split(',') : null
         let directorArr = req.body.director ? req.body.director.split(',') : null
         
@@ -43,7 +44,7 @@ class movieController {
            } 
         }
 
-        // res.redirect('../movies')
+        res.redirect('../movies')
 
     } catch(err) {
         next(err)

@@ -9,7 +9,7 @@ router.get('/movies/add-new-movie',verifyRole,MovieController.getAddNewMoviePage
 router.post(
 '/movies/add-movie',
 verifyRole,
-checkImageUpload(['png', 'jpeg', 'jpg', 'gif'],['image/png', 'image/jpeg', 'image/jpg', 'image/gif']), 
+checkImageUpload('image'), 
 MovieController.createMovie) 
  
 export default router
