@@ -83,6 +83,11 @@ const movieSchema = new mongoose.Schema({
         type: String,
         required: [true,"Please provide the media's trailer link!"],
         trim:true,
+    },
+    embed: {
+        type: String,
+        required: [true,"Please provide the media's embed link!"],
+        trim:true
     }
 })
 

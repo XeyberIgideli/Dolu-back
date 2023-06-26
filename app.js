@@ -23,6 +23,7 @@ import authRoute from './routes/authRoute.js'
 import dashboardAuthRoute from './routes/dashboard/dashAuthRoute.js'
 import dashPageRoute from './routes/dashboard/dashPageRoute.js'
 import dashMovieRoute from './routes/dashboard/dashMovieRoute.js'
+import dashShowRoute from './routes/dashboard/dashShowRoute.js'
 
 
 import {errorHandlerMiddleware} from './middlewares/Error.js'
@@ -88,8 +89,8 @@ app.use('/auth',authRoute)
 app.use('/', homeRoute) // Home pages route handling
 
 // Dashboard routes
-app.use('/dashboard', dashPageRoute)
-app.use('/dashboard', dashMovieRoute)
+// app.use('/dashboard', dashPageRoute)
+app.use('/dashboard', [dashPageRoute,dashMovieRoute,dashShowRoute])
 
 // Admin route
 app.use('/admin', dashboardAuthRoute) 
