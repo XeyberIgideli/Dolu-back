@@ -57,7 +57,7 @@ class movieController {
 
     async updateMovie(req,res,next) {
       try {
-        console.log(req.body)
+        console.log(req.body) 
       } catch (err) {
         res.json(err)
       }

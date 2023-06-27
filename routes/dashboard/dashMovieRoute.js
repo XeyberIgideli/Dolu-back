@@ -15,7 +15,7 @@ MovieController.createMovie)
 router.post(
     '/movies/movie-editted',
     verifyRole,
-    checkImageUpload('image'), 
+    // checkImageUpload('image'), 
     MovieController.updateMovie) 
  
 export default router

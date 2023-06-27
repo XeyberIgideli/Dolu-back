@@ -8,6 +8,7 @@ const tagContainer = document.querySelector(".tag-container");
 const input = document.querySelector(".tag-container input");
 const btnRemoveAll = document.querySelector("#removeAll");
 const btnSend = document.querySelector("#send");
+const btnEdit = document.querySelector("#edit");
 const btnCopy = document.querySelector("#copy");
 const form = document.getElementById('myForm');
 form?.addEventListener('keypress', function(e) {
@@ -107,6 +108,10 @@ btnCopy?.addEventListener("click", function () {
 btnSend?.addEventListener('click', () => {
   input.style.display = 'none'
   input.value = tags
+})
+btnEdit?.addEventListener('click', () => {
+  input.style.display = 'none'
+  input.value += tags
 })
 
 let menu, animate;
