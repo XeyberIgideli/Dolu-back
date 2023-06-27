@@ -6,6 +6,10 @@ class movieController {
     getAddNewMoviePage(req,res) {
         res.render('dashboard/add-new-movie')
      }
+    async getUpdateMoviePage(req,res) {
+      const movie = await Movie.findById(req.params.id) 
+      res.render('dashboard/edit-movie',{movie})
+    }
 
     async createMovie(req,res,next) {
       try {  
@@ -49,7 +53,15 @@ class movieController {
     } catch(err) {
         next(err)
     }
-  }
+     }
+
+    async updateMovie(req,res,next) {
+      try {
+        console.log(req.body)
+      } catch (err) {
+        res.json(err)
+      }
+    }
 }
 
 let MovieController = new movieController()
