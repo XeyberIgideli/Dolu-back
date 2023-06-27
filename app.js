@@ -89,7 +89,6 @@ app.use('/auth',authRoute)
 app.use('/', homeRoute) // Home pages route handling
 
 // Dashboard routes
-// app.use('/dashboard', dashPageRoute)
 app.use('/dashboard', [dashPageRoute,dashMovieRoute,dashShowRoute])
 
 // Admin route
