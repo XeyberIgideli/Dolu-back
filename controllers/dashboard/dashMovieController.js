@@ -21,7 +21,8 @@ class movieController {
         }
 
         const files = req.files
-        let arr = {}
+        let arrPath = {}
+        let arrUpload = {}
         let uniqueImageName
         let uploadedImage
         let imageExt
@@ -36,16 +37,18 @@ class movieController {
             uploadedImage = files[file]
             imageExt = uploadedImage.name.substring(uploadedImage.name.lastIndexOf('.'))
             uniqueImageName = uniqueID(uploadedImage.name.substring(0,uploadedImage.name.lastIndexOf('.')),8)
-            uploadPath = globalDirName + '/public/uploads/movie/' + uniqueImageName + imageExt
-            arr[file] = uploadPath
+            uploadPath = '/uploads/movie/' + uniqueImageName + imageExt
+            uploadFile = globalDirName + '/public/uploads/movie/' + uniqueImageName + imageExt
+            arrUpload[file] = uploadPath
+            arrPath[file] = uploadFile
         })
         
-        const movie = await Movie.create({...req.body,...arr,genres:genresArr,director: directorArr})
+        const movie = await Movie.create({...req.body,...arrUpload,genres:genresArr,director: directorArr})
         hasError = false
 
         if(!hasError) {
            for(let file in files) {  
-             await files[file].mv(arr[file])
+             await files[file].mv(arrPath[file])
            } 
         }
 
@@ -58,6 +61,7 @@ class movieController {
 
     async updateMovie(req,res,next) {
       try { 
+        const genres = req.body['genres[]']
         let files = req.files
         let updatedFiles = {}
 
@@ -80,7 +84,7 @@ class movieController {
             updatedFiles[file] = files[file]
         })
         }
-        await Movie.updateMany(req.body)  
+        await Movie.updateMany({...req.body,genres})  
         res.redirect('../movies')
       } catch (err) {
         res.json(err)
