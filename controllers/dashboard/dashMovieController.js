@@ -69,15 +69,19 @@ class movieController {
             let uniqueImageName = uniqueID(uploadedImage.name.substring(0,uploadedImage.name.lastIndexOf('.')),8)
             let uploadPath = '/uploads/movie/' + uniqueImageName + imageExt
             let filePath =  globalDirName + '/public' + uploadPath
-            fs.unlinkSync(movie[file])
+            let removePath = globalDirName + '/public' + movie[file]
+
+            fs.unlinkSync(removePath)
             await files[file].mv(filePath)
             
             movie[file] = uploadPath
+            await movie.save()
 
             updatedFiles[file] = files[file]
         })
         }
-
+        await Movie.updateMany(req.body)  
+        res.redirect('../movies')
       } catch (err) {
         res.json(err)
       }
