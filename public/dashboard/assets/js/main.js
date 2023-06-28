@@ -109,10 +109,9 @@ btnSend?.addEventListener('click', () => {
   input.style.display = 'none'
   input.value = tags
 })
- 
 btnEdit?.addEventListener('click', () => {
   input.style.display = 'none'
-  input.value += tags
+  input.value += tags 
 })
 
 let menu, animate;

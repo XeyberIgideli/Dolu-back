@@ -1,5 +1,5 @@
 
-function checkImageUpload (sort) { 
+function checkUpload (sort) { 
     let allowedExt
     let allowedMimetypes
     const obj = {
@@ -46,4 +46,11 @@ function checkImageUpload (sort) {
     }
 }
 
-export {checkImageUpload}
+function updateUploadCheck(req,res,next) {
+    if(!req.body.hiddenLandscape) {
+        checkUpload('image')
+    }
+    next()
+}
+
+export {checkUpload,updateUploadCheck}

@@ -1,5 +1,6 @@
 import fs from 'fs'
 import Movie from '../../models/Movie.js'
+import path from 'path'
 import {uniqueID} from '../../utils/Helper.js'
 
 class movieController { 
@@ -56,8 +57,27 @@ class movieController {
      }
 
     async updateMovie(req,res,next) {
-      try {
-        console.log(req.body) 
+      try { 
+        let files = req.files
+        let updatedFiles = {}
+
+        const movie = await Movie.findOne({title: req.body.title}) 
+        if(files) {
+           Object.keys(files).forEach(async (file) => {
+            let uploadedImage = files[file]
+            let imageExt = uploadedImage.name.substring(uploadedImage.name.lastIndexOf('.'))
+            let uniqueImageName = uniqueID(uploadedImage.name.substring(0,uploadedImage.name.lastIndexOf('.')),8)
+            let uploadPath = '/uploads/movie/' + uniqueImageName + imageExt
+            let filePath =  globalDirName + '/public' + uploadPath
+            fs.unlinkSync(movie[file])
+            await files[file].mv(filePath)
+            
+            movie[file] = uploadPath
+
+            updatedFiles[file] = files[file]
+        })
+        }
+
       } catch (err) {
         res.json(err)
       }
