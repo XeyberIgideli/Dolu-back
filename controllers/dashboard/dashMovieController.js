@@ -27,6 +27,7 @@ class movieController {
         let uploadedImage
         let imageExt
         let uploadPath
+        let uploadFile
 
         var hasError = true
 
@@ -84,7 +85,7 @@ class movieController {
             updatedFiles[file] = files[file]
         })
         }
-        await Movie.updateMany({...req.body,genres})  
+        await Movie.updateOne({title: req.body.title},{...req.body,genres})  
         res.redirect('../movies')
       } catch (err) {
         res.json(err)
