@@ -80,7 +80,7 @@ const showSchema = new mongoose.Schema({
     },
     mode: {
         type: String,
-        required: [true,"Please provide the show's embed link!"],
+        required: [true,"Please provide the show's mode!"],
         trim:true,
         enum: ['Featured','Popular', 'None']
     }

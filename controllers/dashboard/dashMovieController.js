@@ -1,7 +1,8 @@
 import fs from 'fs'
 import Movie from '../../models/Movie.js'
+import Show from '../../models/Show.js'
 import path from 'path'
-import {uniqueID} from '../../utils/Helper.js'
+import {uniqueID,fileUpdate} from '../../utils/Helper.js'
 
 class movieController { 
     getAddNewMoviePage(req,res) {
@@ -62,30 +63,13 @@ class movieController {
 
     async updateMovie(req,res,next) {
       try { 
-        const genres = req.body['genres[]']
-        let files = req.files
-        let updatedFiles = {}
-
-        const movie = await Movie.findOne({title: req.body.title}) 
-        if(files) {
-           Object.keys(files).forEach(async (file) => {
-            let uploadedImage = files[file]
-            let imageExt = uploadedImage.name.substring(uploadedImage.name.lastIndexOf('.'))
-            let uniqueImageName = uniqueID(uploadedImage.name.substring(0,uploadedImage.name.lastIndexOf('.')),8)
-            let uploadPath = '/uploads/movie/' + uniqueImageName + imageExt
-            let filePath =  globalDirName + '/public' + uploadPath
-            let removePath = globalDirName + '/public' + movie[file]
-
-            fs.unlinkSync(removePath)
-            await files[file].mv(filePath)
-            
-            movie[file] = uploadPath
-            await movie.save()
-
-            updatedFiles[file] = files[file]
-        })
+        const body = req.body
+        const genres = req.body['genres[]'] 
+        if(req.files) {
+          let files = req.files 
+          fileUpdate(Movie,'movie',files,body)
         }
-        await Movie.updateOne({title: req.body.title},{...req.body,genres})  
+        await Movie.updateOne({title: body.title},{...body,genres})  
         res.redirect('../movies')
       } catch (err) {
         res.json(err)

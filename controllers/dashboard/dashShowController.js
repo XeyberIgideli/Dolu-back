@@ -1,11 +1,17 @@
 import fs from 'fs'
 import Show from '../../models/Show.js'
-import {uniqueID} from '../../utils/Helper.js'
+import {uniqueID,fileUpdate} from '../../utils/Helper.js'
 
 class showController { 
-    getAddNewShowPage(req,res) {
+     getAddNewShowPage(req,res) {
         res.render('dashboard/add-new-show')
      }
+
+     
+    async getUpdateShowPage(req,res) {
+      const show = await Show.findById(req.params.id) 
+      res.render('dashboard/edit-show',{show})
+    }
 
     async createShow(req,res,next) {
       try {    
@@ -49,7 +55,23 @@ class showController {
     } catch(err) {
         next(err)
     }
-  }
+     }
+
+    async updateShow (req,res,next) {
+      try { 
+        const body = req.body
+        const genres = req.body['genres[]'] 
+        if(req.files) {
+          let files = req.files 
+          fileUpdate(Show,'show',files,body)
+        }
+        await Show.updateOne({title: body.title},{...body,genres})  
+        res.redirect('../tv-shows')
+      } catch (err) {
+        res.json(err)
+      }
+
+     }
 }
 
 let ShowController = new showController()
