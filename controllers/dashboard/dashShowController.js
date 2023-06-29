@@ -4,13 +4,13 @@ import {uniqueID,fileUpdate} from '../../utils/Helper.js'
 
 class showController { 
      getAddNewShowPage(req,res) {
-        res.render('dashboard/add-new-show')
+        res.render('dashboard/add-new-show',{pageName:'shows'})
      }
 
      
     async getUpdateShowPage(req,res) {
       const show = await Show.findById(req.params.id) 
-      res.render('dashboard/edit-show',{show})
+      res.render('dashboard/edit-show',{show,pageName:'shows'})
     }
 
     async createShow(req,res,next) {

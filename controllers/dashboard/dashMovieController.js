@@ -6,11 +6,11 @@ import {uniqueID,fileUpdate} from '../../utils/Helper.js'
 
 class movieController { 
     getAddNewMoviePage(req,res) {
-        res.render('dashboard/add-new-movie')
+        res.render('dashboard/add-new-movie', {pageName:'movies'})
      }
     async getUpdateMoviePage(req,res) {
       const movie = await Movie.findById(req.params.id) 
-      res.render('dashboard/edit-movie',{movie})
+      res.render('dashboard/edit-movie',{movie,pageName:'movies'})
     }
 
     async createMovie(req,res,next) {
