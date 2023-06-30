@@ -14,6 +14,7 @@ class movieController {
     }
 
     async createMovie(req,res,next) {
+
       try {  
         const uploadDir = 'public/uploads/movie'
 
@@ -34,7 +35,6 @@ class movieController {
 
         let genresArr = req.body['genres[]'] ? req.body['genres[]'].split(',') : null
         let directorArr = req.body.director ? req.body.director.split(',') : null
-        
         Object.keys(files).forEach(file => {
             uploadedImage = files[file]
             imageExt = uploadedImage.name.substring(uploadedImage.name.lastIndexOf('.'))

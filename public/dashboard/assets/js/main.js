@@ -6,6 +6,7 @@
 
 const tagContainer = document.querySelector(".tag-container");
 const input = document.querySelector(".tag-container input");
+const addInput = document.querySelector('.add-input')
 const btnRemoveAll = document.querySelector("#removeAll");
 const btnSend = document.querySelector("#send");
 const btnEdit = document.querySelector("#edit");
@@ -109,10 +110,33 @@ btnSend?.addEventListener('click', () => {
   input.style.display = 'none'
   input.value = tags
 })
+
 btnEdit?.addEventListener('click', () => {
   input.style.display = 'none'
   input.value += tags 
 })
+
+const embedWrapper = document.querySelector('.embed-wrapper')
+const colWrapper = document.querySelector('.col-wrapper') 
+
+addInput?.addEventListener('click', (e) => {
+  const div = document.createElement('div')
+  div.className = 'embed-wrapper'
+  div.innerHTML = '<div style="display: flex;margin-top:5px; flex-direction: row; gap: 1rem;"><input type="text" name="embed" class="form-control" id="basic-default-name"/> <button type="button" class="btn btn-danger remove-input">-</button></div>'
+  let removeBtn = div.querySelectorAll('.remove-input')
+  removeInput(removeBtn)
+  colWrapper.appendChild(div)
+  e.preventDefault()
+})
+
+function removeInput(element) {
+  element?.forEach(input => {
+    input.addEventListener('click', (e) => {
+      e.target.parentElement.remove()
+      e.preventDefault()
+    })
+  })
+}
 
 let menu, animate;
 

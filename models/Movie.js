@@ -85,7 +85,7 @@ const movieSchema = new mongoose.Schema({
         trim:true,
     },
     embed: {
-        type: String,
+        type: Array,
         required: [true,"Please provide the media's embed link!"],
         trim:true
     },
