@@ -116,14 +116,14 @@ btnEdit?.addEventListener('click', () => {
   input.value += tags 
 })
 
-const embedWrapper = document.querySelector('.embed-wrapper')
 const colWrapper = document.querySelector('.col-wrapper') 
 let removeBtn = document.querySelectorAll('.remove-input')
+const name = colWrapper?.id
 
 addInput?.addEventListener('click', (e) => {
   const div = document.createElement('div')
-  div.className = 'embed-wrapper'
-  div.innerHTML = '<div style="display: flex;margin-top:5px; flex-direction: row; gap: 1rem;"><input type="text" name="embed" class="form-control" id="basic-default-name"/> <button type="button" class="btn btn-danger remove-input">-</button></div>'
+  div.className = 'embed-wrapper' 
+  div.innerHTML = `<div style="display: flex;margin-top:5px; flex-direction: row; gap: 1rem;"><input type="text" name="${name}" class="form-control" id="basic-default-name"/> <button type="button" class="btn btn-danger remove-input">-</button></div>`
   let removeBtnDiv = div.querySelectorAll('.remove-input')
   removeInput(removeBtnDiv)
   colWrapper.appendChild(div)

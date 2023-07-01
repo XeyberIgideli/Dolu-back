@@ -21,12 +21,14 @@ class showController {
             fs.mkdirSync(uploadDir,{recursive:true})
         }
 
-        const files = req.files
-        let arr = {}
+        const files = req.files 
+        let arrPath = {}
+        let arrUpload = {}
         let uniqueImageName
         let uploadedImage
         let imageExt
         let uploadPath
+        let uploadFile
 
         var hasError = true
 
@@ -37,16 +39,17 @@ class showController {
             uploadedImage = files[file]
             imageExt = uploadedImage.name.substring(uploadedImage.name.lastIndexOf('.'))
             uniqueImageName = uniqueID(uploadedImage.name.substring(0,uploadedImage.name.lastIndexOf('.')),8)
-            uploadPath = globalDirName + '/public/uploads/show/' + uniqueImageName + imageExt
-            arr[file] = uploadPath
+            uploadPath = '/uploads/show/' + uniqueImageName + imageExt
+            uploadFile = globalDirName + '/public/uploads/show/' + uniqueImageName + imageExt
+            arrUpload[file] = uploadPath
+            arrPath[file] = uploadFile
         })
-        const show = await Show.create({...req.body,...arr,genres:genresArr,director: directorArr})
+        const show = await Show.create({...req.body,...arrUpload,genres:genresArr,director: directorArr})
         hasError = false
-
 
         if(!hasError) {
            for(let file in files) {  
-             await files[file].mv(arr[file])
+             await files[file].mv(arrPath[file])
            } 
         }
 
@@ -61,14 +64,15 @@ class showController {
       try { 
         const body = req.body
         const genres = req.body['genres[]'] 
+        const trailer = req.body.trailer ? req.body.trailer : null 
         if(req.files) {
           let files = req.files 
           fileUpdate(Show,'show',files,body)
         }
-        await Show.updateOne({title: body.title},{...body,genres})  
+        await Show.updateOne({title: body.title},{...body,genres,trailer},{ runValidators: true })  
         res.redirect('../tv-shows')
       } catch (err) {
-        res.json(err)
+        next(err)
       }
 
      }

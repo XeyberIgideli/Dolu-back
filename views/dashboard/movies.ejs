@@ -42,6 +42,7 @@
                         <td><%= movies[i].genres %></td>
                         <td>
                           <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+                            <% for( let k = 0; k < movies[i].embed.length; k++ ) { %>
                             <li
                               data-bs-toggle="tooltip"
                               data-popup="tooltip-custom"
@@ -49,8 +50,9 @@
                               class="avatar avatar-xs pull-up" 
                               style="text-align: center;line-height: 1.7;"
                             >
-                              1
+                              <%= k+1 %>
                             </li>  
+                            <% } %>
                           </ul>
                         </td>
                         <td><span class="badge bg-label-primary me-1"><%= movies[i].mode %></span></td>

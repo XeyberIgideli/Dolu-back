@@ -71,7 +71,7 @@ class movieController {
           fileUpdate(Movie,'movie',files,body)
         }
         await Movie.updateOne({title: body.title},{...body,genres,embed},{ runValidators: true })  
-        // res.redirect('../movies')
+        res.redirect('../movies')
       } catch (err) {
         next(err)
       }

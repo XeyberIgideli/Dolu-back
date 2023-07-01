@@ -74,8 +74,13 @@ const showSchema = new mongoose.Schema({
         trim:true,
     },
     trailer: {
-        type: String,
+        type: Array,
         required: [true,"Please provide the show's trailer link!"],
+        validate: {
+            validator: function(array) {
+              return array.every((v) => typeof v === 'string');
+            }, 
+        },
         trim:true,
     },
     mode: {
