@@ -87,6 +87,11 @@ const movieSchema = new mongoose.Schema({
     embed: {
         type: Array,
         required: [true,"Please provide the media's embed link!"],
+        validate: {
+            validator: function(array) {
+              return array.every((v) => typeof v === 'string');
+            }, 
+        },
         trim:true
     },
     mode: {
