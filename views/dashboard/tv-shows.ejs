@@ -40,7 +40,7 @@
                       <% for( let i = 0; i < shows.length; i++ ) { %>
                         <tr>
                           <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong><%= shows[i].title %></strong></td>
-                          <td><%= shows[i].genres %></td>
+                          <td><%= shows[i].genres.join('').substring(0,30) %></td>
                           <td>
                             <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
                               <li
