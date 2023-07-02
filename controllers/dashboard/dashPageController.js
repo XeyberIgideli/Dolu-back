@@ -14,9 +14,19 @@ class get_DashPages {
      }
      
     async getDashShowsPage(req,res) {
-      const shows = await Show.find()
+      const page = req.query.page || 1
+      const postPerPage = 10
+      const totalPost = await Show.find().countDocuments()
 
-      res.render('dashboard/tv-shows', {shows,pageName: 'shows'})
+
+      const shows = await Show.find().sort('-dateCreated').skip((page - 1) * postPerPage).limit(postPerPage)
+
+      res.render('dashboard/tv-shows', {
+        shows,
+        pageName: 'shows',
+        currentPage: page,
+        totalPage: Math.ceil(totalPost / postPerPage)
+    })
      } 
  }
  
