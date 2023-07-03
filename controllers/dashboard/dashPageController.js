@@ -6,10 +6,17 @@ class get_DashPages {
          res.render('dashboard/index',{pageName: 'index'})
      } 
      async getDashMoviesPage(req,res) {
-         const movies = await Movie.find()
+        const page = req.query.page || 1
+        const postPerPage = 10
+        const totalPost = await Movie.find().countDocuments()
+  
+        const movies = await Movie.find().sort('-dateCreated').skip((page - 1) * postPerPage).limit(postPerPage)
+
         res.render('dashboard/movies', {
         movies,
-        pageName: 'movies'
+        pageName: 'movies',
+        currentPage: page,
+        totalPage: Math.ceil(totalPost / postPerPage)
         })
      }
      

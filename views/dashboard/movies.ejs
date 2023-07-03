@@ -24,7 +24,7 @@
                     <a href="movies/add-new-movie" style="align-self: center;margin-right: 1.5rem;" class="btn btn-primary">Add New</a>  
                 </div>
 
-                <div class="text-nowrap">
+                <div class="text-nowrap" style="display: flex;flex-direction: column;gap: 2rem;">
                   <table class="table table-hover">
                     <thead>
                       <tr>
@@ -75,6 +75,45 @@
                      <% } %>
                     </tbody>
                   </table>
+
+                  <div style="align-self: center;">
+                    <nav aria-label="Page navigation">
+                     <% if (totalPage > 0) { %>
+                      <ul class="pagination">
+                        <li class="page-item first">
+                          <a class="page-link" href="/dashboard/tv-shows/?page=1"><i class="tf-icon bx bx-chevrons-left"></i></a>
+                        </li>
+                        <% if (currentPage > 1) { %>
+                        <li class="page-item prev">
+                          <a class="page-link" href="/dashboard/tv-shows/?page=<%= Number(currentPage) - 1 %>"><i class="tf-icon bx bx-chevron-left"></i></a>
+                        </li>
+                        <% } %>
+
+                       <% for( let i = 1; i <= Number(totalPage); i++ ) { %>
+                          <% if (i == currentPage) { %>
+                            <li class="page-item active">
+                              <a class="page-link" href="/dashboard/tv-shows/?page=<%= i%>"><%= i %></a>
+                            </li>
+                          <% } else {%>
+                            <li class="page-item">
+                              <a class="page-link" href="/dashboard/tv-shows/?page=<%= i %>"><%= i %></a>
+                            </li>
+                          <% } %>
+                       <% } %>
+                        
+                        <% if (currentPage < totalPage) { %>
+                          <li class="page-item next">
+                            <a class="page-link" href="/dashboard/tv-shows/?page=<%= Number(currentPage) + 1 %>"><i class="tf-icon bx bx-chevron-right"></i></a>
+                          </li>
+                        <% } %>
+                        <li class="page-item last">
+                          <a class="page-link" href="/dashboard/tv-shows/?page=<%= totalPage %>"><i class="tf-icon bx bx-chevrons-right"></i></a>
+                        </li>
+                      </ul>
+                     <% } %>
+                    </nav>
+                  </div>
+
                 </div>
               </div>
               <!--/ Hoverable Table rows -->
