@@ -88,8 +88,11 @@ const showSchema = new mongoose.Schema({
         required: [true,"Please provide the show's mode!"],
         trim:true,
         enum: ['Featured','Popular', 'None']
+    },
+    show: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Show',
     }
-
 })
 
 const Show = mongoose.model('Show',showSchema)

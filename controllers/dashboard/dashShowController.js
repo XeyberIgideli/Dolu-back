@@ -1,6 +1,7 @@
 import fs from 'fs'
 import Show from '../../models/Show.js'
-import {uniqueID,fileUpdate} from '../../utils/Helper.js'
+import Episode from '../../models/Episode.js'
+import {uniqueID,fileUpdateMI} from '../../utils/Helper.js'
 
 class showController { 
      getAddNewShowPage(req,res) {
@@ -34,7 +35,7 @@ class showController {
         let uploadPath
         let uploadFile
 
-        var hasError = true
+        let hasError = true
 
         let genresArr = req.body['genres[]'] ? req.body['genres[]'].split(',') : null
         let directorArr = req.body.director ? req.body.director.split(',') : null
@@ -71,7 +72,7 @@ class showController {
         const trailer = req.body.trailer ? req.body.trailer : null 
         if(req.files) {
           let files = req.files 
-          fileUpdate(Show,'show',files,body)
+          fileUpdateMI(Show,'show',files,body)
         }
         await Show.updateOne({title: body.title},{...body,genres,trailer},{ runValidators: true })  
         res.redirect('../tv-shows')
@@ -81,9 +82,10 @@ class showController {
 
      }
 
-     createEpisode(req,res,next) {
+    async createEpisode(req,res,next) {
         try {
-          
+          const body = req.body 
+          const episode = await Episode.create({...body,show:body.showID})
         } catch(err) {
           next(err)
         }

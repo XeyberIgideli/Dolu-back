@@ -4,7 +4,8 @@ function uniqueID(string,length = 7) {
 	return string + Math.random().toString(36).substring(2,length + 2)
 }
 
-async function fileUpdate(model,pathname,files,body) {
+// File uplading for multi inputs
+async function fileUpdateMI(model,pathname,files,body) {
 	const media = await model.findOne({title: body.title})
  
 	   Object.keys(files).forEach(async (file) => { 
@@ -23,4 +24,4 @@ async function fileUpdate(model,pathname,files,body) {
 	})
 }
 
-export {uniqueID,fileUpdate}
+export {uniqueID,fileUpdateMI}
