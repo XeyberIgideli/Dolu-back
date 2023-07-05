@@ -6,8 +6,12 @@ class showController {
      getAddNewShowPage(req,res) {
         res.render('dashboard/add-new-show',{pageName:'shows'})
      }
-
      
+     async getAddNewEpisodePage(req,res) {
+      const show = await Show.findOne({_id:req.params.id}) 
+      res.render('dashboard/add-new-episode',{pageName:'shows', showData:show})
+   }
+
     async getUpdateShowPage(req,res) {
       const show = await Show.findById(req.params.id) 
       res.render('dashboard/edit-show',{show,pageName:'shows'})
@@ -75,6 +79,14 @@ class showController {
         next(err)
       }
 
+     }
+
+     createEpisode(req,res,next) {
+        try {
+          
+        } catch(err) {
+          next(err)
+        }
      }
 }
 
