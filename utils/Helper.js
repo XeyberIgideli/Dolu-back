@@ -4,7 +4,19 @@ function uniqueID(string,length = 7) {
 	return string + Math.random().toString(36).substring(2,length + 2)
 }
 
-// File uplading for multi inputs
+// Single input file uploading
+async function fileUploadSI (pathname,file,showname) {
+	let uploadedImage = file
+	let imageExt = uploadedImage.name.substring(uploadedImage.name.lastIndexOf('.'))
+	let uniqueImageName = uniqueID(uploadedImage.name.substring(0,uploadedImage.name.lastIndexOf('.')),8)
+	let uploadPath = `/uploads/${pathname}/${showname}/` + uniqueImageName + imageExt
+	let uploadFile = globalDirName + `/public/uploads/${pathname}/${showname}/` + uniqueImageName + imageExt
+
+	await uploadedImage.mv(uploadFile)
+	return uploadPath
+}
+
+// Updating the files in multi inputs
 async function fileUpdateMI(model,pathname,files,body) {
 	const media = await model.findOne({title: body.title})
  
@@ -24,4 +36,4 @@ async function fileUpdateMI(model,pathname,files,body) {
 	})
 }
 
-export {uniqueID,fileUpdateMI}
+export {uniqueID,fileUpdateMI,fileUploadSI}

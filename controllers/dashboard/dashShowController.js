@@ -1,7 +1,7 @@
 import fs from 'fs'
 import Show from '../../models/Show.js'
 import Episode from '../../models/Episode.js'
-import {uniqueID,fileUpdateMI} from '../../utils/Helper.js'
+import {uniqueID,fileUpdateMI,fileUploadSI} from '../../utils/Helper.js'
 
 class showController { 
      getAddNewShowPage(req,res) {
@@ -68,8 +68,9 @@ class showController {
     async updateShow (req,res,next) {
       try { 
         const body = req.body
-        const genres = req.body['genres[]'] 
+        const genres = req.body['genres[]'] ? req.body['genres[]'] : null
         const trailer = req.body.trailer ? req.body.trailer : null 
+
         if(req.files) {
           let files = req.files 
           fileUpdateMI(Show,'show',files,body)
@@ -84,8 +85,24 @@ class showController {
 
     async createEpisode(req,res,next) {
         try {
+          let uploadedFile
           const body = req.body 
-          const episode = await Episode.create({...body,show:body.showID})
+          const file = req.files?.thumbnail 
+
+          const showFolderName = await Show.findOne({_id: body.showID})
+
+          const uploadDir = `public/uploads/show/${showFolderName.title}`
+
+          if(!fs.existsSync(uploadDir)) {
+              fs.mkdirSync(uploadDir,{recursive:true})
+          }
+
+          if(file) {
+            uploadedFile = await fileUploadSI('show',file,showFolderName.title)
+          }
+
+          // const episode = await Episode.create({...body,show:body.showID,thumbnail:uploadedFile}) 
+
         } catch(err) {
           next(err)
         }
