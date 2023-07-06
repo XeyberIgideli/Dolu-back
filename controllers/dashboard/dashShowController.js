@@ -7,13 +7,30 @@ class showController {
      getAddNewShowPage(req,res) {
         res.render('dashboard/add-new-show',{pageName:'shows'})
      }
+
+     async getEpisodesPage(req,res) {
+      const page = req.query.page || 1
+      const postPerPage = 10
+      const totalPost = await Episode.find().countDocuments()
+
+      const show = await Show.findOne({_id:req.params.id})
+      const episode = await Episode.find({show:req.params.id}).populate('show').skip((page - 1) * postPerPage).limit(postPerPage)
+
+      res.render('dashboard/episodes',{
+        pageName:'shows',
+        showTitle: show.title,
+        episodeData:episode,
+        currentPage: page,
+        totalPage: Math.ceil(totalPost / postPerPage)
+        })
+     }
      
      async getAddNewEpisodePage(req,res) {
       const show = await Show.findOne({_id:req.params.id}) 
       res.render('dashboard/add-new-episode',{pageName:'shows', showData:show})
-   }
+     }
 
-    async getUpdateShowPage(req,res) {
+     async getUpdateShowPage(req,res) {
       const show = await Show.findById(req.params.id) 
       res.render('dashboard/edit-show',{show,pageName:'shows'})
     }
@@ -101,7 +118,9 @@ class showController {
             uploadedFile = await fileUploadSI('show',file,showFolderName.title)
           }
 
-          // const episode = await Episode.create({...body,show:body.showID,thumbnail:uploadedFile}) 
+          const episode = await Episode.create({...body,show:body.showID,thumbnail:uploadedFile}) 
+
+          res.redirect('../tv-shows/episodes')
 
         } catch(err) {
           next(err)
