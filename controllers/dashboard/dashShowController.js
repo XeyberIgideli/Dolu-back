@@ -35,6 +35,12 @@ class showController {
       res.render('dashboard/edit-show',{show,pageName:'shows'})
     }
 
+     async deleteShow(req,res,next) {
+       const removePath = globalDirName +  
+       await Episode.findOneAndRemove({_id: req.params.id})
+       await Show.findOneAndRemove({_id: req.params.id})
+     }
+
     async createShow(req,res,next) {
       try {    
         const uploadDir = 'public/uploads/show'
