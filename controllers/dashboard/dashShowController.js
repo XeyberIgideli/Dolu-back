@@ -36,9 +36,23 @@ class showController {
     }
 
      async deleteShow(req,res,next) {
-       const removePath = globalDirName +  
-       await Episode.findOneAndRemove({_id: req.params.id})
-       await Show.findOneAndRemove({_id: req.params.id})
+       const episode = await Episode.findOne({show: req.params.id})
+       const show = await Show.findOne({_id: req.params.id})
+       const path = globalDirName + '/public'
+       const arr = [show.landscapeImage,show.portraitImage]  
+       if(episode) {
+        arr.push(episode.thumbnail)
+       }
+       try {
+        await episode?.deleteOne()
+        await show.deleteOne()  
+        arr.forEach(item => {
+          fs.unlinkSync(path + item)
+        })  
+        res.redirect('tv-shows')
+       } catch(err) {
+        next(err)
+       } 
      }
 
     async createShow(req,res,next) {

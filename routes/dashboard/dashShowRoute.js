@@ -7,6 +7,7 @@ const router = express.Router()
 
 router.get('/tv-shows/add-new-show',verifyRole,ShowController.getAddNewShowPage) 
 router.get('/tv-shows/edit-show/:id',verifyRole,ShowController.getUpdateShowPage) 
+router.get('/tv-shows/delete-show/:id',verifyRole,ShowController.deleteShow)
 
 // Episodes
 
