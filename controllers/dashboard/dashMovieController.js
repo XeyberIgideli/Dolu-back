@@ -66,11 +66,12 @@ class movieController {
         const body = req.body
         const genres = req.body['genres[]'] ? req.body['genres[]'] : null
         const embed = req.body.embed ? req.body.embed : null
+        let updatingFile
         if(req.files) {
           let files = req.files 
-          fileUpdateMI(Movie,'movie',files,body)
+          updatingFile = await fileUpdateMI(Movie,'movie',files,body)
         }
-        await Movie.updateOne({_id: body.movieID},{...body,genres,embed},{ runValidators: true })  
+        await Movie.updateOne({_id: body.movieID},{...body,...updatingFile,genres,embed},{ runValidators: true })  
         res.redirect('../movies')
       } catch (err) {
         next(err)
