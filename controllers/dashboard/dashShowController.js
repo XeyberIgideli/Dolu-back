@@ -121,12 +121,24 @@ class showController {
 
           const episode = await Episode.create({...body,show:body.showID,thumbnail:uploadedFile}) 
 
-          res.redirect('../tv-shows/episodes')
+          res.redirect('../episodes')
 
         } catch(err) {
           next(err)
         }
      }
+
+    async deleteEpisode(req,res,next) {
+      const episode = await Episode.findOne({_id: req.params.id})
+      const path = globalDirName + '/public'
+      try {
+       fs.unlinkSync(path + episode.thumbnail) 
+       await episode.deleteOne()
+       res.redirect('tv-shows')
+      } catch(err) {
+       next(err)
+      } 
+    }
 }
 
 let ShowController = new showController()

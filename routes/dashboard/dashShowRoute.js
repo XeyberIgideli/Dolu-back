@@ -13,6 +13,7 @@ router.get('/tv-shows/delete-show/:id',verifyRole,ShowController.deleteShow)
 
 router.get('/tv-shows/episodes/:id',verifyRole,ShowController.getEpisodesPage) 
 router.get('/tv-shows/add-new-episode/:id',verifyRole,ShowController.getAddNewEpisodePage) 
+router.get('/tv-shows/episodes/delete-episode/:id',verifyRole,ShowController.deleteEpisode)
 
 router.post(
 '/tv-shows/add-show',
