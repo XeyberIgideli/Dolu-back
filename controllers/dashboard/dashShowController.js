@@ -15,7 +15,7 @@ class showController {
       const totalPost = await Episode.find().countDocuments()
 
       const show = await Show.findOne({_id:req.params.id})
-      const episode = await Episode.find({show:req.params.id}).skip((page - 1) * postPerPage).limit(postPerPage)
+      const episode = await Episode.find({show:req.params.id}).populate('show').skip((page - 1) * postPerPage).limit(postPerPage)
       res.render('dashboard/episodes',{
         pageName:'shows',
         showTitle: show.title,
@@ -105,23 +105,22 @@ class showController {
         try {
           let uploadedFile
           const body = req.body 
-          const file = req.files?.thumbnail 
+          const file = req.files?.thumbnail  
+          const show = await Show.findOne({_id: body.showID})
 
-          const showFolderName = await Show.findOne({_id: body.showID})
-
-          const uploadDir = `public/uploads/show/${showFolderName.title}`
+          const uploadDir = `public/uploads/show/${show.title}`
 
           if(!fs.existsSync(uploadDir)) {
               fs.mkdirSync(uploadDir,{recursive:true})
           }
 
           if(file) {
-            uploadedFile = await fileUploadSI('show',file,showFolderName.title)
+            uploadedFile = await fileUploadSI('show',file,show.title)
           }
 
           const episode = await Episode.create({...body,show:body.showID,thumbnail:uploadedFile}) 
 
-          res.redirect('../episodes')
+          res.redirect(`../episodes/${body.showID}`)
 
         } catch(err) {
           next(err)
@@ -134,7 +133,7 @@ class showController {
       try {
        fs.unlinkSync(path + episode.thumbnail) 
        await episode.deleteOne()
-       res.redirect('tv-shows')
+       res.redirect('back')
       } catch(err) {
        next(err)
       } 
