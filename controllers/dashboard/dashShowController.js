@@ -9,16 +9,17 @@ class showController {
      }
 
      async getEpisodesPage(req,res) {
+      const showID = req.params.id
       const page = req.query.page || 1
       const postPerPage = 10
       const totalPost = await Episode.find().countDocuments()
 
       const show = await Show.findOne({_id:req.params.id})
-      const episode = await Episode.find({show:req.params.id}).populate('show').skip((page - 1) * postPerPage).limit(postPerPage)
-
+      const episode = await Episode.find({show:req.params.id}).skip((page - 1) * postPerPage).limit(postPerPage)
       res.render('dashboard/episodes',{
         pageName:'shows',
         showTitle: show.title,
+        showID,
         episodeData:episode,
         currentPage: page,
         totalPage: Math.ceil(totalPost / postPerPage)
