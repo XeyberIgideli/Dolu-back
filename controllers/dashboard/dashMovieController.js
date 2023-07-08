@@ -70,7 +70,7 @@ class movieController {
           let files = req.files 
           fileUpdateMI(Movie,'movie',files,body)
         }
-        await Movie.updateOne({title: body.title},{...body,genres,embed},{ runValidators: true })  
+        await Movie.updateOne({_id: body.movieID},{...body,genres,embed},{ runValidators: true })  
         res.redirect('../movies')
       } catch (err) {
         next(err)

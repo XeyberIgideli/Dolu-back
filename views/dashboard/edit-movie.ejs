@@ -27,6 +27,8 @@
                   </div>
                   <div class="card-body">
                     <form id="myForm" action="../movie-editted" method="POST" enctype="multipart/form-data"> 
+                      <input type="hidden" name="movieID" value="<%= movie.id %>" />
+
                       <div class="row mb-3">
                             <label class="col-sm-2 col-form-label" for="basic-default-name">Landscape image</label>
                             <div class="col-sm-10">

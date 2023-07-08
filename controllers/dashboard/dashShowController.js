@@ -88,12 +88,8 @@ class showController {
         const body = req.body
         const genres = req.body['genres[]'] ? req.body['genres[]'] : null
         const trailer = req.body.trailer ? req.body.trailer : null 
-
-        if(req.files) {
-          let files = req.files 
-          fileUpdateMI(Show,'show',files,body)
-        }
-        await Show.updateOne({title: body.title},{...body,genres,trailer},{ runValidators: true })  
+         
+        await Show.updateOne({_id: body.showID},{...body,genres,trailer},{ runValidators: true })  
         res.redirect('../tv-shows')
       } catch (err) {
         next(err)
