@@ -4,6 +4,29 @@ function uniqueID(string,length = 7) {
 	return string + Math.random().toString(36).substring(2,length + 2)
 }
 
+// Multi input file uploading
+function fileUploadMI (pathname,files) {
+	let arrPath = {}
+	let arrUpload = {}
+	let uniqueImageName
+	let uploadedImage
+	let imageExt
+	let uploadPath
+	let uploadFile
+
+	Object.keys(files).forEach(async (file) => {
+		uploadedImage = files[file]
+		imageExt = uploadedImage.name.substring(uploadedImage.name.lastIndexOf('.'))
+		uniqueImageName = uniqueID(uploadedImage.name.substring(0,uploadedImage.name.lastIndexOf('.')),8)
+		uploadPath = `/uploads/${pathname}/` + uniqueImageName + imageExt
+		uploadFile = globalDirName + `/public/uploads/${pathname}/` + uniqueImageName + imageExt
+		arrUpload[file] = uploadPath
+		arrPath[file] = uploadFile
+	})
+
+	return {arrUpload,arrPath}
+}
+
 // Single input file uploading
 async function fileUploadSI (pathname,file,showname) {
 	let uploadedImage = file
@@ -36,4 +59,4 @@ async function fileUpdateMI(model,pathname,files,body) {
 	})
 }
 
-export {uniqueID,fileUpdateMI,fileUploadSI}
+export {uniqueID,fileUpdateMI,fileUploadSI,fileUploadMI}
