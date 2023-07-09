@@ -8,6 +8,8 @@ const router = express.Router()
 router.get('/movies/add-new-movie',verifyRole,MovieController.getAddNewMoviePage) 
 router.get('/movies/edit-movie/:id',verifyRole,MovieController.getUpdateMoviePage) 
 
+router.get('/movies/delete-movie/:id',verifyRole,MovieController.deleteMovie) 
+
 router.post(
     '/movies/add-movie',
     verifyRole,

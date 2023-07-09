@@ -57,6 +57,21 @@ class movieController {
         next(err)
       }
     }
+    
+    async deleteMovie(req,res,next) {
+      const movie = await Movie.findOne({_id: req.params.id})
+      const path = globalDirName + '/public'
+      const arr = [movie.landscapeImage,movie.portraitImage]  
+      try {
+       await movie.deleteOne()  
+       arr.forEach(item => {
+         fs.unlinkSync(path + item)
+       })  
+       res.redirect('back')
+      } catch(err) {
+       next(err)
+      } 
+    }
 }
 
 let MovieController = new movieController()
