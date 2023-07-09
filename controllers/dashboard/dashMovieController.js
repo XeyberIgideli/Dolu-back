@@ -2,7 +2,7 @@ import fs from 'fs'
 import Movie from '../../models/Movie.js'
 import Show from '../../models/Show.js'
 import path from 'path'
-import {uniqueID,fileUpdateMI} from '../../utils/Helper.js'
+import {uniqueID,fileUpdateMI,fileUploadMI} from '../../utils/Helper.js'
 
 class movieController { 
     getAddNewMoviePage(req,res) {
