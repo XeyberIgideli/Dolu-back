@@ -21,38 +21,18 @@ class movieController {
         if(!fs.existsSync(uploadDir)) {
             fs.mkdirSync(uploadDir,{recursive:true})
         }
-
         const files = req.files
-        let arrPath = {}
-        let arrUpload = {}
-        let uniqueImageName
-        let uploadedImage
-        let imageExt
-        let uploadPath
-        let uploadFile
-
-        var hasError = true
+        const uploading = fileUploadMI('movie',files)
 
         let genresArr = req.body['genres[]'] ? req.body['genres[]'].split(',') : null
         let directorArr = req.body.director ? req.body.director.split(',') : null
-        Object.keys(files).forEach(file => {
-            uploadedImage = files[file]
-            imageExt = uploadedImage.name.substring(uploadedImage.name.lastIndexOf('.'))
-            uniqueImageName = uniqueID(uploadedImage.name.substring(0,uploadedImage.name.lastIndexOf('.')),8)
-            uploadPath = '/uploads/movie/' + uniqueImageName + imageExt
-            uploadFile = globalDirName + '/public/uploads/movie/' + uniqueImageName + imageExt
-            arrUpload[file] = uploadPath
-            arrPath[file] = uploadFile
-        })
+ 
         
-        const movie = await Movie.create({...req.body,...arrUpload,genres:genresArr,director: directorArr})
-        hasError = false
+        const movie = await Movie.create({...req.body,...uploading.arrUpload,genres:genresArr,director: directorArr})
 
-        if(!hasError) {
-           for(let file in files) {  
-             await files[file].mv(arrPath[file])
-           } 
-        }
+        for(let file in files) {  
+          await files[file].mv(uploading.arrPath[file])
+        } 
 
         res.redirect('../movies')
 

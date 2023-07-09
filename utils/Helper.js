@@ -54,8 +54,6 @@ async function fileUpdateMI(model,pathname,files,body) {
 
 		fs.unlinkSync(removePath)
 		await files[file].mv(filePath)
-		// media[file] = uploadPath
-		// await media.save() 
 	})
 	return uploadPaths
 }

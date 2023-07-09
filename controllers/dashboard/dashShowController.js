@@ -63,12 +63,12 @@ class showController {
         if(!fs.existsSync(uploadDir)) {
             fs.mkdirSync(uploadDir,{recursive:true})
         }
+        
         const files = req.files 
         const uploading = fileUploadMI('show',files)
 
         let genresArr = req.body['genres[]'] ? req.body['genres[]'].split(',') : null
         let directorArr = req.body.director ? req.body.director.split(',') : null
-        
 
         const show = await Show.create({...req.body,...uploading.arrUpload,genres:genresArr,director: directorArr})
         
