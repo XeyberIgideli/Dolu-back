@@ -2,7 +2,7 @@ import fs from 'fs'
 import Movie from '../../models/Movie.js'
 import Show from '../../models/Show.js'
 import path from 'path'
-import {uniqueID,fileUpdateMI,fileUploadMI} from '../../utils/Helper.js'
+import {uniqueID,fileUpdate,fileUploadMI} from '../../utils/Helper.js'
 
 class movieController { 
     getAddNewMoviePage(req,res) {
@@ -49,7 +49,7 @@ class movieController {
         let updatingFile
         if(req.files) {
           let files = req.files 
-          updatingFile = await fileUpdateMI(Movie,'movie',files,body)
+          updatingFile = await fileUpdate(Movie,'movie',files,body)
         }
         await Movie.updateOne({_id: body.movieID},{...body,...updatingFile,genres,embed},{ runValidators: true })  
         res.redirect('../movies')

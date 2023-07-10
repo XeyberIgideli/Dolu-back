@@ -1,7 +1,7 @@
 import fs from 'fs'
 import Show from '../../models/Show.js'
 import Episode from '../../models/Episode.js'
-import {uniqueID,fileUpdateMI,fileUploadSI,fileUploadMI} from '../../utils/Helper.js'
+import {uniqueID,fileUpdate,fileUploadSI,fileUploadMI} from '../../utils/Helper.js'
 
 class showController { 
      getAddNewShowPage(req,res) {
@@ -96,7 +96,7 @@ class showController {
         let updatingFile
         if(req.files) {
           let files = req.files 
-          updatingFile = await fileUpdateMI(Show,'show',files,body)
+          updatingFile = await fileUpdate(Show,'show',files,body)
         }
         await Show.updateOne({_id: body.showID},{...body,...updatingFile,genres,trailer},{ runValidators: true })  
         res.redirect('../tv-shows')
@@ -151,7 +151,7 @@ class showController {
         let updatingFile
         if(req.files) {
           let files = req.files
-          updatingFile = await fileUpdateMI(Episode,`show/${show.title}`,files,body)
+          updatingFile = await fileUpdate(Episode,`show/${show.title}`,files,body)
         }
         await Episode.updateOne({_id: body.episodeID},{...body,...updatingFile,embed},{ runValidators: true })  
         res.redirect(`../${body.showID}`)

@@ -40,7 +40,7 @@ async function fileUploadSI (pathname,file,showname) {
 }
 
 // Updating the files in multi inputs
-async function fileUpdateMI(model,pathname,files,body) {
+async function fileUpdate(model,pathname,files,body) {
 	const media = await model.findOne({_id: body.episodeID})
 	let uploadPaths = {}	
 	   Object.keys(files).forEach(async (file) => { 
@@ -58,4 +58,4 @@ async function fileUpdateMI(model,pathname,files,body) {
 	return uploadPaths
 } 
 
-export {uniqueID,fileUpdateMI,fileUploadSI,fileUploadMI}
+export {uniqueID,fileUpdate,fileUploadSI,fileUploadMI}
