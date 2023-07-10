@@ -41,7 +41,7 @@ async function fileUploadSI (pathname,file,showname) {
 
 // Updating the files in multi inputs
 async function fileUpdateMI(model,pathname,files,body) {
-	const media = await model.findOne({_id: body.showID})
+	const media = await model.findOne({_id: body.episodeID})
 	let uploadPaths = {}	
 	   Object.keys(files).forEach(async (file) => { 
 		let uploadedImage = files[file]
@@ -52,26 +52,10 @@ async function fileUpdateMI(model,pathname,files,body) {
 		let removePath = globalDirName + '/public' + media[file]
 		uploadPaths[file] = uploadPath
 
-		// fs.unlinkSync(removePath)
-		// await files[file].mv(filePath)
+		fs.unlinkSync(removePath)
+		await files[file].mv(filePath)
 	})
 	return uploadPaths
-}
-
-// Updating the file in single input
-async function fileUpdateSI(model,pathname,file,body) {
-	const media = await model.findOne({_id: body.showID})
-	let uploadedImage = file
-	let imageExt = uploadedImage.name.substring(uploadedImage.name.lastIndexOf('.'))
-	let uniqueImageName = uniqueID(uploadedImage.name.substring(0,uploadedImage.name.lastIndexOf('.')),8)
-	let uploadPath = `/uploads/${pathname}/` + uniqueImageName + imageExt
-	let filePath =  globalDirName + '/public' + uploadPath
-	let removePath = globalDirName + '/public' + media[file]
-	uploadPaths[file] = uploadPath
-
-	fs.unlinkSync(removePath)
-	await files[file].mv(filePath)
-	return uploadPaths
-}
+} 
 
 export {uniqueID,fileUpdateMI,fileUploadSI,fileUploadMI}

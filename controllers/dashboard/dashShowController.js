@@ -32,7 +32,7 @@ class showController {
      }
 
     async getEditEpisodePage(req,res) {
-      const episode = await Episode.findOne({_id:req.params.id}) 
+      const episode = await Episode.findOne({_id:req.params.id}).populate('show') 
       res.render('dashboard/edit-episode',{pageName:'shows', episodeData:episode})
      }
 
@@ -147,15 +147,14 @@ class showController {
       try { 
         const body = req.body
         const embed = req.body.embed ? req.body.embed : null
-        const show = await Show.findOne({_id: body.episodeID})
+        const show = await Show.findOne({_id: body.showID})
         let updatingFile
         if(req.files) {
           let files = req.files
           updatingFile = await fileUpdateMI(Episode,`show/${show.title}`,files,body)
-          console.log(updatingFile)
         }
-        // await Movie.updateOne({_id: body.movieID},{...body,...updatingFile,genres,embed},{ runValidators: true })  
-        // res.redirect('../movies')
+        await Episode.updateOne({_id: body.episodeID},{...body,...updatingFile,embed},{ runValidators: true })  
+        res.redirect(`../${body.showID}`)
       } catch (err) {
         next(err)
       }

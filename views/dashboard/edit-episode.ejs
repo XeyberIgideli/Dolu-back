@@ -27,7 +27,8 @@
                   </div>
                   <div class="card-body">
                     <form id="myForm" action="episode-editted" method="POST" enctype="multipart/form-data"> 
-                      <input type="hidden" name="showID" value="<%= episodeData.id %>" readonly>
+                      <input type="hidden" name="showID" value="<%= episodeData.show.id %>" readonly>
+                      <input type="hidden" name="episodeID" value="<%= episodeData.id %>" readonly>
 
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label" for="basic-default-name">Thumbnail</label>
