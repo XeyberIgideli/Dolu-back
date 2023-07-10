@@ -52,9 +52,25 @@ async function fileUpdateMI(model,pathname,files,body) {
 		let removePath = globalDirName + '/public' + media[file]
 		uploadPaths[file] = uploadPath
 
-		fs.unlinkSync(removePath)
-		await files[file].mv(filePath)
+		// fs.unlinkSync(removePath)
+		// await files[file].mv(filePath)
 	})
+	return uploadPaths
+}
+
+// Updating the file in single input
+async function fileUpdateSI(model,pathname,file,body) {
+	const media = await model.findOne({_id: body.showID})
+	let uploadedImage = file
+	let imageExt = uploadedImage.name.substring(uploadedImage.name.lastIndexOf('.'))
+	let uniqueImageName = uniqueID(uploadedImage.name.substring(0,uploadedImage.name.lastIndexOf('.')),8)
+	let uploadPath = `/uploads/${pathname}/` + uniqueImageName + imageExt
+	let filePath =  globalDirName + '/public' + uploadPath
+	let removePath = globalDirName + '/public' + media[file]
+	uploadPaths[file] = uploadPath
+
+	fs.unlinkSync(removePath)
+	await files[file].mv(filePath)
 	return uploadPaths
 }
 

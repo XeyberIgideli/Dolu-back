@@ -8,7 +8,7 @@ class showController {
         res.render('dashboard/add-new-show',{pageName:'shows'})
      }
 
-     async getEpisodesPage(req,res) {
+    async getEpisodesPage(req,res) {
       const showID = req.params.id
       const page = req.query.page || 1
       const postPerPage = 10
@@ -26,17 +26,22 @@ class showController {
         })
      }
      
-     async getAddNewEpisodePage(req,res) {
+    async getAddNewEpisodePage(req,res) {
       const show = await Show.findOne({_id:req.params.id}) 
       res.render('dashboard/add-new-episode',{pageName:'shows', showData:show})
      }
 
-     async getUpdateShowPage(req,res) {
+    async getEditEpisodePage(req,res) {
+      const episode = await Episode.findOne({_id:req.params.id}) 
+      res.render('dashboard/edit-episode',{pageName:'shows', episodeData:episode})
+     }
+
+    async getUpdateShowPage(req,res) {
       const show = await Show.findById(req.params.id) 
       res.render('dashboard/edit-show',{show,pageName:'shows'})
     }
 
-     async deleteShow(req,res,next) {
+    async deleteShow(req,res,next) {
        const episode = await Episode.findOne({show: req.params.id})
        const show = await Show.findOne({_id: req.params.id})
        const path = globalDirName + '/public'
@@ -63,7 +68,7 @@ class showController {
         if(!fs.existsSync(uploadDir)) {
             fs.mkdirSync(uploadDir,{recursive:true})
         }
-        
+
         const files = req.files 
         const uploading = fileUploadMI('show',files)
 
@@ -137,6 +142,23 @@ class showController {
       } catch(err) {
        next(err)
       } 
+    }
+    async updateEpisode(req,res,next) {
+      try { 
+        const body = req.body
+        const embed = req.body.embed ? req.body.embed : null
+        const show = await Show.findOne({_id: body.episodeID})
+        let updatingFile
+        if(req.files) {
+          let files = req.files
+          updatingFile = await fileUpdateMI(Episode,`show/${show.title}`,files,body)
+          console.log(updatingFile)
+        }
+        // await Movie.updateOne({_id: body.movieID},{...body,...updatingFile,genres,embed},{ runValidators: true })  
+        // res.redirect('../movies')
+      } catch (err) {
+        next(err)
+      }
     }
 }
 
