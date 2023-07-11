@@ -4,9 +4,16 @@ import Episode from '../../models/Episode.js'
 import {uniqueID,fileUpdate,fileUploadSI,fileUploadMI} from '../../utils/Helper.js'
 
 class showController { 
-     getAddNewShowPage(req,res) {
+
+  // Get pages
+    getAddNewShowPage(req,res) {
         res.render('dashboard/add-new-show',{pageName:'shows'})
      }
+     
+    async getUpdateShowPage(req,res) {
+      const show = await Show.findById(req.params.id) 
+      res.render('dashboard/edit-show',{show,pageName:'shows'})
+    }
 
     async getEpisodesPage(req,res) {
       const showID = req.params.id
@@ -36,10 +43,7 @@ class showController {
       res.render('dashboard/edit-episode',{pageName:'shows', episodeData:episode})
      }
 
-    async getUpdateShowPage(req,res) {
-      const show = await Show.findById(req.params.id) 
-      res.render('dashboard/edit-show',{show,pageName:'shows'})
-    }
+  // Post operations 
 
     async deleteShow(req,res,next) {
        const episode = await Episode.findOne({show: req.params.id})
@@ -143,6 +147,7 @@ class showController {
        next(err)
       } 
     }
+    
     async updateEpisode(req,res,next) {
       try { 
         const body = req.body

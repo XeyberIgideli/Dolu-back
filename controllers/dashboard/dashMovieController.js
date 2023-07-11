@@ -5,6 +5,7 @@ import path from 'path'
 import {uniqueID,fileUpdate,fileUploadMI} from '../../utils/Helper.js'
 
 class movieController { 
+  // Get pages
     getAddNewMoviePage(req,res) {
         res.render('dashboard/add-new-movie', {pageName:'movies'})
      }
@@ -12,7 +13,8 @@ class movieController {
       const movie = await Movie.findById(req.params.id) 
       res.render('dashboard/edit-movie',{movie,pageName:'movies'})
     }
-
+    
+  // Post operations  
     async createMovie(req,res,next) {
 
       try {  

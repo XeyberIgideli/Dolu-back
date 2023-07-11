@@ -49,6 +49,7 @@ async function logout(req,res) {
     const authHeader = req.cookies.token
     if(authHeader) {
         res.clearCookie('token')
+        res.redirect('/auth')
     }
 }
 

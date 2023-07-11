@@ -35,7 +35,7 @@ async function logout(req,res) {
     const authHeader = req.headers.authorization
     jwt.sign(authHeader,{expiresIn:1}, (logout) => {
         if(logout) {
-            res.send('Logged out!')
+            res.redirect('/')
         }
     })
 }
