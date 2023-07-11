@@ -23,6 +23,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true,"Please provide your password!"],
         trim:true,
+    },
+    status: {
+        type: String,
+        enum: ['Active', 'Banned'],
+        default: 'Active'
     }
 })
 

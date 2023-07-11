@@ -20,7 +20,8 @@ const roleSchema = new mongoose.Schema({
         default: 'admin'
     }
 })
-// Role user password hashing
+
+// Password hashing
 roleSchema.pre('save', function(next) {
     const user = this
     bcrypt.hash(user.password,10,(err,hash) => {
