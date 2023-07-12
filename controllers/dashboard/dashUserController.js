@@ -9,7 +9,6 @@ class userController {
       const totalPost = await User.find().countDocuments()
 
       const users = await User.find({status: 'Banned'}).sort('-dateCreated').skip((page - 1) * postPerPage).limit(postPerPage) 
-      console.log(users)
       res.render('dashboard/banned-users',{
         users,
         pageName:'users',
@@ -19,18 +18,16 @@ class userController {
     
   // Post operations  
    
-    async deleteUser(req,res,next) {
-      const movie = await Movie.findOne({_id: req.params.id})
-      const path = globalDirName + '/public'
-      const arr = [movie.landscapeImage,movie.portraitImage]  
+    async banUser(req,res,next) {
       try {
-       await movie.deleteOne()  
-       arr.forEach(item => {
-         fs.unlinkSync(path + item)
-       })  
-       res.redirect('back')
+        const user = await User.findOne({_id: req.params.id})
+        user.status = 'Banned'
+        user.banReason = req.body.banReason
+        user.banExpireDate = req.body.banExpireDate
+        user.save()
+        res.redirect('back')
       } catch(err) {
-       next(err)
+        next(err)
       } 
     }
 }

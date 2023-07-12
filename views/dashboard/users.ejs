@@ -21,7 +21,6 @@
               <div class="card">
                 <div style="display: flex;flex-direction: row; justify-content: space-between;">
                     <h5 class="card-header">User list</h5>
-                    <a href="movies/add-new-movie" style="align-self: center;margin-right: 1.5rem;" class="btn btn-primary">Add New</a>  
                 </div>
 
                 <div class="text-nowrap" style="display: flex;flex-direction: column;gap: 2rem;">
@@ -46,9 +45,24 @@
                               <i class="bx bx-dots-vertical-rounded"></i>
                             </button>
                             <div class="dropdown-menu">
-                              <a class="dropdown-item" href="users/ban-user/<%= users[i].id %>"
-                                ><i class="bx bx-block"></i> Ban User</a
-                              >
+                              <% if (users[i].status === 'Active') { %>
+                                <!-- <a class="dropdown-item" href="users/ban-user/<%= users[i].id %>"
+                                  ><i class="bx bx-block"></i> Ban User</a
+                                > -->
+                                <button
+                                type="button"
+                                class="dropdown-item modalBtn"
+                                data-bs-toggle="modal"
+                                data-bs-target="#smallModal"
+                                data-id="<%= users[i].id %>"
+                              ><i class="bx bx-block"></i>
+                                Ban User
+                              </button>
+                              <% } else { %>
+                                <a class="dropdown-item" href="users/unban-user/<%= users[i].id %>"
+                                  ><i class="bx bx-check"></i> Unban User</a
+                                >
+                              <% } %>
                               <a class="dropdown-item" href="users/delete-user/<%= users[i].id %>"
                                 ><i class="bx bx-trash me-1"></i> Delete</a
                               >
@@ -56,10 +70,48 @@
                           </div>
                         </td>
                       </tr> 
+                      <div class="modal fade" id="smallModal" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-sm" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel2">Modal title</h5>
+                              <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                              ></button>
+                            </div>
+                            <div class="modal-body">
+                              <form action="users/ban-user/<%= users[i].id %>" method="POST">
+                                <div class="row">
+                                  <div class="col mb-3">
+                                    <label for="nameSmall" class="form-label">Reason</label>
+                                    <input type="text" id="nameSmall" name="banReason" class="form-control" placeholder="Enter reason" />
+                                  </div>
+                                </div>
+                                <div class="row g-2"> 
+                                  <div class="col mb-0">
+                                    <label for="dobSmall" class="form-label">Ban Time</label>
+                                    <input id="dobSmall" type="date" name="banExpireDate" class="form-control" placeholder="DD / MM / YY" />
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                  Close
+                                </button>
+                                <button type="submit" class="btn btn-primary">Confirm</button>
+                              </div>
+                              </form>
+                          </div>
+                        </div>
+                      </div>
                      <% } %>
                     </tbody>
                   </table>
 
+                  <!-- Padding -->
                   <div style="align-self: center;">
                     <nav aria-label="Page navigation">
                      <% if (totalPage > 0) { %>
@@ -103,6 +155,6 @@
               <!--/ Hoverable Table rows -->
             </div>
             <!-- / Content -->
-
+            
             <!-- Footer -->
 <%- include('partials/footer') %>

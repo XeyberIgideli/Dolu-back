@@ -4,6 +4,19 @@
 
 'use strict';
 
+// For assigning id to modal form action link
+const modalBtn = document.querySelectorAll('.modalBtn')
+const modalform = document.querySelector('#smallModal form')
+
+modalBtn.forEach(item => {
+  item.addEventListener('click' , (e) => {
+    let id = e.target.dataset.id ?? e.target.parentElement.dataset.id
+    let splitted = modalform.action.split('/')
+    splitted[6] = id
+    modalform.action = splitted.join('/')
+  })
+})
+
 const tagContainer = document.querySelector(".tag-container");
 const input = document.querySelector(".tag-container input");
 const addInput = document.querySelector('.add-input')

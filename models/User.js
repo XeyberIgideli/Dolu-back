@@ -28,6 +28,14 @@ const userSchema = new mongoose.Schema({
         type: String,
         enum: ['Active', 'Banned'],
         default: 'Active'
+    },
+    banExpireDate: {
+        type: String,
+        trim: true,
+    },
+    banReason: {
+        type: String,
+        trim: true,
     }
 })
 
