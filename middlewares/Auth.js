@@ -36,6 +36,15 @@ function verifyToken(req,res,next) {
     }
 }
 
+function adminRedirect(req,res,next) {
+    const authHeader = req.cookies.adToken 
+    if(authHeader) {
+       res.redirect('dashboard')
+    } else {
+       next()
+    }
+}
+
 function userRedirect(req,res,next) {
     const authHeader = req.cookies.token 
     if(authHeader) {
@@ -70,4 +79,4 @@ async function checkForm(req,res,next) {
 }
    
 
-export {verifyToken,verifyRole,isEmailExist,checkForm,userRedirect}
+export {verifyToken,verifyRole,isEmailExist,checkForm,userRedirect,adminRedirect}
