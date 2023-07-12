@@ -4,8 +4,17 @@ import User from '../../models/User.js'
 class userController { 
   // Get pages 
     async getBannedUsersPage(req,res) {
-      const users = await User.findOne({status: 'Banned'}) 
-      res.render('dashboard/edit-movie',{users,pageName:'users'})
+      const page = req.query.page || 1
+      const postPerPage = 10
+      const totalPost = await User.find().countDocuments()
+
+      const users = await User.find({status: 'Banned'}).sort('-dateCreated').skip((page - 1) * postPerPage).limit(postPerPage) 
+      console.log(users)
+      res.render('dashboard/banned-users',{
+        users,
+        pageName:'users',
+        currentPage: page,
+        totalPage: Math.ceil(totalPost / postPerPage)})
     }
     
   // Post operations  

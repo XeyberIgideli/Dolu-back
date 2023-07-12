@@ -3,7 +3,7 @@ import UserController from '../../controllers/dashboard/dashUserController.js'
 
 const router = express.Router()
 
-router.get('/users/banned-users',verifyRole,UserController.getBannedUsersPage) 
+router.get('/users/banned-users',UserController.getBannedUsersPage) 
 
 
 export default router
