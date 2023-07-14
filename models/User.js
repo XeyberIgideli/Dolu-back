@@ -24,6 +24,11 @@ const userSchema = new mongoose.Schema({
         required: [true,"Please provide your password!"],
         trim:true,
     },
+    avatar: {
+        type: String,
+        trim: true,
+        required: [true, 'Please select an avatar!']
+    },
     status: {
         type: String,
         enum: ['Active', 'Banned'],
