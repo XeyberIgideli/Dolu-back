@@ -19,12 +19,19 @@ class userController {
   // Post operations  
    
     async banUser(req,res,next) {
+      let update = {}
+      for (const key of Object.keys(req.body)){
+        if (req.body[key] !== '') {
+            update[key] = req.body[key];
+        }
+    }
+    update['status'] = 'Banned'
       try {
-        const user = await User.findOne({_id: req.params.id})
-        user.status = 'Banned'
-        user.banReason = req.body.banReason
-        user.banExpireDate = req.body.banExpireDate
-        user.save()
+        const user = await User.findOneAndUpdate({_id: req.params.id}, {$set: update}, {new: true})
+        // user.status = 'Banned'
+        // user.banReason = req.body.banReason
+        // user.banExpireDate = req.body.banExpireDate
+        // user.save()
         res.redirect('back')
       } catch(err) {
         next(err)

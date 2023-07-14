@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema({
     avatar: {
         type: String,
         trim: true,
-        required: [true, 'Please select an avatar!']
+        // required: [true, 'Please select an avatar!']
     },
     status: {
         type: String,

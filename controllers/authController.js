@@ -6,7 +6,6 @@ async function register (req,res,next) {
     try { 
         const user = await User.create(req.body)
         const token = user.createJWT()
-        console.log(token)
         res.cookie('token',`Bearer: ${token}`, {maxAge: 1000*60*60*24,httpOnly:true,secure:true})
         res.redirect('../home')
     } catch(err) {
@@ -32,7 +31,7 @@ async function login(req,res,next) {
         const checkedPass = await user.isPasswordCorrect(password)
 
         if(!checkedPass) {
-            throw new BadRequestError('The passwords is not correct!')
+            throw new BadRequestError('The password is not correct!')
         }
 
         const token = user.createJWT() 
