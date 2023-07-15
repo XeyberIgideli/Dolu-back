@@ -24,6 +24,9 @@
                 </div>
 
                 <div class="text-nowrap" style="display: flex;flex-direction: column;gap: 2rem;">
+                  <% if (users.length > 0) { %>
+                   
+               
                   <table class="table table-hover">
                     <thead>
                       <tr>
@@ -110,7 +113,9 @@
                      <% } %>
                     </tbody>
                   </table>
-
+                  <% } else { %>
+                    <p style="padding-left: 1.5rem;" class="text-warning">No user registered!</p>
+                  <% } %>  
                   <!-- Padding -->
                   <div style="align-self: center;">
                     <nav aria-label="Page navigation">

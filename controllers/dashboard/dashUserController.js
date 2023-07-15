@@ -37,6 +37,16 @@ class userController {
         next(err)
       } 
     }
+
+    async deleteUser(req,res,next) {
+      try {
+        const user = await User.findOne({_id: req.params.id})
+        user.deleteOne()  
+        res.redirect('back')
+      } catch(err) {
+        next(err)
+      }      
+    }
 }
 
 let UserController = new userController()
