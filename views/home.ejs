@@ -293,139 +293,23 @@
         <div class="content-1 swiper">
             <!-- Additional required wrapper -->
             <div class="swiper-wrapper">
-                <!-- Slides -->
-
-                <div class="swiper-slide">
-                    <div class="card-box">
-                        <img src="img/1.jpg" class="card-box-img" alt="">
-                        <div class="box-content">
-                            <i class="bx bx-time card-bookmark"></i>
-                            <h2 class="content-title">Spider: No Way Home</h2>
-                            <span class="content-type">Action</span>
-                            <span class="content-duration">128 min</span>
-                            <span class="content-rate">Imdb: 7.5</span>
-                            <a href="" class="play-btn hidden">
-                                <i class="bx bx-right-arrow"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="swiper-slide">
-                    <div class="card-box">
-                        <img src="img/2.jpg" class="card-box-img" alt="">
-                        <div class="box-content">
-                            <h2 class="content-title">Spider: No Way Home</h2>
-                            <span class="content-type">Action</span>
-                            <span class="content-duration">128 min</span>
-                            <span class="content-rate">Imdb: 7.5</span>
-                            <a href="" class="play-btn hidden">
-                                <i class="bx bx-right-arrow"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="swiper-slide">
-                    <div class="card-box">
-                        <img src="img/3.jpg" class="card-box-img" alt="">
-                        <div class="box-content">
-                            <h2 class="content-title">Spider: No Way Home</h2>
-                            <span class="content-type">Action</span>
-                            <span class="content-duration">128 min</span>
-                            <span class="content-rate">Imdb: 7.5</span>
-                            <a href="" class="play-btn hidden">
-                                <i class="bx bx-right-arrow"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="swiper-slide">
-                    <div class="card-box">
-                        <img src="img/4.jpg" class="card-box-img" alt="">
-                        <div class="box-content">
-                            <h2 class="content-title">Spider: No Way Home</h2>
-                            <span class="content-type">Action</span>
-                            <span class="content-duration">128 min</span>
-                            <span class="content-rate">Imdb: 7.5</span>
-                            <a href="" class="play-btn hidden">
-                                <i class="bx bx-right-arrow"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="swiper-slide">
-                    <div class="card-box">
-                        <img src="img/5.jpg" class="card-box-img" alt="">
-                        <div class="box-content">
-                            <h2 class="content-title">Spider: No Way Home</h2>
-                            <span class="content-type">Action</span>
-                            <span class="content-duration">128 min</span>
-                            <span class="content-rate">Imdb: 7.5</span>
-                            <a href="" class="play-btn hidden">
-                                <i class="bx bx-right-arrow"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="swiper-slide">
-                    <div class="card-box">
-                        <img src="img/6.jpg" class="card-box-img" alt="">
-                        <div class="box-content">
-                            <h2 class="content-title">Spider: No Way Home</h2>
-                            <span class="content-type">Action</span>
-                            <span class="content-duration">128 min</span>
-                            <span class="content-rate">Imdb: 7.5</span>
-                            <a href="" class="play-btn hidden">
-                                <i class="bx bx-right-arrow"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="swiper-slide">
-                    <div class="card-box">
-                        <img src="img/7.jpg" class="card-box-img" alt="">
-                        <div class="box-content">
-                            <h2 class="content-title">Spider: No Way Home</h2>
-                            <span class="content-type">Action</span>
-                            <span class="content-duration">128 min</span>
-                            <span class="content-rate">Imdb: 7.5</span>
-                            <a href="" class="play-btn hidden">
-                                <i class="bx bx-right-arrow"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="swiper-slide">
-                    <div class="card-box">
-                        <img src="img/8.jpg" class="card-box-img" alt="">
-                        <div class="box-content">
-                            <h2 class="content-title">Spider: No Way Home</h2>
-                            <span class="content-type">Action</span>
-                            <span class="content-duration">128 min</span>
-                            <span class="content-rate">Imdb: 7.5</span>
-                            <a href="" class="play-btn hidden">
-                                <i class="bx bx-right-arrow"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="swiper-slide">
-                    <a href="">
-                        <div class="card-box card-more">
-                            <div class="card-more-cover"></div>
+                <!-- Slides --> 
+                <% for( let i = 0; i < movies.length; i++ ) { %>
+                    <div class="swiper-slide">
+                        <div class="card-box">
+                            <img src="<%= movies[i].portraitImage %>" class="card-box-img" alt="">
                             <div class="box-content">
-                                <h2 class="content-title">More</h2>
+                                <h2 class="content-title"><%= movies[i].title %></h2>
+                                <span class="content-type"><%= movies[i].genres.join('').split(',').splice(0,3) %></span>
+                                <span class="content-duration"><%= movies[i].duration %> min</span>
+                                <span class="content-rate">Imdb: <%= movies[i].rating %></span>
+                                <a href="" class="play-btn hidden">
+                                    <i class="bx bx-right-arrow"></i>
+                                </a>
                             </div>
                         </div>
-                    </a>
-                </div>
+                    </div>
+                <% } %> 
 
             </div>
         </div>
@@ -438,111 +322,23 @@
         </div>
 
         <div class="grid-content">
-
-            <div class="card-box">
-                <img src="img/1.jpg" class="card-box-img" alt="">
-                <div class="box-content">
-                    <h2 class="content-title">Spider: No Way Home</h2>
-                    <span class="content-type">Action</span>
-                    <span class="content-duration">128 min</span>
-                    <span class="content-episode">S1E2</span>
-                    <span class="content-rate">Imdb: 7.5</span>
-                    <a href="" class="play-btn hidden">
-                        <i class="bx bx-right-arrow"></i>
-                    </a>
-                </div>
-            </div>
-
-            <div class="card-box">
-                <img src="img/2.jpg" class="card-box-img" alt="">
-                <div class="box-content">
-                    <h2 class="content-title">Spider: No Way Home</h2>
-                    <span class="content-type">Action</span>
-                    <span class="content-duration">128 min</span>
-                    <span class="content-rate">Imdb: 7.5</span>
-                    <a href="" class="play-btn hidden">
-                        <i class="bx bx-right-arrow"></i>
-                    </a>
-                </div>
-            </div>
-
-            <div class="card-box">
-                <img src="img/3.jpg" class="card-box-img" alt="">
-                <div class="box-content">
-                    <h2 class="content-title">Spider: No Way Home</h2>
-                    <span class="content-type">Action</span>
-                    <span class="content-duration">128 min</span>
-                    <span class="content-rate">Imdb: 7.5</span>
-                    <a href="" class="play-btn hidden">
-                        <i class="bx bx-right-arrow"></i>
-                    </a>
-                </div>
-            </div>
-
-            <div class="card-box">
-                <img src="img/4.jpg" class="card-box-img" alt="">
-                <div class="box-content">
-                    <h2 class="content-title">Spider: No Way Home</h2>
-                    <span class="content-type">Action</span>
-                    <span class="content-duration">128 min</span>
-                    <span class="content-rate">Imdb: 7.5</span>
-                    <a href="" class="play-btn hidden">
-                        <i class="bx bx-right-arrow"></i>
-                    </a>
-                </div>
-            </div>
-
-            <div class="card-box">
-                <img src="img/5.jpg" class="card-box-img" alt="">
-                <div class="box-content">
-                    <h2 class="content-title">Spider: No Way Home</h2>
-                    <span class="content-type">Action</span>
-                    <span class="content-duration">128 min</span>
-                    <span class="content-rate">Imdb: 7.5</span>
-                    <a href="" class="play-btn hidden">
-                        <i class="bx bx-right-arrow"></i>
-                    </a>
-                </div>
-            </div>
-
-            <div class="card-box">
-                <img src="img/6.jpg" class="card-box-img" alt="">
-                <div class="box-content">
-                    <h2 class="content-title">Spider: No Way Home</h2>
-                    <span class="content-type">Action</span>
-                    <span class="content-duration">128 min</span>
-                    <span class="content-rate">Imdb: 7.5</span>
-                    <a href="" class="play-btn hidden">
-                        <i class="bx bx-right-arrow"></i>
-                    </a>
-                </div>
-            </div>
-
-            <div class="card-box">
-                <img src="img/7.jpg" class="card-box-img" alt="">
-                <div class="box-content">
-                    <h2 class="content-title">Spider: No Way Home</h2>
-                    <span class="content-type">Action</span>
-                    <span class="content-duration">128 min</span>
-                    <span class="content-rate">Imdb: 7.5</span>
-                    <a href="" class="play-btn hidden">
-                        <i class="bx bx-right-arrow"></i>
-                    </a>
-                </div>
-            </div>
-
-            <div class="card-box">
-                <img src="img/8.jpg" class="card-box-img" alt="">
-                <div class="box-content">
-                    <h2 class="content-title">Spider: No Way Home</h2>
-                    <span class="content-type">Action</span>
-                    <span class="content-duration">128 min</span>
-                    <span class="content-rate">Imdb: 7.5</span>
-                    <a href="" class="play-btn hidden">
-                        <i class="bx bx-right-arrow"></i>
-                    </a>
-                </div>
-            </div>
+ 
+            <% for( let i = 0; i < shows.length; i++ ) { %>
+                <% if (shows[i].mode === 'Featured') { %>
+                    <div class="card-box">
+                        <img src="<%= shows[i].portraitImage %>" class="card-box-img" alt="">
+                        <div class="box-content">
+                            <h2 class="content-title"><%= shows[i].title %></h2>
+                            <span class="content-type"><%= shows[i].genres.join('').split(',').splice(0,3) %></span>
+                            <span class="content-duration"><%= shows[i].duration %> min</span>
+                            <span class="content-rate">Imdb: <%= shows[i].rating %></span>
+                            <a href="" class="play-btn hidden">
+                                <i class="bx bx-right-arrow"></i>
+                            </a>
+                        </div>
+                    </div>
+                <% } %>
+            <% } %>
 
         </div>
         <div class="next-page">

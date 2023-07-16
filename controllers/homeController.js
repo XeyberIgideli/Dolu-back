@@ -1,7 +1,12 @@
+import Movie from "../models/Movie.js"
+import Show from "../models/Show.js"
 class home_Pages { 
-     getHomePage(req,res) { 
+     async getHomePage(req,res) { 
+        const movies = await Movie.find()
+        const shows = await Show.find()
          res.render('home',{
-            user:req.user
+            movies,
+            shows
          })
      } 
      getMoviesPage(req,res) {

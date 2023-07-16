@@ -27,11 +27,7 @@ class userController {
     }
     update['status'] = 'Banned'
       try {
-        const user = await User.findOneAndUpdate({_id: req.params.id}, {$set: update}, {new: true})
-        // user.status = 'Banned'
-        // user.banReason = req.body.banReason
-        // user.banExpireDate = req.body.banExpireDate
-        // user.save()
+        const user = await User.findOneAndUpdate({_id: req.params.id}, {$set: update}, {new: true}) 
         res.redirect('back')
       } catch(err) {
         next(err)
