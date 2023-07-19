@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import speakingurl from 'speakingurl'
 
 const movieSchema = new mongoose.Schema({
     title: {
@@ -94,12 +95,27 @@ const movieSchema = new mongoose.Schema({
         },
         trim:true
     },
+    slug: {
+        type: String,
+        unique: true
+    },
     mode: {
         type: String,
         required: [true,"Please provide the media's mode!"],
         trim:true,
         enum: ['Featured','Popular', 'None']
     }
+})
+
+movieSchema.pre('validate', function (next) {
+    this.slug = speakingurl(this.title, {
+        maintainCase: false,
+        separator: '_',
+        custom: {
+          '+': '-plus'
+        }
+    })
+    next()
 })
 
 const Movie = mongoose.model('Movie',movieSchema)

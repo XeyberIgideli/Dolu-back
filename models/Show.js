@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import speakingurl from 'speakingurl'
 
 const showSchema = new mongoose.Schema({
     title: {
@@ -92,7 +93,22 @@ const showSchema = new mongoose.Schema({
     show: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Show',
-    }
+    },
+    slug: {
+        type: String,
+        unique: true
+    },
+})
+
+showSchema.pre('validate', function (next) {
+    this.slug = speakingurl(this.title, {
+        maintainCase: false,
+        separator: '_',
+        custom: {
+          '+': '-plus'
+        }
+    })
+    next()
 })
 
 const Show = mongoose.model('Show',showSchema)

@@ -328,7 +328,7 @@
                     <div class="card-box">
                         <img src="<%= shows[i].portraitImage %>" class="card-box-img" alt="">
                         <div class="box-content">
-                            <h2 class="content-title"><%= shows[i].title %></h2>
+                            <h2 class="content-title"><a href=""><a href="movie-page/"><%= shows[i].title %></a></a></h2>
                             <span class="content-type"><%= shows[i].genres.join('').split(',').splice(0,3) %></span>
                             <span class="content-duration"><%= shows[i].duration %> min</span>
                             <span class="content-rate">Imdb: <%= shows[i].rating %></span>
