@@ -110,7 +110,7 @@ const movieSchema = new mongoose.Schema({
 movieSchema.pre('validate', function (next) {
     this.slug = speakingurl(this.title, {
         maintainCase: false,
-        separator: '_',
+        separator: '-',
         custom: {
           '+': '-plus'
         }

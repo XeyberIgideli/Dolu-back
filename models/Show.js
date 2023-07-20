@@ -103,7 +103,7 @@ const showSchema = new mongoose.Schema({
 showSchema.pre('validate', function (next) {
     this.slug = speakingurl(this.title, {
         maintainCase: false,
-        separator: '_',
+        separator: '-',
         custom: {
           '+': '-plus'
         }

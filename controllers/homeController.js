@@ -12,6 +12,9 @@ class home_Pages {
      getMoviesPage(req,res) {
          res.render('movies')
      } 
+     async getWatchPage(req,res) {
+        res.render('watch')
+     }
  }
  
  let homePages = new home_Pages()
