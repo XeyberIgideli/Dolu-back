@@ -4,27 +4,28 @@
     <%- include('partials/sidebar') %>
 
 
+
     <!-- Single movie page -->
     <div class="movie-detail" id="">
         <div class="movie-image-full">
-            <img src="img/24.jpg" alt="" class="movie-img">
+            <img src="img/gotback.png" alt="" class="movie-img">
         </div>
         <div class="res-image" >
-            <img src="img/9.jpg" class="" alt="">
+            <img src="img/gotback.png" class="" alt="">
         </div>
         <div class="movie-card">
                 <div class="movie-card-box">
-                    <img src="img/9.jpg" class="movie-card-box-img" alt="">
-                    <p class="media-type">MOVIE</p>    
+                    <img src="img/got.jpg" class="movie-card-box-img" alt="">
+                    <p class="media-type">TV</p>    
                 <div class="movie-text">
-                    <p class="movie-timezone">2023,France</p>
+                    <p class="movie-timezone">2011,United Kingdom | USA</p>
                     <div>
-                        <h2 class="movie-title">Jeanne du Barry</h2>
-                        <p class="movie-second-title">The game has evolved</p>
+                        <h2 class="movie-title">Game of Thrones</h2>
+                        <p class="movie-second-title">Winter is Coming</p>
                     </div>
                     <div class="movie-rating">
                         <div class="rating">
-                            <p class="rate">7.1</p>
+                            <p class="rate">9.2</p>
                             <p class="rate-source">TMDB</p>
                         </div>
                         <div class="rating">
@@ -36,8 +37,9 @@
                         </div>
                     </div>
                     <ul class="movie-details">
-                        <li class="movie-duration">01.59</li>
-                        <li class="movie-category">Drama | History | Romance</li>
+                        <li class="show-season">Seasons: 8</li>
+                        <li class="show-episode">Episodes: 73</li>
+                        <li class="movie-category">Sci-Fi | Drama | Action</li>
                         <li class="reviews">Reviews: 12020</li>
                     </ul>
                     
@@ -49,7 +51,7 @@
                             <i class="bx bx-play-circle"></i>
                         </a>
                         <a href="" class="btn btn-outline-bookmark bookmark-btn">
-                            <i class="bx bx-bookmark bookmarked"></i>
+                            <i class="bx bx-bookmark"></i>
                         </a>
                     </div>
                 </div>
@@ -183,77 +185,7 @@
                                 </div>
                             </div>
                 </div>
-                <div class="recommendation-content">
-                    <div class="recommendation-content-wrap swiper" id="scroll-content">
-                        <h3>Recommendations</h3>
-                        <div class="swiper-wrapper">
-
-                            <div class="swiper-slide">
-                                <div class="recommendation-items">
-                                    <a href=""><img src="img/3.jpg" alt=""></a>
-                                        <a href="" class="item-title">Spectre 007</a>
-                                </div>
-                            </div>
-
-                            <div class="swiper-slide">
-                                <div class="recommendation-items">
-                                    <a href=""><img src="img/4.jpg" alt=""></a>
-                                        <a href="" class="item-title">Hitman & Bodyguard 2</a>
-                                </div>
-                            </div>
-
-                            <div class="swiper-slide">
-                                <div class="recommendation-items">
-                                    <a href=""><img src="img/5.jpg" alt=""></a>
-                                        <a href="" class="item-title">Hitman & Bodyguard 2</a>
-                                </div>
-                            </div>
-
-                            <div class="swiper-slide">
-                                <div class="recommendation-items">
-                                    <a href=""><img src="img/6.jpg" alt=""></a>
-                                        <a href="" class="item-title">Hitman & Bodyguard 2</a>
-                                </div>
-                            </div>
-
-                            <div class="swiper-slide">
-                                <div class="recommendation-items">
-                                    <a href=""><img src="img/7.jpg" alt=""></a>
-                                        <a href="" class="item-title">Hitman & Bodyguard 2</a>
-                                </div>
-                            </div>
-
-                            <div class="swiper-slide">
-                                <div class="recommendation-items">
-                                    <a href=""><img src="img/8.jpg" alt=""></a>
-                                        <a href="" class="item-title">Hitman & Bodyguard 2</a>
-                                </div>
-                            </div>
-
-                            <div class="swiper-slide">
-                                <div class="recommendation-items">
-                                    <a href=""><img src="img/2.jpg" alt=""></a>
-                                        <a href="" class="item-title">Hitman & Bodyguard 2</a>
-                                </div>
-                            </div>
-
-                            <div class="swiper-slide">
-                                <div class="recommendation-items">
-                                    <a href=""><img src="img/2.jpg" alt=""></a>
-                                        <a href="" class="item-title">Hitman & Bodyguard 2</a>
-                                </div>
-                            </div>
-
-                            <div class="swiper-slide">
-                                <div class="recommendation-items">
-                                    <a href=""><img src="img/2.jpg" alt=""></a>
-                                        <a href="" class="item-title">Hitman & Bodyguard 2</a>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
+                
                 <div class="similar-content">
                     <div class="similar-content-wrap swiper" id="scroll-content">
                         <h3>Similar Movies</h3>
@@ -336,23 +268,38 @@
         <div class="side-tab hidden-tab streamTab">
             <div class="tab-inside" tabindex="0">
                 <div class="server-tab">
-                    <h3 class="tab-title">Servers</h3>
+                    <div class="tab-nav">
+                        <h3 class="tab-title">Episodes</h3>
+                        <select name="" class="season-list">
+                            <option value="">Season 1</option>
+                            <option value="">Season 2</option>
+                            <option value="">Season 3</option>
+                        </select>
+                    </div>
                     <ul class="tab-list">
-                        <li tabindex="1" ><a tabindex='0' href=""><i class="bx bx-play-circle"></i> <span>Videocdn</span></a></li>
+                        <li tabindex="1" >
+                            <a tabindex='0' href="">
+                                <img src="img/w9.jpg" class="side-tab-img" alt="">
+                                <div class="episode-text">
+                                    <span>Episode #1</span>
+                                    <span>49:03</span>
+                                </div>
+                            </a>
+                        </li>
                     </ul>
                 </div>
                 <div class="trailer-tab">
                     <h3 class="tab-title">Trailers</h3>
                     <ul class="tab-list">
-                        <li><a href="" tabindex='0'>
+                        <li>
+                            <a href="" tabindex='0'>
                                 <img src="img/thumb.jpg" class="side-tab-img" alt=""> 
-                            <div class="trailer-text">
-                                <span>Trailer #1</span>
-                                <span>6 April 2023</span>
-                            </div>
-                        </a></li>
-                        <!-- <li><a href="" tabindex='0'>Trailer #1</a></li>
-                        <li><a href="" tabindex='0'>Trailer #1</a></li> -->
+                                <div class="trailer-text">
+                                    <span>Trailer #1</span>
+                                    <span>6 April 2023</span>
+                                </div>
+                             </a>
+                        </li> 
                     </ul>
                 </div>
             </div>
@@ -362,16 +309,16 @@
 
     <!-- Settings Tab -->
     <div class="side-tab hidden-tab settings-tab">
-            <div class="tab-inside" tabindex="0">
-                <h1 class="tab-title">Settings</h1>
-                <div class="menu-tab">
-                    <ul class="tab-list">
-                        <li tabindex="1" ><a tabindex='0' href=""><i class="bx bx-user"></i> <span>Account</span></a></li>
-                        <li tabindex="2" ><a tabindex="0" href=""><i class="bx bxs-layout"></i> <span>Interface</span></a></li>
-                        <li tabindex="3" ><a tabindex="0" href=""><i class="bx bx-play-circle"></i> <span>Player</span></a></li> 
-                    </ul>
-                </div> 
-            </div>
+        <div class="tab-inside" tabindex="0">
+            <h1 class="tab-title">Settings</h1>
+            <div class="menu-tab">
+                <ul class="tab-list">
+                    <li tabindex="1" ><a tabindex='0' href=""><i class="bx bx-user"></i> <span>Account</span></a></li>
+                    <li tabindex="2" ><a tabindex="0" href=""><i class="bx bxs-layout"></i> <span>Interface</span></a></li>
+                    <li tabindex="3" ><a tabindex="0" href=""><i class="bx bx-play-circle"></i> <span>Player</span></a></li> 
+                </ul>
+            </div> 
+        </div>
 
     </div>
 
@@ -414,7 +361,7 @@
     </div>
 
 </body>
-<script src="style/swiper-bundle.min.js"></script>
-<script src="style/main.js"></script>
+<script src="../style/swiper-bundle.min.js"></script>
+<script src="../style/main.js"></script>
 
 </html>
