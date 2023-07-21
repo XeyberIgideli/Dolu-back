@@ -26,8 +26,8 @@ import dashMovieRoute from './routes/dashboard/dashMovieRoute.js'
 import dashShowRoute from './routes/dashboard/dashShowRoute.js'
 import dashUserRoute from './routes/dashboard/dashUserRoute.js'
 
-
-import {errorHandlerMiddleware} from './middlewares/Error.js'
+// Middleware routes
+import {errorHandlerMiddleware,notFound} from './middlewares/Error.js'
 import {verifyToken} from './middlewares/Auth.js'
 
 // PORT
@@ -95,6 +95,9 @@ app.use('/dashboard', [dashPageRoute,dashMovieRoute,dashShowRoute,dashUserRoute]
 // Admin route
 app.use('/admin', dashboardAuthRoute) 
 
+app.all('*',(req,res) => {
+    console.log('salam')
+})
 app.use(errorHandlerMiddleware)
 app.listen(port)
 

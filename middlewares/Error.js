@@ -22,4 +22,8 @@ function errorHandlerMiddleware (err,req,res,next) {
     return res.status(customErr.statusCode).json(customErr.msg)  
 }
 
-export {errorHandlerMiddleware}
+function notFound(req,res,next) {
+    console.log(res.status)
+}
+
+export {errorHandlerMiddleware,notFound}
