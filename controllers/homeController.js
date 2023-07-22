@@ -13,7 +13,10 @@ class home_Pages {
          res.render('movies')
      } 
      async getWatchPage(req,res) {
-        res.render('watch')
+        const media = await Movie.findOne({slug: req.params.slug}) ?? await Show.findOne({slug: req.params.slug})
+        res.render('watch', {
+         media
+        })
      }
  }
  

@@ -8,7 +8,7 @@ const bookmarkSchema = new mongoose.Schema({
     },
     bookmarkIcon: {
         type: String,
-        required: [true, "Please provide your site title!"],
+        required: [true, "Please provide your bookmark group icon!"],
         trim: true
     }
 })

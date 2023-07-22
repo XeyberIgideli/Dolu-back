@@ -2,8 +2,361 @@
 
     <!-- Sidebar -->
     <%- include('partials/sidebar') %> 
-
     <!-- Single movie page -->
+    <% if (media.mediaType) { %>
+    <div class="movie-detail" id="">
+        <div class="movie-image-full">
+            <img src="<%= media.landscapeImage %>" alt="" class="movie-img">
+        </div>
+        <div class="res-image" >
+            <img src="<%= media.portraitImage %>" class="" alt="">
+        </div>
+        <div class="movie-card">
+                <div class="movie-card-box">
+                    <img src="<%= media.portraitImage %>" class="movie-card-box-img" alt="">
+                    <p class="media-type"><%= media.mediaType %></p>    
+                <div class="movie-text">
+                    <p class="movie-timezone"><%= media.releaseDate %>,<%= media.releaseCountry %></p>
+                    <div>
+                        <h2 class="movie-title"><%= media.title %></h2>
+                        <p class="movie-second-title"><%= media.subTitle %></p>
+                    </div>
+                    <div class="movie-rating">
+                        <div class="rating">
+                            <p class="rate"><%= media.rating %></p>
+                            <p class="rate-source">TMDB</p>
+                        </div>
+                        <div class="rating">
+                            <p class="rate">6.9</p>
+                            <p class="rate-source">IMDB</p>
+                        </div>
+                        <div class="pg">
+                            <p><%= media.guidance %></p>
+                        </div>
+                    </div>
+                    <ul class="movie-details">
+                        <li class="movie-duration"><%= media.duration %></li>
+                        <li class="movie-category"><%= media.genres.join(' | ') %></li>
+                        <li class="reviews">Reviews: 12020</li>
+                    </ul>
+                    
+                    <div class="release-date">
+                        <p>Date of release: <span>16 May 2017</span></p>
+                    </div>
+                    <div class="movie-action">
+                        <a href="#" class="btn btn-outline watch">
+                            <i class="bx bx-play-circle"></i>
+                        </a>
+                        <a href="" class="btn btn-outline-bookmark bookmark-btn">
+                            <i class="bx bx-bookmark bookmarked"></i>
+                        </a>
+                    </div>
+                </div>
+                </div>
+                <div class="in-detail">
+                            <div class="detail-text">
+                                <h2>In detail</h2>
+                                <p class="detail-description"><%= media.description %></p>
+                            </div>
+                            <div class="detail-genre">
+                                <h3>Genre</h3>
+                                <ul class="genre-list">
+                                    <li><a class="btn btn-black" href="">Comedy</a></li>
+                                    <li><a class="btn btn-black" href="">Adventure</a></li>
+                                    <li><a class="btn btn-black" href="">Action</a></li>
+                                    <li><a class="btn btn-black" href="">Fantasy</a></li>
+                                </ul>
+                            </div>
+                            <div class="detail-production">
+                                <h3>Production</h3>
+                                <ul class="production-list">
+                                    <li><a class="btn btn-black" href="">Columbia Pictures</a></li>
+                                    <li><a class="btn btn-black" href="">Radar Pictures</a></li>
+                                    <li><a class="btn btn-black" href="">Matt Tolmach Productions</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="detail-cast">
+                                <div class="producer swiper" id="producer-list">
+                                    <h3>Producer</h3>
+                                    <div class="swiper-wrapper">
+
+                                        <div class="swiper-slide">
+                                            <div class="list-item"> 
+                                                    <a href=""><img src="img/play-page/cast1.jpg" alt=""></a>
+                                                    <a href="" class="cast-title">Jake Kasdan</a>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+
+                                <div class="detail-actor swiper" id="cast-list">
+                                    <h3>Actors</h3>
+                                    <div class="swiper-wrapper">
+
+                                        <div class="swiper-slide">
+                                            <div class="list-item">
+                                                <a href=""><img src="img/play-page/cast1.jpg" alt=""></a>
+                                                <div class="cast-text">
+                                                    <a href="" class="cast-title">Jake Kasdan</a>
+                                                        <p class="actor-role">Dr.Xander 'Smolder' Bravestone</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="swiper-slide">
+                                            <div class="list-item">
+                                                <a href=""><img src="img/play-page/cast3.jpg" alt=""></a>
+                                                <div class="cast-text">
+                                                    <a href="" class="cast-title">Kevin Hart</a>
+                                                        <p class="actor-role">Franklin Mouse 'Finbar'</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="swiper-slide">
+                                            <div class="list-item">
+                                                <a href=""><img src="img/play-page/cast2.jpg" alt=""></a>
+                                                <div class="cast-text">
+                                                    <a href="" class="cast-title">Karen Gillan</a>
+                                                        <p class="actor-role">Ruby Roundhouse</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="swiper-slide">
+                                            <div class="list-item">
+                                                <a href=""><img src="img/play-page/cast2.jpg" alt=""></a>
+                                                <div class="cast-text">
+                                                    <a href="" class="cast-title">Karen Gillan</a>
+                                                        <p class="actor-role">Ruby Roundhouse</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="swiper-slide">
+                                            <div class="list-item">
+                                                <a href=""><img src="img/play-page/cast2.jpg" alt=""></a>
+                                                <div class="cast-text">
+                                                    <a href="" class="cast-title">Karen Gillan</a>
+                                                        <p class="actor-role">Ruby Roundhouse</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="swiper-slide">
+                                            <div class="list-item">
+                                                <a href=""><img src="img/play-page/cast2.jpg" alt=""></a>
+                                                <div class="cast-text">
+                                                    <a href="" class="cast-title">Karen Gillan</a>
+                                                        <p class="actor-role">Ruby Roundhouse</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="swiper-slide">
+                                            <div class="list-item">
+                                                <a href=""><img src="img/play-page/cast2.jpg" alt=""></a>
+                                                <div class="cast-text">
+                                                    <a href="" class="cast-title">Karen Gillan</a>
+                                                        <p class="actor-role">Ruby Roundhouse</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="swiper-slide">
+                                            <div class="list-item">
+                                                <a href=""><img src="img/play-page/cast2.jpg" alt=""></a>
+                                                <div class="cast-text">
+                                                    <a href="" class="cast-title">Karen Gillan</a>
+                                                        <p class="actor-role">Ruby Roundhouse</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                </div>
+                <div class="recommendation-content">
+                    <div class="recommendation-content-wrap swiper" id="scroll-content">
+                        <h3>Recommendations</h3>
+                        <div class="swiper-wrapper">
+
+                            <div class="swiper-slide">
+                                <div class="recommendation-items">
+                                    <a href=""><img src="img/3.jpg" alt=""></a>
+                                        <a href="" class="item-title">Spectre 007</a>
+                                </div>
+                            </div>
+
+                            <div class="swiper-slide">
+                                <div class="recommendation-items">
+                                    <a href=""><img src="img/4.jpg" alt=""></a>
+                                        <a href="" class="item-title">Hitman & Bodyguard 2</a>
+                                </div>
+                            </div>
+
+                            <div class="swiper-slide">
+                                <div class="recommendation-items">
+                                    <a href=""><img src="img/5.jpg" alt=""></a>
+                                        <a href="" class="item-title">Hitman & Bodyguard 2</a>
+                                </div>
+                            </div>
+
+                            <div class="swiper-slide">
+                                <div class="recommendation-items">
+                                    <a href=""><img src="img/6.jpg" alt=""></a>
+                                        <a href="" class="item-title">Hitman & Bodyguard 2</a>
+                                </div>
+                            </div>
+
+                            <div class="swiper-slide">
+                                <div class="recommendation-items">
+                                    <a href=""><img src="img/7.jpg" alt=""></a>
+                                        <a href="" class="item-title">Hitman & Bodyguard 2</a>
+                                </div>
+                            </div>
+
+                            <div class="swiper-slide">
+                                <div class="recommendation-items">
+                                    <a href=""><img src="img/8.jpg" alt=""></a>
+                                        <a href="" class="item-title">Hitman & Bodyguard 2</a>
+                                </div>
+                            </div>
+
+                            <div class="swiper-slide">
+                                <div class="recommendation-items">
+                                    <a href=""><img src="img/2.jpg" alt=""></a>
+                                        <a href="" class="item-title">Hitman & Bodyguard 2</a>
+                                </div>
+                            </div>
+
+                            <div class="swiper-slide">
+                                <div class="recommendation-items">
+                                    <a href=""><img src="img/2.jpg" alt=""></a>
+                                        <a href="" class="item-title">Hitman & Bodyguard 2</a>
+                                </div>
+                            </div>
+
+                            <div class="swiper-slide">
+                                <div class="recommendation-items">
+                                    <a href=""><img src="img/2.jpg" alt=""></a>
+                                        <a href="" class="item-title">Hitman & Bodyguard 2</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="similar-content">
+                    <div class="similar-content-wrap swiper" id="scroll-content">
+                        <h3>Similar Movies</h3>
+                        <div class="swiper-wrapper">
+
+                            <div class="swiper-slide">
+                                <div class="similar-items">
+                                    <a href=""><img src="img/2.jpg" alt=""></a>
+                                        <a href="" class="item-title">Hitman & Bodyguard 2</a>
+                                </div>
+                            </div>
+
+                            <div class="swiper-slide">
+                                <div class="similar-items">
+                                    <a href=""><img src="img/2.jpg" alt=""></a>
+                                        <a href="" class="item-title">Hitman & Bodyguard 2</a>
+                                </div>
+                            </div>
+
+                            <div class="swiper-slide">
+                                <div class="similar-items">
+                                    <a href=""><img src="img/2.jpg" alt=""></a>
+                                        <a href="" class="item-title">Hitman & Bodyguard 2</a>
+                                </div>
+                            </div>
+
+                            <div class="swiper-slide">
+                                <div class="similar-items">
+                                    <a href=""><img src="img/2.jpg" alt=""></a>
+                                        <a href="" class="item-title">Hitman & Bodyguard 2</a>
+                                </div>
+                            </div>
+
+                            <div class="swiper-slide">
+                                <div class="similar-items">
+                                    <a href=""><img src="img/2.jpg" alt=""></a>
+                                        <a href="" class="item-title">Hitman & Bodyguard 2</a>
+                                </div>
+                            </div>
+
+                            <div class="swiper-slide">
+                                <div class="similar-items">
+                                    <a href=""><img src="img/2.jpg" alt=""></a>
+                                        <a href="" class="item-title">Hitman & Bodyguard 2</a>
+                                </div>
+                            </div>
+
+                            <div class="swiper-slide">
+                                <div class="similar-items">
+                                    <a href=""><img src="img/2.jpg" alt=""></a>
+                                        <a href="" class="item-title">Hitman & Bodyguard 2</a>
+                                </div>
+                            </div>
+
+                            <div class="swiper-slide">
+                                <div class="similar-items">
+                                    <a href=""><img src="img/2.jpg" alt=""></a>
+                                        <a href="" class="item-title">Hitman & Bodyguard 2</a>
+                                </div>
+                            </div>
+
+                            <div class="swiper-slide">
+                                <div class="similar-items">
+                                    <a href=""><img src="img/2.jpg" alt=""></a>
+                                        <a href="" class="item-title">Hitman & Bodyguard 2</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="player">
+                    <div></div>
+                    <iframe id="iframe" src="https://www.2embed.to/embed/tmdb/movie?id=877269" 
+                    width="100%" height="100%" frameborder="0"></iframe>
+                </div> -->
+        </div>
+            
+        <!-- Stream Tab -->
+        <div class="side-tab hidden-tab streamTab">
+            <div class="tab-inside" tabindex="0">
+                <div class="server-tab">
+                    <h3 class="tab-title">Servers</h3>
+                    <ul class="tab-list">
+                        <li tabindex="1" ><a tabindex='0' href=""><i class="bx bx-play-circle"></i> <span>Videocdn</span></a></li>
+                    </ul>
+                </div>
+                <div class="trailer-tab">
+                    <h3 class="tab-title">Trailers</h3>
+                    <ul class="tab-list">
+                        <li><a href="" tabindex='0'>
+                                <img src="img/thumb.jpg" class="side-tab-img" alt=""> 
+                            <div class="trailer-text">
+                                <span>Trailer #1</span>
+                                <span>6 April 2023</span>
+                            </div>
+                        </a></li>
+                        <!-- <li><a href="" tabindex='0'>Trailer #1</a></li>
+                        <li><a href="" tabindex='0'>Trailer #1</a></li> -->
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <% } else {%>
+    <!-- Single show page -->
     <div class="movie-detail" id="">
         <div class="movie-image-full">
             <img src="../img/gotback.png" alt="" class="movie-img">
@@ -104,7 +457,7 @@
                                                 <a href=""><img src="../img/play-page/cast1.jpg" alt=""></a>
                                                 <div class="cast-text">
                                                     <a href="" class="cast-title">Jake Kasdan</a>
-                                                     <p class="actor-role">Dr.Xander 'Smolder' Bravestone</p>
+                                                        <p class="actor-role">Dr.Xander 'Smolder' Bravestone</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -114,7 +467,7 @@
                                                 <a href=""><img src="../img/play-page/cast3.jpg" alt=""></a>
                                                 <div class="cast-text">
                                                     <a href="" class="cast-title">Kevin Hart</a>
-                                                     <p class="actor-role">Franklin Mouse 'Finbar'</p>
+                                                        <p class="actor-role">Franklin Mouse 'Finbar'</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -124,7 +477,7 @@
                                                 <a href=""><img src="../img/play-page/cast2.jpg" alt=""></a>
                                                 <div class="cast-text">
                                                     <a href="" class="cast-title">Karen Gillan</a>
-                                                     <p class="actor-role">Ruby Roundhouse</p>
+                                                        <p class="actor-role">Ruby Roundhouse</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -134,7 +487,7 @@
                                                 <a href=""><img src="img/play-page/cast2.jpg" alt=""></a>
                                                 <div class="cast-text">
                                                     <a href="" class="cast-title">Karen Gillan</a>
-                                                     <p class="actor-role">Ruby Roundhouse</p>
+                                                        <p class="actor-role">Ruby Roundhouse</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -144,7 +497,7 @@
                                                 <a href=""><img src="img/play-page/cast2.jpg" alt=""></a>
                                                 <div class="cast-text">
                                                     <a href="" class="cast-title">Karen Gillan</a>
-                                                     <p class="actor-role">Ruby Roundhouse</p>
+                                                        <p class="actor-role">Ruby Roundhouse</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -154,7 +507,7 @@
                                                 <a href=""><img src="img/play-page/cast2.jpg" alt=""></a>
                                                 <div class="cast-text">
                                                     <a href="" class="cast-title">Karen Gillan</a>
-                                                     <p class="actor-role">Ruby Roundhouse</p>
+                                                        <p class="actor-role">Ruby Roundhouse</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -164,7 +517,7 @@
                                                 <a href=""><img src="img/play-page/cast2.jpg" alt=""></a>
                                                 <div class="cast-text">
                                                     <a href="" class="cast-title">Karen Gillan</a>
-                                                     <p class="actor-role">Ruby Roundhouse</p>
+                                                        <p class="actor-role">Ruby Roundhouse</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -174,7 +527,7 @@
                                                 <a href=""><img src="img/play-page/cast2.jpg" alt=""></a>
                                                 <div class="cast-text">
                                                     <a href="" class="cast-title">Karen Gillan</a>
-                                                     <p class="actor-role">Ruby Roundhouse</p>
+                                                        <p class="actor-role">Ruby Roundhouse</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -296,7 +649,7 @@
                                     <span>Trailer #1</span>
                                     <span>6 April 2023</span>
                                 </div>
-                             </a>
+                                </a>
                         </li> 
                     </ul>
                 </div>
@@ -304,7 +657,7 @@
 
         </div>
     </div>
-
+    <% } %>
     <!-- Settings Tab -->
     <div class="side-tab hidden-tab settings-tab">
         <div class="tab-inside" tabindex="0">

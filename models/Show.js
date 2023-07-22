@@ -48,7 +48,7 @@ const showSchema = new mongoose.Schema({
         trim:true,
     }, 
     genres: {
-        type: Array,
+        type: [String],
         required: [true,"Please provide the show's genres!"],
         validate: {
             validator: function(array) {
