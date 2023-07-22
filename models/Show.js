@@ -90,6 +90,10 @@ const showSchema = new mongoose.Schema({
         trim:true,
         enum: ['Featured','Popular', 'None']
     },
+    bookmark: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Bookmark'
+    },
     show: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Show',

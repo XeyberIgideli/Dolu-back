@@ -99,6 +99,10 @@ const movieSchema = new mongoose.Schema({
         type: String,
         unique: true
     },
+    bookmark: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Bookmark'
+    },
     mode: {
         type: String,
         required: [true,"Please provide the media's mode!"],
