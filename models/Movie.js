@@ -54,7 +54,7 @@ const movieSchema = new mongoose.Schema({
         enum: ['Movie','Documentary','Animation']
     },
     genres: {
-        type: Array,
+        type: [String],
         required: [true,"Please provide the media's genres!"],
         validate: {
             validator: function(array) {
