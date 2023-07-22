@@ -95,9 +95,7 @@ app.use('/dashboard', [dashPageRoute,dashMovieRoute,dashShowRoute,dashUserRoute]
 // Admin route
 app.use('/admin', dashboardAuthRoute) 
 
-app.all('*',(req,res) => {
-    console.log('salam')
-})
+app.use(notFound)
 app.use(errorHandlerMiddleware)
 app.listen(port)
 

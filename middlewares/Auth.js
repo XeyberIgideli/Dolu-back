@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken'
 import User from '../models/User.js'
 import { UnauthenticatedError } from '../utils/Error.js'
 
+// Verifying token for admin login
 function verifyRole(req,res,next) {
     const authHeader = req.cookies.adToken
     if(!authHeader || !authHeader.startsWith("Bearer")) {
@@ -19,6 +20,7 @@ function verifyRole(req,res,next) {
     }
 }
 
+// Verifying token for user login
 function verifyToken(req,res,next) {
     const authHeader = req.cookies.token 
     if(!authHeader || !authHeader.startsWith("Bearer")) {

@@ -23,7 +23,7 @@ function errorHandlerMiddleware (err,req,res,next) {
 }
 
 function notFound(req,res,next) {
-    console.log(res.status)
+    res.status(404).send('Page not found!')
 }
 
 export {errorHandlerMiddleware,notFound}
