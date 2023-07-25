@@ -1,0 +1,99 @@
+<%- include('partials/header') %>
+    <!-- Sidebar -->
+    <%- include('partials/sidebar') %>
+
+    <!-- Bookmarks -->
+    <div class="bookmarks">
+        <div class="movie-image-full">
+            <img src="img/back.svg" alt="" class="movie-img">
+        </div> 
+        <section class="container">
+            <div>
+                <a href="" class="create-bookmark-list">Create new list</a>
+            </div>
+            <div class="bookmark-list"> 
+               
+              <ul class="items">
+                <li>
+                    <a href="bookmark-item.html" class="bookmark-item">
+                        <i class="bx bx-list-ul"></i>
+                        <span>My Favorites</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="bookmark-item.html" class="bookmark-item">
+                        <i class="bx bxs-heart"></i>
+                        <span>Liked</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="bookmark-item.html" class="bookmark-item">
+                        <i class="bx bxs-time"></i>
+                        <span>Later</span>
+                    </a>
+                </li>
+                <li> 
+              </ul>
+            </div>
+       </section>
+    </section>  
+        
+    </div>
+
+    <!-- Settings Tab -->
+    <div class="side-tab hidden-tab settings-tab">
+        <div class="tab-inside" tabindex="0">
+            <h1 class="tab-title">Settings</h1>
+            <div class="menu-tab">
+                <ul class="tab-list">
+                    <li tabindex="1" ><a tabindex='0' href=""><i class="bx bx-user"></i> <span>Account</span></a></li>
+                    <li tabindex="2" ><a tabindex="0" href=""><i class="bx bxs-layout"></i> <span>Interface</span></a></li>
+                    <li tabindex="3" ><a tabindex="0" href=""><i class="bx bx-play-circle"></i> <span>Player</span></a></li> 
+                </ul>
+            </div> 
+        </div>
+
+    </div>
+    <!-- Bookmarks Tab -->
+    <div class="side-tab hidden-tab bookmarks-tab">
+        <div class="tab-inside" tabindex="0">
+            <h1 class="tab-title">Bookmarks</h1>
+            <div class="menu-tab">
+                <ul class="tab-list">
+
+                    <li tabindex="1" >
+                        <label class="label-container" tabindex='0' href="#">
+                            <span>My Favorites</span>
+                            <input type="checkbox" name="" id=""> 
+                            <span class="checkmark"></span>
+                        </label>
+                    </li>
+
+                    <li tabindex="1" >
+                        <label class="label-container" tabindex='0' href="#">
+                            <span>Later</span>
+                            <input type="checkbox" name="" id=""> 
+                            <span class="checkmark"></span>
+                        </label>
+                    </li>
+
+                    
+                    <li tabindex="1" >
+                        <label class="label-container" tabindex='0' href="#">
+                            <span>Liked</span>
+                            <input type="checkbox" name="" id=""> 
+                            <span class="checkmark"></span>
+                        </label>
+                    </li>
+
+                </ul>
+            </div> 
+        </div>
+
+    </div>
+
+</body>
+<script src="style/swiper-bundle.min.js"></script>
+<script src="style/main.js"></script>
+
+</html>
