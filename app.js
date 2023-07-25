@@ -18,6 +18,7 @@ const __dirname = path.dirname(__filename)
 import pageRoute from './routes/pageRoute.js'
 import homeRoute from './routes/homeRoute.js'
 import authRoute from './routes/authRoute.js'
+import bookmarkRoute from './routes/bookmarkRoute.js'
 
 // Dashboard routes
 import dashboardAuthRoute from './routes/dashboard/dashAuthRoute.js'
@@ -85,9 +86,10 @@ app.use(cors({
 }))
 
 // General routes
-app.use('/',pageRoute)
+app.use('/',pageRoute) // Index,auth,admin pages route handling
 app.use('/auth',authRoute)
 app.use('/', homeRoute) // Home pages route handling
+app.use('/bookmarks',bookmarkRoute)
 
 // Dashboard routes
 app.use('/dashboard', [dashPageRoute,dashMovieRoute,dashShowRoute,dashUserRoute])
