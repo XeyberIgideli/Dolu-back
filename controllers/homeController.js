@@ -1,3 +1,4 @@
+import Bookmark from "../models/Bookmark.js"
 import Movie from "../models/Movie.js"
 import Show from "../models/Show.js"
 class home_Pages { 
@@ -12,14 +13,17 @@ class home_Pages {
      getMoviesPage(req,res) {
          res.render('movies')
      } 
-     getBookmarksPage(req,res) {
-      res.render('bookmarks')
+     async getBookmarksPage(req,res) {
+         const bookmarks = await Bookmark.find()
+         res.render('bookmarks',{
+            bookmarks
+         })
      }
      async getWatchPage(req,res) {
-        const media = await Movie.findOne({slug: req.params.slug}) ?? await Show.findOne({slug: req.params.slug})
-        res.render('watch', {
-         media
-        })
+         const media = await Movie.findOne({slug: req.params.slug}) ?? await Show.findOne({slug: req.params.slug})
+         res.render('watch', {
+            media
+         })
      }
  }
  

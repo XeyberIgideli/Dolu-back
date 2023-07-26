@@ -10,6 +10,12 @@ class bookmarks {
             next(err)
         }
     }
+    async getBookmarkGroup(req,res) {
+        const bookmark = await Bookmark.findOne({slug: req.params.slug})
+        res.render('bookmark-group', {
+            bookmark
+        })
+    }
 }
 
 const Bookmarks = new bookmarks()

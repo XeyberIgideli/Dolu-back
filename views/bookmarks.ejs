@@ -14,24 +14,14 @@
             <div class="bookmark-list"> 
                
               <ul class="items">
-                <li>
-                    <a href="bookmark-item.html" class="bookmark-item">
-                        <i class="bx bx-list-ul"></i>
-                        <span>My Favorites</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="bookmark-item.html" class="bookmark-item">
-                        <i class="bx bxs-heart"></i>
-                        <span>Liked</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="bookmark-item.html" class="bookmark-item">
-                        <i class="bx bxs-time"></i>
-                        <span>Later</span>
-                    </a>
-                </li>
+                <% for( let i = 0; i < bookmarks.length; i++ ) { %>
+                     <li>
+                        <a href="bookmarks/<%= bookmarks[i].slug %>" class="bookmark-item">
+                            <i class="bx bxs-<%= bookmarks[i].bookmarkIcon %>-ul"></i>
+                            <span><%= bookmarks[i].name %></span>
+                        </a>
+                     </li> 
+                <% } %>
                 <li> 
               </ul>
             </div>
