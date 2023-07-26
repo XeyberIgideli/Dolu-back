@@ -3,9 +3,9 @@ import Show from "../models/Show.js"
 import Bookmark from '../models/Bookmark.js'
 
 class bookmarks {
-   async createBookmark (req,res) { 
+   async createBookmark (req,res,next) { 
         try {
-            const bookmark = await Bookmark.create(req.body)
+            const bookmark = await Bookmark.create({...req.body})
         } catch(err) {
             next(err)
         }

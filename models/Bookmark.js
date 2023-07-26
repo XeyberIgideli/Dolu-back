@@ -13,6 +13,6 @@ const bookmarkSchema = new mongoose.Schema({
     }
 })
 
-const Bookmark = mongoose.model('Bookmark', bookmarkSchema)
+const Bookmark = mongoose.model('Bookmarks', bookmarkSchema)
 
-export default bookmarkSchema
+export default Bookmark
