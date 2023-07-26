@@ -101,7 +101,7 @@ const movieSchema = new mongoose.Schema({
     },
     bookmark: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Bookmark'
+        ref: 'Bookmarks'
     },
     mode: {
         type: String,

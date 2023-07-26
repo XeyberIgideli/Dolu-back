@@ -41,6 +41,9 @@ const userSchema = new mongoose.Schema({
     banReason: {
         type: String,
         trim: true,
+    },
+    bookmarks: {
+        type: [String],
     }
 })
 
