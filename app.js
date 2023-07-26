@@ -88,7 +88,7 @@ app.use(cors({
 // General routes
 app.use('/',pageRoute) // Index,auth,admin pages route handling
 app.use('/auth',authRoute)
-app.use('/', homeRoute) // Home pages route handling
+app.use('/',verifyToken, homeRoute) // Home pages route handling
 app.use('/bookmarks',bookmarkRoute)
 
 // Dashboard routes

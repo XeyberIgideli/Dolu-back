@@ -32,6 +32,7 @@ function verifyToken(req,res,next) {
     try {
         const payload = jwt.verify(token, process.env.JWT_SECRET)
         req.user = {userId:payload.userId,username: payload.username}
+        
         next()
     } catch(err) {
         throw new UnauthenticatedError('Invalid Authentication!')

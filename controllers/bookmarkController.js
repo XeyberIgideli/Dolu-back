@@ -11,7 +11,8 @@ class bookmarks {
         }
     }
     async getBookmarkGroup(req,res) {
-        const bookmark = await Bookmark.findOne({slug: req.params.slug})
+        const bookmark = await Bookmark.findOne({slug: req.params.slug}) 
+        console.log(req.user)
         res.render('bookmark-group', {
             bookmark
         })

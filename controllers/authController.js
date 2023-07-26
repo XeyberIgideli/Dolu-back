@@ -35,9 +35,8 @@ async function login(req,res,next) {
         }
 
         const token = user.createJWT() 
- 
+        
         res.cookie('token',`Bearer: ${token}`, {maxAge: 1000*60*60*24,httpOnly:true,secure:true})
-
         res.redirect('../home')
     } catch (err) {
         next(err)
