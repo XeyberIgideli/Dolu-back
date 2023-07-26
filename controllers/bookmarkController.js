@@ -3,8 +3,12 @@ import Show from "../models/Show.js"
 import Bookmark from '../models/Bookmark.js'
 
 class bookmarks {
-    createBookmark (req,res) { 
-
+   async createBookmark (req,res) { 
+        try {
+            const bookmark = await Bookmark.create(req.body)
+        } catch(err) {
+            next(err)
+        }
     }
 }
 

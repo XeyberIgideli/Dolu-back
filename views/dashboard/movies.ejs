@@ -39,7 +39,7 @@
                      <% for( let i = 0; i < movies.length; i++ ) { %>
                       <tr>
                         <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong><%= movies[i].title %></strong></td>
-                        <td><%= movies[i].genres.join('').substring(0,30) %></td>
+                        <td><%= movies[i].genres.join(',').substring(0,30) %></td>
                         <td>
                           <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
                             <% for( let k = 0; k < movies[i].embed.length; k++ ) { %>
