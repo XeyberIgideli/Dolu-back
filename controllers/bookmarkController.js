@@ -6,10 +6,9 @@ import Bookmark from '../models/Bookmark.js'
 class bookmarks {
    async createBookmark (req,res,next) { 
         try {
-            const bookmark = await Bookmark.create({...req.body,user: req.user.userId})
-            const user = await User.findOne({_id: req.user.userId})
-            user.bookmarks.push(req.body.name)
-            user.save()
+            // const bookmark = await Bookmark.create({...req.body,user: req.user.userId})
+            await User.findOneAndUpdate({_id: req.user.userId},{ $push: { bookmarks: req.body.name  }},{new:true},{ runValidators: true })
+            
         } catch(err) {
             next(err)
         }

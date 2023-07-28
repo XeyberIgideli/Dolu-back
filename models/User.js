@@ -43,7 +43,13 @@ const userSchema = new mongoose.Schema({
         trim: true,
     },
     bookmarks: {
-        type: [String],
+        type: Array,
+        validate: {
+            validator: function(array) {
+              return array.every((v) => typeof v === '')
+        },
+        message: "Bos ola bilmez!"
+    },
     }
 })
 

@@ -9,16 +9,20 @@
         </div> 
         <section class="container">
             <div>
-                <a href="bookmarks/create" class="create-bookmark-list">Create new list</a>
+                <form action="bookmarks/create" method="POST">
+                    <input type="text" name="name">
+                    <button class="create-bookmark-list"> Create new List</button>
+                </form>
+                <!-- <a href="bookmarks/create" class="create-bookmark-list">Create new list</a> -->
             </div>
             <div class="bookmark-list"> 
                
               <ul class="items">
                 <% for( let i = 0; i < bookmarks.length; i++ ) { %>
                      <li>
-                        <a href="bookmarks/<%= bookmarks[i].slug %>" class="bookmark-item">
-                            <i class="bx bxs-<%= bookmarks[i].bookmarkIcon %>-ul"></i>
-                            <span><%= bookmarks[i].name %></span>
+                        <a href="bookmarks/<%= bookmarks[i].split(' ').join('-').toLowerCase()%>" class="bookmark-item">
+                            <i class="bx bxs-<%= bookmarks[i] %>-ul"></i>
+                            <span><%= bookmarks[i]%></span>
                         </a>
                      </li> 
                 <% } %>

@@ -1,4 +1,5 @@
 import Bookmark from "../models/Bookmark.js"
+import User from "../models/User.js"
 import Movie from "../models/Movie.js"
 import Show from "../models/Show.js"
 class home_Pages { 
@@ -14,9 +15,12 @@ class home_Pages {
          res.render('movies')
      } 
      async getBookmarksPage(req,res) {
-         const bookmarks = await Bookmark.find()
+        //  const bookmarksOrigin = await Bookmark.find({user: null}) 
+        //  const bookmarksUser = await Bookmark.find({user: req.user.userId}) 
+        //  let bookmarks = Object.assign(bookmarksOrigin,bookmarksUser)
+        let user = await User.findOne({_id: req.user.userId})
          res.render('bookmarks',{
-            bookmarks
+            bookmarks: user.bookmarks
          })
      }
      async getWatchPage(req,res) {

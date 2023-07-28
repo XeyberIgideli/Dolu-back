@@ -5,11 +5,11 @@ import { BadRequestError,UnauthenticatedError } from '../utils/Error.js'
 
 async function register (req,res,next) {
     try { 
-        const bookmarks = await Bookmark.find() 
-        let arr = []
-        for(let key of bookmarks) {
-            arr.push(key.name)
-        }
+        // const bookmarks = await Bookmark.find({user: null}) 
+        let arr = ['My Favorites','Liked','Later']
+        // for(let key of bookmarks) {
+        //     arr.push(key.name)
+        // }
         const user = await User.create({...req.body,bookmarks: arr})
         const token = user.createJWT()
         res.cookie('token',`Bearer: ${token}`, {maxAge: 1000*60*60*24,httpOnly:true,secure:true})

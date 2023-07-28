@@ -2,29 +2,22 @@ import mongoose from "mongoose"
 import speakingurl from 'speakingurl' 
 
 const bookmarkSchema = new mongoose.Schema({
-    name: {
+    title: {
         type: String,
-        required: [true, "Please provide your bookmark group name!"],
-        trim: true,
-        unique: true
+        required: true
     },
-    bookmarkIcon: {
-        type: String,
-        required: [true, "Please provide your bookmark group icon!"],
-        trim: true
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     },
     slug: {
         type: String,
         unique: true
     },
-    user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    }
 })
 
 bookmarkSchema.pre('validate', function (next) {
-    this.slug = speakingurl(this.name, {
+    this.slug = speakingurl(this.title, {
         maintainCase: false,
         separator: '-',
         custom: {
