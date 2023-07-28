@@ -56,10 +56,10 @@ function tabOutsideClicks(tabname,tabBtn) {
     return;
   } 
 }
-
-body.addEventListener("click", tabOutsideClicks.bind(event, streamTab, watchBtn));
-body.addEventListener("click", tabOutsideClicks.bind(event, settingsTab, settingsBtn));
-body.addEventListener("click", tabOutsideClicks.bind(event, bookmarksTab, bookmarkBtn));
+console.log(document.body)
+document.body.addEventListener("click", tabOutsideClicks.bind(event, streamTab, watchBtn));
+document.body.addEventListener("click", tabOutsideClicks.bind(event, settingsTab, settingsBtn));
+document.body.addEventListener("click", tabOutsideClicks.bind(event, bookmarksTab, bookmarkBtn));
 
 // Tab inside stop propagation
 sideTabs.forEach(item => {
