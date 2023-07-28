@@ -5,10 +5,17 @@ import Bookmark from '../models/Bookmark.js'
 
 class bookmarks {
    async createBookmark (req,res,next) { 
-        try {
-            // const bookmark = await Bookmark.create({...req.body,user: req.user.userId})
-            await User.findOneAndUpdate({_id: req.user.userId},{ $push: { bookmarks: req.body.name  }},{new:true},{ runValidators: true })
-            
+       try {
+            if (req.body.name.length === 0) {
+                throw new Error("Name can't be empty!")
+            }
+            await User.findOneAndUpdate(
+                { _id: req.user.userId },
+                { $push: { bookmarks: req.body.name } },
+                { new: true, runValidators: true }
+            );
+
+            res.status(200).json({ message: "Bookmark created successfully." })
         } catch(err) {
             next(err)
         }
