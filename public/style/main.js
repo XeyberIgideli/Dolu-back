@@ -18,24 +18,31 @@ window.onload = visible;
 
 // When you have leisure time, make inifinite scroll functionality
 
-var modal = document.getElementById("myModal");
+var modals = document.querySelectorAll(".modal");
+var notificationModal = document.getElementById("notificationModal");
+var createBookmarkModal = document.getElementById("createBookmark");
 
 // Get the button that opens the modal
 var btn = document.querySelector(".nav-notification"); 
+var btnCreate = document.querySelector(".create-bookmark-list"); 
 
 // When the user clicks on the button, open the modal
 if(btn) {
   btn.addEventListener('click', () => {
-    modal.classList.remove('hidden-modal')
+    notificationModal.classList.remove('hidden-modal')
+  })
+  btnCreate.addEventListener('click', () => {
+    createBookmarkModal.classList.remove('hidden-modal')
   })
 }
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(e) {
-  if (e.target == modal) {
-    modal.classList.add('hidden-modal')
-    // e.preventDefault()
-  }
+  modals.forEach(modal => {
+    if (e.target == modal) {
+      modal.classList.add('hidden-modal')
+    }
+  })
 }
 
 // HOME PAGE TAB FORM

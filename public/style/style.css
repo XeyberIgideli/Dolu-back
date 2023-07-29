@@ -1206,6 +1206,48 @@ section .content-rate:not(.top-three-of-day) {
     overflow-y: auto;
 
 }
+#createBookmark .modal-content {
+    margin: 27% auto;
+    height: auto;
+    overflow-y: hidden;
+    border-radius: 0;
+}  
+.modal-bookmark {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.modal-bookmark form {
+     display: flex;
+     flex-direction: column;
+     gap: 1rem;   
+}
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="submit"] {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #2f2f2c;
+    border-radius: 3px;
+    color: white;
+    outline: none;
+    background-color: #20201e;
+}
+.modal-bookmark button {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #2f2f2c;
+    border-radius: 3px;
+    width: 50%;
+    background-color: initial;
+    color: #fff;
+    align-self: center;
+    transition: all .3s;
+}
+.modal-bookmark button:hover {
+    background-color: #353533;
+}
 .side-tab::-webkit-scrollbar,
 .modal-content::-webkit-scrollbar {
     width: 5px;
