@@ -1141,11 +1141,7 @@ section .content-rate:not(.top-three-of-day) {
 }
 .movie-card .swiper {
     margin-left: 0;
-}
-.movie-card .swiper .swiper-wrapper {
-    /* -webkit-mask-image: linear-gradient(to right, transparent -7%, black 20% 80%, transparent 100%); */
-
-}
+} 
 .producer .list-item {
     padding-right: 1rem;
 }
@@ -1436,9 +1432,7 @@ input[type="submit"] {
 }
 
 /* Recommendation Content */
-.recommendation-content {
-    /* padding-bottom: 2rem; */
-}
+ 
 .recommendation-items {
     display: flex;
     flex-direction: column;
@@ -1469,9 +1463,7 @@ input[type="submit"] {
     gap: 1rem;
 }
 /* EPISODES SECTION */
-.episode-content {
-    /* padding-bottom: 2rem; */
-}
+ 
 .episode-text {
     display: flex;
     flex-direction: column;
