@@ -17,7 +17,7 @@ let settingsBtn = document.querySelector('.settings');
 
 // SETTINGS BUTTON CLICK EVENT
 settingsBtn?.addEventListener('click', (e) => { 
-    settingsTab.classList.toggle('hidden-tab')
+    settingsTab.classList.toggle('hidden-tab');
     e.stopPropagation();
     e.preventDefault();
 })
@@ -27,6 +27,7 @@ let bookmarkBtn = document.querySelector('.bookmark-btn');
 let checkboxs = document.querySelectorAll('.bookmarks-tab input');
 let checkbox = document.querySelector('.bookmarks-tab input');
 let arrayedCheckboxs = Array.from(checkboxs)
+
 // Add Bookmark
 
 checkboxs.forEach(item => {
@@ -56,7 +57,6 @@ function tabOutsideClicks(tabname,tabBtn) {
     return;
   } 
 }
-console.log(document.body)
 document.body.addEventListener("click", tabOutsideClicks.bind(event, streamTab, watchBtn));
 document.body.addEventListener("click", tabOutsideClicks.bind(event, settingsTab, settingsBtn));
 document.body.addEventListener("click", tabOutsideClicks.bind(event, bookmarksTab, bookmarkBtn));
@@ -78,13 +78,10 @@ function keyNavigateList(e) {
   // let sideTabs = document.querySelectorAll('.side-tab') 
   let insideTabs = document.querySelectorAll('.tab-inside')
   let key = e.key; 
+  let arrayedSideTabs = Array.from(sideTabs);
+  let filtered = arrayedSideTabs.filter(item => !item.classList.contains('hidden-tab'))[0]
   
-  /* Bunu ona gore edirem ki, tab acilib,scroll edende body 
-  hereket etmesin,amma tab bagli olanda body scroll aktiv olsun */
-  if(e.target !== body) {
-    e.preventDefault();
-  }
-  
+
   // Open and close tabs
   for(let i =0; i < insideTabs.length; i++) {
       switch (key) {
@@ -103,9 +100,13 @@ function keyNavigateList(e) {
     }
   } 
 
-  let arrayedSideTabs = Array.from(sideTabs);
-  let filtered = arrayedSideTabs.filter(item => !item.classList.contains('hidden-tab'))[0]
   if(filtered) {
+      /* Bunu ona gore edirem ki, tab acilib,scroll edende body 
+         hereket etmesin,amma tab bagli olanda body scroll aktiv olsun */
+    if(e.target !== body) {
+      e.preventDefault();
+    }
+
     var aTags = filtered.querySelectorAll('a')
     if(aTags.length < 1) {
       aTags = filtered.querySelectorAll('label')
