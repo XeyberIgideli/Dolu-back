@@ -31,7 +31,7 @@ if(btn) {
   btn.addEventListener('click', () => {
     notificationModal.classList.remove('hidden-modal')
   })
-  btnCreate.addEventListener('click', () => {
+  btnCreate?.addEventListener('click', () => {
     createBookmarkModal.classList.remove('hidden-modal')
   })
 }
