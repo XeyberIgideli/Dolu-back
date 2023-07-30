@@ -26,6 +26,18 @@ class bookmarks {
             bookmark
         })
     }
+    
+    addBookmark(req,res,next) {
+        try {
+            let data = req.body
+            console.log(data)
+            // data.forEach(async item => {
+            //     const bookmark = await Bookmark.create({title: item, user: req.user.userId})
+            // })
+        } catch(err) {
+            next(err)
+        }
+    }
 }
 
 const Bookmarks = new bookmarks()

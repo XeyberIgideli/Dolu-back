@@ -21,7 +21,6 @@ window.onload = visible;
 var modals = document.querySelectorAll(".modal");
 var notificationModal = document.getElementById("notificationModal");
 var createBookmarkModal = document.getElementById("createBookmark");
-
 // Get the button that opens the modal
 var btn = document.querySelector(".nav-notification"); 
 var btnCreate = document.querySelector(".create-bookmark-list"); 

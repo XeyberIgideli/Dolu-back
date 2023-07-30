@@ -30,18 +30,34 @@ let arrayedCheckboxs = Array.from(checkboxs)
 
 // Add Bookmark
 
+async function addBookmark(data) {
+  try {
+    const test = await axios.get(window.location.href)
+    console.log(test.data.querySelector('.movie-title')) 
+    // const response = await axios.post('../bookmarks/add',data)
+  } catch(err) {
+    console.log(err)
+  }
+}
 checkboxs.forEach(item => {
   item.addEventListener('change', (e) => {
-    let checkedlist = arrayedCheckboxs.filter(boxs => boxs.checked === true)
+    let checkedlist = arrayedCheckboxs.filter(box => box.checked === true)
+    let bookmarkName = e.target.previousElementSibling.innerText
+    let data = {arr: []}
+    checkedlist.forEach(item => {
+      data.arr.push(item?.previousElementSibling.innerText)
+    }) 
+    addBookmark(data)
+
     if(checkedlist.length > 0) {
         bookmarkBtn.classList.add('bookmarked')
       } else {
         bookmarkBtn.classList.remove('bookmarked')
-      }
+    }
   })
 })
  
-// BOOKMAR BUTTON CLICK EVENT
+// BOOKMARK BUTTON CLICK EVENT
 bookmarkBtn?.addEventListener('click', (e) => {
     bookmarksTab.classList.toggle('hidden-tab')
     e.stopPropagation();

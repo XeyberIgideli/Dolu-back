@@ -10,6 +10,10 @@ const bookmarkSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
+    bookmark: {
+        type: String,
+        required: true
+    },
     slug: {
         type: String,
         unique: true
