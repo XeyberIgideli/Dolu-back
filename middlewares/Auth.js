@@ -24,7 +24,7 @@ function verifyRole(req,res,next) {
 function verifyToken(req,res,next) {
     const authHeader = req.cookies.token 
     if(!authHeader || !authHeader.startsWith("Bearer")) {
-       return res.redirect('auth')
+       return res.redirect('../auth')
     }
 
     const token = authHeader.split(' ')[1] 
