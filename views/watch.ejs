@@ -335,21 +335,23 @@
                 <div class="server-tab">
                     <h3 class="tab-title">Servers</h3>
                     <ul class="tab-list">
-                        <li tabindex="1" ><a tabindex='0' href=""><i class="bx bx-play-circle"></i> <span>Videocdn</span></a></li>
+                        <% for( let i = 0; i < media.embed.length; i++ ) { %>
+                            <li tabindex="1" ><a tabindex='0' href=""><i class="bx bx-play-circle"></i> <span><%= media.embed[i] %></span></a></li>
+                        <% } %>
                     </ul>
                 </div>
                 <div class="trailer-tab">
                     <h3 class="tab-title">Trailers</h3>
                     <ul class="tab-list">
-                        <li><a href="" tabindex='0'>
+                    <li>
+                       <a href="" tabindex='0'>
                                 <img src="img/thumb.jpg" class="side-tab-img" alt=""> 
                             <div class="trailer-text">
                                 <span>Trailer #1</span>
                                 <span>6 April 2023</span>
                             </div>
-                        </a></li>
-                        <!-- <li><a href="" tabindex='0'>Trailer #1</a></li>
-                        <li><a href="" tabindex='0'>Trailer #1</a></li> -->
+                        </a>
+                    </li> 
                     </ul>
                 </div>
             </div>
