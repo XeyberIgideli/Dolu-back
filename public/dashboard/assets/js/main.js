@@ -19,7 +19,6 @@ modalBtn.forEach(item => {
 
 const tagContainer = document.querySelector(".tag-container");
 const input = document.querySelector(".tag-container input");
-const addInput = document.querySelector('.add-input')
 const btnRemoveAll = document.querySelector("#removeAll");
 const btnSend = document.querySelector("#send");
 const btnEdit = document.querySelector("#edit");
@@ -129,19 +128,30 @@ btnEdit?.addEventListener('click', () => {
   input.value += tags 
 })
 
-const colWrapper = document.querySelector('.col-wrapper') 
+// Addding tags
+
+const addInput = document.querySelectorAll('.add-input')
+const colWrapper = document.querySelectorAll('.col-wrapper') 
 let removeBtn = document.querySelectorAll('.remove-input')
 const name = colWrapper?.id
 
-addInput?.addEventListener('click', (e) => {
-  const div = document.createElement('div')
-  div.className = 'embed-wrapper' 
-  div.innerHTML = `<div style="display: flex;margin-top:5px; flex-direction: row; gap: 1rem;"><input type="text" name="${name}" class="form-control" id="basic-default-name"/> <button type="button" class="btn btn-danger remove-input">-</button></div>`
-  let removeBtnDiv = div.querySelectorAll('.remove-input')
-  removeInput(removeBtnDiv)
-  colWrapper.appendChild(div)
-  e.preventDefault()
-}) 
+addInput?.forEach(input => {
+  input.addEventListener('click', (e) => {
+    const div = document.createElement('div')
+    div.className = 'embed-wrapper' 
+    div.innerHTML = `<div style="display: flex;margin-top:5px; flex-direction: row; gap: 1rem;"><input type="text" name="${e.target.parentElement.parentElement.id}" class="form-control" id="basic-default-name"/> <button type="button" class="btn btn-danger remove-input">-</button></div>`
+    let removeBtnDiv = div.querySelectorAll('.remove-input')
+    removeInput(removeBtnDiv)
+    colWrapper.forEach(item => {
+      console.log(item)
+      if(item === e.target.parentElement.parentElement) {
+        item.appendChild(div)
+      }
+    })
+    e.preventDefault()
+  }) 
+})
+
 function removeInput(element) {
   element?.forEach(input => {
     input.addEventListener('click', (e) => {

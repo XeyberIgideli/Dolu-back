@@ -19,7 +19,6 @@ class movieController {
 
       try {  
         const uploadDir = 'public/uploads/movie'
-
         if(!fs.existsSync(uploadDir)) {
             fs.mkdirSync(uploadDir,{recursive:true})
         }

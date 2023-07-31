@@ -81,7 +81,7 @@ const movieSchema = new mongoose.Schema({
         trim:true,
     },
     trailer: {
-        type: Array,
+        type: [String],
         required: [true,"Please provide the media's trailer link!"],
         validate: {
             validator: function(array) {
