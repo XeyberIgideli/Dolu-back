@@ -16,7 +16,6 @@ const bookmarkSchema = new mongoose.Schema({
     },
     slug: {
         type: String,
-        unique: true
     },
 })
 

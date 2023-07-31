@@ -27,13 +27,15 @@ class bookmarks {
         })
     }
     
-    addBookmark(req,res,next) {
+    async addBookmark(req,res,next) {
         try {
             let data = req.body
             console.log(data)
-            // data.forEach(async item => {
-            //     const bookmark = await Bookmark.create({title: item, user: req.user.userId})
-            // })
+            // const existingBookmark = await Bookmark.findOne({bookmark: data.info});
+            // if(!existingBookmark) {
+            //     const bookmark = await Bookmark.create({title: data.title,bookmark:data.info, user: req.user.userId})
+            // } 
+            // const deleting = await Bookmark.deleteOne({ _id: existingBookmark._id });
         } catch(err) {
             next(err)
         }

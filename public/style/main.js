@@ -10,7 +10,7 @@ function visible () {
     loader.style.visibility = 'hidden';
     loaderLogo.style.display = 'none';
     document.body.classList.remove('loading')
-  }, 2600);
+  }, 1600);
 }
 
 window.onload = visible;
