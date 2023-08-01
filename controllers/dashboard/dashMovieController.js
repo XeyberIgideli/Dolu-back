@@ -45,6 +45,7 @@ class movieController {
     async updateMovie(req,res,next) {
       try { 
         const body = req.body
+        console.log(body.trailer)
         const genres = req.body['genres[]'] ? req.body['genres[]'] : null
         const embed = req.body.embed ? req.body.embed : null
         let updatingFile

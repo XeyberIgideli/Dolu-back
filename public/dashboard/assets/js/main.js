@@ -133,7 +133,6 @@ btnEdit?.addEventListener('click', () => {
 const addInput = document.querySelectorAll('.add-input')
 const colWrapper = document.querySelectorAll('.col-wrapper') 
 let removeBtn = document.querySelectorAll('.remove-input')
-const name = colWrapper?.id
 
 addInput?.forEach(input => {
   input.addEventListener('click', (e) => {
@@ -143,7 +142,6 @@ addInput?.forEach(input => {
     let removeBtnDiv = div.querySelectorAll('.remove-input')
     removeInput(removeBtnDiv)
     colWrapper.forEach(item => {
-      console.log(item)
       if(item === e.target.parentElement.parentElement) {
         item.appendChild(div)
       }
