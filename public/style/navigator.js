@@ -37,8 +37,9 @@ async function addBookmark(data) {
   const movieTitle = htmlDocument.querySelector('.movie-title').innerText; 
 
   data.title = movieTitle 
-  console.log(data)
-  const response =  axios.post('../bookmarks/add',data) 
+    await axios.post('../bookmarks/add',data)
+    .then(res => res.data) 
+    .catch(err => {console.log(err)})  
 
 }
 checkboxs.forEach(item => {
