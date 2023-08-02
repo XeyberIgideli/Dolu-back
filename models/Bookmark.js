@@ -8,13 +8,16 @@ const bookmarkSchema = new mongoose.Schema({
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
+        unique:false
     },
     bookmark: {
         type: String,
+        unique:false
     },
     slug: {
         type: String,
+        unique:false
     },
 })
 
