@@ -1,15 +1,13 @@
 import User from '../models/User.js'
 import Bookmark from '../models/Bookmark.js'
 import jwt from 'jsonwebtoken'
+import {uniqueID} from '../utils/Helper.js'
 import { BadRequestError,UnauthenticatedError } from '../utils/Error.js'
 
 async function register (req,res,next) {
     try { 
-        // const bookmarks = await Bookmark.find({user: null}) 
-        let arr = ['My Favorites','Liked','Later']
-        // for(let key of bookmarks) {
-        //     arr.push(key.name)
-        // }
+        let id = uniqueID('fav', 4)
+        let arr = [`My Favorites-${id}`,`Liked-${id}`,`Later-${id}`] 
         const user = await User.create({...req.body,bookmarks: arr})
         const token = user.createJWT()
         res.cookie('token',`Bearer: ${token}`, {maxAge: 1000*60*60*24,httpOnly:true,secure:true})

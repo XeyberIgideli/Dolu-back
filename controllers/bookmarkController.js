@@ -2,27 +2,36 @@ import Movie from "../models/Movie.js"
 import Show from "../models/Show.js"
 import User from "../models/User.js"
 import Bookmark from '../models/Bookmark.js'
+import {uniqueID} from '../utils/Helper.js'
+
 
 class bookmarks {
    async createBookmark (req,res,next) { 
+    const bookmark = await User.findOne({_id: req.user.userId})
+    let id = bookmark.bookmarks[0].split('-')[1]
+    let bookmarkName = req.body.name + '-' + id
        try {
             if (req.body.name.length === 0) {
                 throw new Error("Name can't be empty!")
             }
-            await User.findOneAndUpdate(
+           const result = await User.updateOne(
                 { _id: req.user.userId },
-                { $push: { bookmarks: req.body.name } },
-                { new: true, runValidators: true }
-            );
-
-            res.status(200).json({ message: "Bookmark created successfully." })
+                { $addToSet: { bookmarks: bookmarkName} },
+                {new:false, runValidators: true }
+            )
+            if(result.modifiedCount === 0) {
+                res.status(400).json({ message: "The bookmark you try to add is already exist!" })
+                return
+            }
+            res.redirect('back')
         } catch(err) {
             next(err)
         }
     }
-    async getBookmarkGroup(req,res) {
-        const bookmark = await Bookmark.findOne({slug: req.params.slug}) 
-        res.render('bookmark-group', {
+    async getBookmarkList(req,res) {
+        const bookmark = await Bookmark.find({user: req.user.userId}) 
+        console.log(bookmark)
+        res.render('bookmark-list', {
             bookmark
         })
     }

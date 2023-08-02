@@ -18,7 +18,7 @@
                      <li>
                         <a href="bookmarks/<%= bookmarks[i].split(' ').join('-').toLowerCase()%>" class="bookmark-item">
                             <i class="bx bxs-<%= bookmarks[i] %>-ul"></i>
-                            <span><%= bookmarks[i]%></span>
+                            <span><%= bookmarks[i].split('-')[0]%></span>
                         </a>
                      </li> 
                 <% } %>
