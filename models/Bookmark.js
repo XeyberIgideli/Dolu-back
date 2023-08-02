@@ -4,7 +4,7 @@ import speakingurl from 'speakingurl'
 const bookmarkSchema = new mongoose.Schema({
     title: {
         type: String,
-        required: true
+        unique:false
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,
@@ -12,7 +12,6 @@ const bookmarkSchema = new mongoose.Schema({
     },
     bookmark: {
         type: String,
-        required: true
     },
     slug: {
         type: String,
@@ -20,7 +19,7 @@ const bookmarkSchema = new mongoose.Schema({
 })
 
 bookmarkSchema.pre('validate', function (next) {
-    this.slug = speakingurl(this.title, {
+    this.slug = speakingurl(this.bookmark, {
         maintainCase: false,
         separator: '-',
         custom: {

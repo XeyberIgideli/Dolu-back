@@ -686,7 +686,7 @@
                     <% for( let i = 0; i < user.bookmarks.length; i++ ) { %>
                         <li tabindex="1" >
                             <label class="label-container" tabindex='0' href="#">
-                                <span><%= user.bookmarks[i] %></span>
+                                <span id="<%= user.bookmarks[i] %>"><%= user.bookmarks[i].split('-')[0] %></span>
                                 <input type="checkbox" name="" id=""> 
                                 <span class="checkmark"></span>
                             </label>

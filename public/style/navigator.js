@@ -36,20 +36,21 @@ async function addBookmark(data) {
   const htmlDocument = parser.parseFromString(movieData.data, 'text/html'); 
   const movieTitle = htmlDocument.querySelector('.movie-title').innerText; 
 
-  data.title = movieTitle 
-    await axios.post('../bookmarks/add',data)
+    await axios.post('../bookmarks/add',{bookmark: data.info,title:movieTitle}, {headers: {
+      'Content-Type': 'application/json'
+    }})
     .then(res => res.data) 
-    .catch(err => {console.log(err)})  
+    .catch(err => err)  
 
 }
 checkboxs.forEach(item => {
-  item.addEventListener('change', (e) => {
+  item.addEventListener('change', async (e) => {
     let checkedlist = arrayedCheckboxs.filter(box => box.checked === true)
-    let bookmarkName = e.target.previousElementSibling.innerText
+    let bookmarkName = e.target.previousElementSibling.id
     let data = {} 
     data.info = bookmarkName
     
-    addBookmark(data)
+    await addBookmark(data)
 
     if (checkedlist.length > 0) {
         bookmarkBtn.classList.add('bookmarked');

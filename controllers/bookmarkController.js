@@ -29,22 +29,28 @@ class bookmarks {
         }
     }
     async getBookmarkList(req,res) {
-        const bookmark = await Bookmark.find({user: req.user.userId}) 
-        console.log(bookmark)
+        const bookmarks = await Bookmark.find({slug: req.params.slug}) 
+        bookmarks.forEach(async item => {
+            const media = await Movie.findOne({title: item.title})
+            console.log(media)
+        })
         res.render('bookmark-list', {
-            bookmark
+            bookmarks
         })
     }
     
-    async addBookmark(req,res,next) {
+    async addBookmark(req,res,next) { 
         try {
             let data = req.body
+            console.log(data)
             const existingBookmark = await Bookmark.findOne({bookmark: data.info})
             if(existingBookmark) {
-              await Bookmark.findByIdAndDelete(existingBookmark.id)
-              return
+              if(existingBookmark.title === data.title) {
+                await Bookmark.findByIdAndDelete(existingBookmark.id)
+              }
+            } else {
+                await Bookmark.create({...data, user: req.user.userId}, {new:false,runValidators:true})
             }
-             await Bookmark.create({title: data.title,bookmark:data.info, user: req.user.userId})
             res.sendStatus(200) // For sequential axios post calls
         } catch(err) {
             next(err)
