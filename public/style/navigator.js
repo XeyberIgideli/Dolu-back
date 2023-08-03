@@ -29,7 +29,8 @@ let checkbox = document.querySelector('.bookmarks-tab input');
 let arrayedCheckboxs = Array.from(checkboxs)
 
 // Add Bookmark
-let test = false
+const url = window.location.href;
+const slug = url.split('/').pop(); 
 async function addBookmark(data) { 
   const movieData = await axios.get(window.location.href)
   const parser = new DOMParser();

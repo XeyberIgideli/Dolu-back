@@ -85,17 +85,17 @@ app.use(cors({
 	credentials: true
 }))
 
-// General routes
-app.use('/',pageRoute) // Index,auth,admin pages route handling
-app.use('/auth',authRoute)
-app.use('/',verifyToken, homeRoute) // Home pages route handling
-app.use('/bookmarks',bookmarkRoute)
-
 // Dashboard routes
 app.use('/dashboard', [dashPageRoute,dashMovieRoute,dashShowRoute,dashUserRoute])
 
 // Admin route
 app.use('/admin', dashboardAuthRoute) 
+// General routes
+app.use('/',pageRoute) // Index,auth,admin pages route handling
+app.use('/auth',authRoute)
+app.use('/bookmarks',bookmarkRoute)
+app.use('/',verifyToken, homeRoute) // Home pages route handling
+
 
 app.use(notFound)
 app.use(errorHandlerMiddleware)
