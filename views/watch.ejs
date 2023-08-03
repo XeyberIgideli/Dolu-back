@@ -48,7 +48,7 @@
                         <a href="#" class="btn btn-outline watch">
                             <i class="bx bx-play-circle"></i>
                         </a>
-                        <a href="" class="btn btn-outline-bookmark bookmark-btn">
+                        <a href="" class="btn btn-outline-bookmark bookmark-btn <%= bookmarks.length > 0 ? 'bookmarked' : '' %>">
                             <i class="bx bx-bookmark"></i>
                         </a>
                     </div>
@@ -687,7 +687,12 @@
                         <li tabindex="1" >
                             <label class="label-container" tabindex='0' href="#">
                                 <span id="<%= user.bookmarks[i] %>"><%= user.bookmarks[i].split('-')[0] %></span>
-                                <input type="checkbox" name="" id=""> 
+                                <% for( let k = 0; k < bookmarks.length; k++ ) { %>
+                                    <% if (bookmarks[k].bookmark === user.bookmarks[i]) { %>
+                                        <input type="checkbox" checked> 
+                                    <% } %>
+                                <% } %>
+                                <input type="checkbox">  
                                 <span class="checkmark"></span>
                             </label>
                         </li> 

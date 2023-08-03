@@ -42,12 +42,13 @@ class bookmarks {
     async addBookmark(req,res,next) { 
         try {
             let data = req.body
-            const existingBookmark = await Bookmark.findOne({bookmark: data.info})
-            if(existingBookmark && existingBookmark.title === data.title) {
+            const existingBookmark = await Bookmark.findOne({bookmark: data.info,title:data.title})
+            console.log(existingBookmark)
+            if(existingBookmark) {
                 await Bookmark.findByIdAndDelete(existingBookmark.id)
                 return
             } 
-           const result = await Bookmark.create({title: data.title,bookmark:data.info,user: req.user.userId})
+            const result = await Bookmark.create({title: data.title,bookmark:data.info,user: req.user.userId})
             res.sendStatus(200) // For sequential axios post calls
         } catch(err) {
             next(err)

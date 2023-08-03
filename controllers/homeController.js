@@ -26,9 +26,11 @@ class home_Pages {
      async getWatchPage(req,res) {
          const media = await Movie.findOne({slug: req.params.slug}) ?? await Show.findOne({slug: req.params.slug})
          const user = await User.findOne({_id: req.user.userId})
+         const bookmarks = await Bookmark.find({title: media.title})
          res.render('watch', {
             media,
-            user
+            user,
+            bookmarks
          })
      }
  }

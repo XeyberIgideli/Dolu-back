@@ -37,7 +37,6 @@ async function addBookmark(data) {
   const movieTitle = htmlDocument.querySelector('.movie-title').innerText; 
 
   data.title = movieTitle 
-  console.log(data)
     await axios.post('../bookmarks/add',data, {headers: {
       "Content-Type": "application/json",
 
@@ -52,7 +51,6 @@ checkboxs.forEach(item => {
     let bookmarkName = e.target.previousElementSibling.id
     let data = {} 
     data.info = bookmarkName
-    
     addBookmark(data)
 
     if (checkedlist.length > 0) {
