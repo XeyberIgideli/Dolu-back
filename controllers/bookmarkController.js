@@ -43,7 +43,6 @@ class bookmarks {
         try {
             let data = req.body
             const existingBookmark = await Bookmark.findOne({bookmark: data.info,title:data.title})
-            console.log(existingBookmark)
             if(existingBookmark) {
                 await Bookmark.findByIdAndDelete(existingBookmark.id)
                 return

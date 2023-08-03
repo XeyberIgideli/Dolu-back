@@ -27,7 +27,7 @@ class home_Pages {
          const media = await Movie.findOne({slug: req.params.slug}) ?? await Show.findOne({slug: req.params.slug})
          const user = await User.findOne({_id: req.user.userId})
          const bookmarks = await Bookmark.find({title: media.title})
-         res.render('watch', {
+         res.status(200).render('watch', {
             media,
             user,
             bookmarks
