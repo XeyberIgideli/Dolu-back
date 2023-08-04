@@ -93,8 +93,8 @@ app.use('/admin', dashboardAuthRoute)
 // General routes
 app.use('/',pageRoute) // Index,auth,admin pages route handling
 app.use('/auth',authRoute)
-app.use('/bookmarks',bookmarkRoute)
 app.use('/',verifyToken, homeRoute) // Home pages route handling
+app.use('/bookmarks',bookmarkRoute)
 
 
 app.use(notFound)

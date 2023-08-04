@@ -30,11 +30,14 @@ class bookmarks {
     }
     async getBookmarkList(req,res) {
         const bookmarks = await Bookmark.find({slug: req.params.slug}) 
-        bookmarks.forEach(async item => {
-            const media = await Movie.findOne({title: item.title})
-            console.log(media)
-        })
+        let media = []
+        console.log(bookmarks)
+        for(let i = 0; i < bookmarks.length; i++) {
+            const mediaData = await Movie.findOne({title: bookmarks[i].title}) 
+            media.push(mediaData)
+        }
         res.render('bookmark-list', {
+            media,
             bookmarks
         })
     }
