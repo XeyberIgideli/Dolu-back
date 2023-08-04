@@ -23,7 +23,7 @@ const showSchema = new mongoose.Schema({
         trim:true,
     },
     releaseDate: {
-        type: Number,
+        type: String,
         required: [true,"Please provide the show's release date!"],
         trim:true,
     },

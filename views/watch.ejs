@@ -38,12 +38,12 @@
                     <ul class="movie-details">
                         <li class="movie-duration"><%= media.duration %></li>
                         <li class="movie-category"><%= media.genres.join(' | ') %></li>
-                        <li class="reviews">Reviews: 12020</li>
                     </ul>
                     
                     <div class="release-date">
-                        <p>Date of release: <span>16 May 2017</span></p>
+                        <p>Date of release: <span><%= media.releaseDate %></span></p>
                     </div>
+
                     <div class="movie-action">
                         <a href="#" class="btn btn-outline watch">
                             <i class="bx bx-play-circle"></i>
@@ -62,18 +62,17 @@
                             <div class="detail-genre">
                                 <h3>Genre</h3>
                                 <ul class="genre-list">
-                                    <li><a class="btn btn-black" href="">Comedy</a></li>
-                                    <li><a class="btn btn-black" href="">Adventure</a></li>
-                                    <li><a class="btn btn-black" href="">Action</a></li>
-                                    <li><a class="btn btn-black" href="">Fantasy</a></li>
+                                    <% media.genres.forEach(genre => { %>
+                                    <li><a class="btn btn-black" href=""><%= genre %></a></li>
+                                    <% }) %>
                                 </ul>
                             </div>
                             <div class="detail-production">
                                 <h3>Production</h3>
                                 <ul class="production-list">
-                                    <li><a class="btn btn-black" href="">Columbia Pictures</a></li>
-                                    <li><a class="btn btn-black" href="">Radar Pictures</a></li>
-                                    <li><a class="btn btn-black" href="">Matt Tolmach Productions</a></li>
+                                    <% media.production.forEach(production => { %>
+                                        <li><a class="btn btn-black" href=""><%= production %></a></li>
+                                    <% }) %>
                                 </ul>
                             </div>
 
@@ -248,9 +247,9 @@
                 <div class="server-tab">
                     <h3 class="tab-title">Servers</h3>
                     <ul class="tab-list">
-                        <% for( let i = 0; i < media.embed.length; i++ ) { %>
-                            <li tabindex="1" ><a tabindex='0' href=""><i class="bx bx-play-circle"></i> <span><%= media.embed[i] %></span></a></li>
-                        <% } %>
+                        <% media.embed.forEach(embed => { %>
+                            <li tabindex="1" ><a tabindex='0' href=""><i class="bx bx-play-circle"></i> <span><%= embed %></span></a></li>
+                        <% }) %>
                     </ul>
                 </div>
                 <div class="trailer-tab">
