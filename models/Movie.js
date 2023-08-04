@@ -23,7 +23,7 @@ const movieSchema = new mongoose.Schema({
         trim:true,
     },
     releaseDate: {
-        type: Number,
+        type: String,
         required: [true,"Please provide the media's release date!"],
         trim:true,
     },
