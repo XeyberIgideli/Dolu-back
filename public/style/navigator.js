@@ -61,6 +61,7 @@ checkboxs.forEach(item => {
     } 
   })
 })
+
  
 // BOOKMARK BUTTON CLICK EVENT
 bookmarkBtn?.addEventListener('click', (e) => {

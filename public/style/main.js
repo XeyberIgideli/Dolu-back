@@ -15,6 +15,96 @@ function visible () {
 
 window.onload = visible;
 
+// Request to TMDB API
+
+const apiKey = 'e8b3201ef028f52f8def6d5e7aeb2636';
+const slugUrl = window.location.href.split('/').pop()
+const movieName = slugUrl.split('-').join(' ')
+
+async function getMovieData() { 
+  const apiUrl = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(movieName)}`;
+  try {
+    const response = await axios.get(apiUrl);
+    const media = response.data.results;
+
+    if (media) {
+      let trailerList = document.getElementById('trailer-list')
+      let castWrapper = document.getElementById('cast-wrapper')
+      let producerWrapper = document.getElementById('producer-wrapper')
+
+      const mediaData = media[0]; 
+
+      const castUrl = `https://api.themoviedb.org/3/movie/${mediaData.id}/credits?api_key=${apiKey}`;
+      const videoUrl = `https://api.themoviedb.org/3/movie/${mediaData.id}/videos?api_key=${apiKey}`;
+
+      const castResponse = await axios.get(castUrl);
+      const videoResponse = await axios.get(videoUrl);
+      const trailerData = videoResponse.data.results;
+      const cast = castResponse.data.cast; 
+      const crew = castResponse.data.crew;
+      const trailer = trailerData.filter(item => item.site === 'YouTube')
+      console.log(trailer)
+      trailer.forEach(item => {
+        trailerList.insertAdjacentHTML('beforeend', `
+        <li>
+        <a href="" tabindex='0'>
+                 <img src="https://img.youtube.com/vi/${item.key}/hqdefault.jpg" class="side-tab-img" alt=""> 
+             <div class="trailer-text">
+                 <span>${item.name}</span>
+                 <span>${item.published_at.split('T')[0]}</span>
+             </div>
+         </a>
+     </li>`)
+      });
+      if (cast) {
+
+        const castList = cast.map(actor => ({
+          name: actor.name,
+          character: actor.character,
+          profileImage: actor.profile_path 
+        })).filter(item => item.character.length > 0 && item.profileImage);
+
+        // Showing producers
+        const crewData = crew.filter(person => person.known_for_department === 'Production' && person.profile_path).slice(0,3)
+        crewData.forEach(item => {
+          producerWrapper.insertAdjacentHTML('beforeend', `
+          <div class="swiper-slide">
+              <div class="list-item"> 
+                      <a href=""><img src="https://image.tmdb.org/t/p/w200${item.profile_path}" alt="${item.name}"></a>
+                      <a href="" class="cast-title">${item.name}</a>
+              </div>
+          </div>`)
+        });
+
+        // Showing actors
+        castList.slice(0, 12).forEach(item => {
+          castWrapper.insertAdjacentHTML('beforeend', `
+            <div class="swiper-slide">
+              <div class="list-item">
+                <a href=""><img src="https://image.tmdb.org/t/p/w200${item.profileImage}" alt="${item.name}"></a>
+                <div class="cast-text">
+                  <a href="" class="cast-title">${item.name}</a>
+                  <p class="actor-role">${item.character}</p>
+                </div>
+              </div>
+            </div>
+          `);
+        });
+
+      } else {
+        console.log('The cast information could not be found.');
+      }
+    } else {
+      console.log('The movie could not be found.');
+    }
+  } catch (error) {
+    console.error('API request is unsuccessful!:', error);
+  }
+}
+if(window.location.href.split('/')[3] === 'watch'){
+    getMovieData();
+}
+
 
 // When you have leisure time, make inifinite scroll functionality
 
