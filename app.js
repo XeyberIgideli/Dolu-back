@@ -26,6 +26,7 @@ import dashPageRoute from './routes/dashboard/dashPageRoute.js'
 import dashMovieRoute from './routes/dashboard/dashMovieRoute.js'
 import dashShowRoute from './routes/dashboard/dashShowRoute.js'
 import dashUserRoute from './routes/dashboard/dashUserRoute.js'
+import dashSliderRoute from './routes/dashboard/dashSliderRoute.js'
 
 // Middleware routes
 import {errorHandlerMiddleware,notFound} from './middlewares/Error.js'
@@ -86,7 +87,7 @@ app.use(cors({
 }))
 
 // Dashboard routes
-app.use('/dashboard', [dashPageRoute,dashMovieRoute,dashShowRoute,dashUserRoute])
+app.use('/dashboard', [dashPageRoute,dashMovieRoute,dashShowRoute,dashUserRoute,dashSliderRoute])
 
 // Admin route
 app.use('/admin', dashboardAuthRoute) 
