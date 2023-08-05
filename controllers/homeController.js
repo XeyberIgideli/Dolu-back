@@ -5,10 +5,12 @@ import Show from "../models/Show.js"
 class home_Pages { 
      async getHomePage(req,res) { 
         const movies = await Movie.find()
-        const shows = await Show.find()
+        const shows = await Show.find() 
+        const allMedia = [shows,movies]
          res.render('home',{
             movies,
-            shows
+            shows,
+            allMedia
          })
      } 
      getMoviesPage(req,res) {

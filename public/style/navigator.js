@@ -36,7 +36,6 @@ async function addBookmark(data) {
   const parser = new DOMParser();
   const htmlDocument = parser.parseFromString(movieData.data, 'text/html'); 
   const movieTitle = htmlDocument.querySelector('.movie-title').innerText; 
-  console.log(data)
   data.title = movieTitle 
     await axios.post('../bookmarks/add',data, {headers: {
       "Content-Type": "application/json",

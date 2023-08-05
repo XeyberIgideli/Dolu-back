@@ -6,24 +6,25 @@
     <div class="home swiper" id="home">
 
         <div class="swiper-wrapper">
-
+            <% for( let i = 0; i < allMedia.length; i++ ) { %>
+               
             <div class="swiper-slide">
                 <div class="home-image-full">
-                    <img src="img/pl.jpg" alt="" class="home-img">
+                    <img src="<%= allMedia[i][0].landscapeImage %>" alt="" class="home-img">
                 </div>
                 <div class="home-text container">
-                    <div class="tv-details">
-                        <img src="img/companies/netflix.png" class="company" alt=""> 
-                        <p>Season 3</p>
-                    </div>
-                    <h1 class="home-title">The Pale Blue Eye</h1>
-                    <p class="home-imdb"><i class="bx bx-star"></i> 7.3/10</p>
-                    <p class="home-description">Veteran detective Augustus Landor investigates a series of grisly murders
-                     with the help of a young cadet who will eventually go on to become
-                      the world-famous author Edgar Allan Poe.</p>
+                    <% if (allMedia[i][0].season) { %>
+                        <div class="tv-details">
+                            <img src="img/companies/netflix.png" class="company" alt=""> 
+                            <p>Season <%= allMedia[i][0].season %></p>
+                        </div>
+                    <% } %>
+                    <h1 class="home-title"><%= allMedia[i][0].title %></h1>
+                    <p class="home-imdb"><i class="bx bx-star"></i> <%= allMedia[i][0].rating %>/10</p>
+                    <p class="home-description"><%= allMedia[i][0].description %></p>
                     <div class="home-links">
                         <div class="home-watch">
-                            <a href="" class="btn btn-primary"> Watch Now
+                            <a href="watch/<%= allMedia[i][0].slug %>" class="btn btn-primary"> Watch Now
                             </a>
                         </div>
                         <div class="home-add-bookmark">
@@ -34,59 +35,8 @@
                     </div>
                 </div>
 
-            </div>
-
-            <div class="swiper-slide">
-                <div class="home-image-full">
-                    <img src="img/lastofus.jpg" alt="" class="home-img">
-                </div>
-                <div class="home-text container"> 
-                    <div class="tv-details">
-                        <img src="img/companies/hbo.png" class="company" alt=""> 
-                        <p>Season 1</p>
-                    </div>
-                    <h1 class="home-title">Last of Us </h1>
-                    <p class="home-imdb"><i class="bx bx-star"></i> 8.3/10</p>
-                    <p class="home-description">Joel and Ellie, a pair connected through the harshness of 
-                        the world they live in, are forced to endure brutal circumstances and ruthless 
-                        killers on a trek across a post-outbreak America.</p>
-                        <div class="home-links">
-                            <div class="home-watch">
-                                <a href="" class="btn btn-primary"> Watch Now
-                                </a>
-                            </div>
-                            <div class="home-add-bookmark">
-                                <a href="#" class="btn btn-outline-bookmark bookmark-btn">
-                                    <i class="bx bx-bookmark"></i>
-                                </a>
-                            </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="swiper-slide">
-                <div class="home-image-full">
-                    <img src="img/2-b.jpg" alt="" class="home-img">
-                </div>
-                <div class="home-text container">
-                    <h1 class="home-title">Alien (1979)</h1>
-                    <p class="home-imdb"><i class="bx bx-star"></i> 7.3/10</p>
-                    <p class="home-description">The crew of a colony ship, bound for a remote planet, discover an uncharted paradise with a threat beyond their imagination, and must attempt a harrowing escape.
-                    </p>
-                        <div class="home-links">
-                            <div class="home-watch">
-                            <a href="movie-page.html" class="btn btn-primary"> Watch Now
-                            </a>
-                        </div>
-                        <div class="home-add-bookmark">
-                            <a href="#" class="btn btn-outline-bookmark bookmark-btn">
-                                <i class="bx bx-bookmark"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            </div> 
+            <% } %>
 
 
         </div>

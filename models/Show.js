@@ -43,8 +43,18 @@ const showSchema = new mongoose.Schema({
         trim:true,
     },
     production: {
+        type: [String],
+        required: [true,"Please provide the show's production data!"],
+        validate: {
+            validator: function(array) {
+              return array.every((v) => typeof v === 'string');
+            }, 
+        },
+        trim:true,
+    }, 
+    season: {
         type: String,
-        required: [true,"Please provide the show's guidance!"],
+        required: [true,"Please provide the show's season!"],
         trim:true,
     }, 
     genres: {
@@ -112,7 +122,7 @@ const showSchema = new mongoose.Schema({
         type: String,
         unique: true
     },
-})
+},{timestamps:true})
 
 showSchema.pre('validate', function (next) {
     this.slug = speakingurl(this.title, {

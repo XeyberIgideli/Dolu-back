@@ -119,7 +119,7 @@ const movieSchema = new mongoose.Schema({
         trim:true,
         enum: ['Featured','Popular', 'None']
     }
-})
+},{timestamps:true})
 
 movieSchema.pre('validate', function (next) {
     this.slug = speakingurl(this.title, {
