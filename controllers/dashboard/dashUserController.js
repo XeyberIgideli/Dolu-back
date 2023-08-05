@@ -1,5 +1,6 @@
 import fs from 'fs'
 import User from '../../models/User.js'
+import Bookmark from '../../models/Bookmark.js'
 
 class userController { 
   // Get pages 
@@ -37,6 +38,10 @@ class userController {
     async deleteUser(req,res,next) {
       try {
         const user = await User.findOne({_id: req.params.id})
+        const bookmark = await Bookmark.findOne({user:req.params.id})
+        if(bookmark) {
+          bookmark.deleteOne()
+        }
         user.deleteOne()  
         res.redirect('back')
       } catch(err) {

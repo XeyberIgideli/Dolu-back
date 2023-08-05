@@ -50,11 +50,7 @@ class get_DashPages {
         currentPage: page,
         totalPage: Math.ceil(totalPost / postPerPage)
     })
-     }
-     
-    async getDashSlidersPage(req,res) {
-      res.render('sliders')
-    }
+     } 
  }
  
  let getDashPages = new get_DashPages()
