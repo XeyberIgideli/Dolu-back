@@ -103,6 +103,7 @@
           </li>
         </ul>
       </li>
+
       <li class="menu-item">
         <a href="menu" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-menu"></i>
@@ -143,11 +144,23 @@
       <!-- Components -->
       <li class="menu-header small text-uppercase"><span class="menu-header-text">Components</span></li>
       <!-- Sliders -->
-      <li class="menu-item">
-        <a href="sliders" class="menu-link">
+      <li class="menu-item <%= pageName === 'sliders' ? 'active' : '' %>">
+        <a href="javascript:void(0)" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-collection"></i>
           <div data-i18n="Sliders">Sliders</div>
         </a>
+        <ul class="menu-sub">
+          <li class="menu-item">
+            <a href="/dashboard/sliders" class="menu-link">
+              <div data-i18n="Slider List">Slider List</div>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="/dashboard/users" class="menu-link">
+              <div data-i18n="Add Slider">Add Slider</div>
+            </a>
+          </li>
+        </ul>
       </li>
 
       <!-- Settings -->
