@@ -10,7 +10,7 @@
                
             <div class="swiper-slide">
                 <div class="home-image-full">
-                    <img src="<%= allMedia[i][0].landscapeImage %>" alt="" class="home-img">
+                    <img src="<%= allMedia[i][0].landscapeImage %>" alt="<%= allMedia[i][0].title %>" class="home-img">
                 </div>
                 <div class="home-text container">
                     <% if (allMedia[i][0].season) { %>
@@ -28,7 +28,7 @@
                             </a>
                         </div>
                         <div class="home-add-bookmark">
-                            <a href="#" class="btn btn-outline-bookmark bookmark-btn">
+                            <a href="javascript:void(0)" class="btn btn-outline-bookmark bookmark-btn">
                                 <i class="bx bx-bookmark"></i>
                             </a>
                         </div>
@@ -1271,36 +1271,26 @@
             <div class="menu-tab">
                 <ul class="tab-list">
 
-                    <li tabindex="1" >
-                        <label class="label-container" tabindex='0' href="#">
-                            <span>My Favorites</span>
-                            <input type="checkbox" name="" id=""> 
-                            <span class="checkmark"></span>
-                        </label>
-                    </li>
-
-                    <li tabindex="1" >
-                        <label class="label-container" tabindex='0' href="#">
-                            <span>Later</span>
-                            <input type="checkbox" name="" id=""> 
-                            <span class="checkmark"></span>
-                        </label>
-                    </li>
-
-                    
-                    <li tabindex="1" >
-                        <label class="label-container" tabindex='0' href="#">
-                            <span>Liked</span>
-                            <input type="checkbox" name="" id=""> 
-                            <span class="checkmark"></span>
-                        </label>
-                    </li>
+                    <% for( let i = 0; i < user.bookmarks.length; i++ ) { %>
+                        <li tabindex="1" >
+                            <label class="label-container" tabindex='0' href="#">
+                                <span id="<%= user.bookmarks[i] %>"><%= user.bookmarks[i].split('-')[0] %></span>
+                                <!-- <% //for( let k = 0; k < bookmarks.length; k++ ) { %>
+                                     <% //if (bookmarks[k].bookmark === user.bookmarks[i]) { %>
+                                         <input type="checkbox" checked> 
+                                     <% //} %>
+                                <% //} %> -->
+                                <input type="checkbox">  
+                                <span class="checkmark"></span>
+                            </label>
+                        </li> 
+                    <% } %>
 
                 </ul>
             </div> 
         </div>
 
-    </div> 
+    </div>
     
 
 <%- include('partials/footer') %>

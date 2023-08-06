@@ -6,11 +6,13 @@ class home_Pages {
      async getHomePage(req,res) { 
         const movies = await Movie.find()
         const shows = await Show.find() 
+        const user = await User.findOne({_id: req.user.userId})
         const allMedia = [shows,movies]
          res.render('home',{
             movies,
             shows,
-            allMedia
+            allMedia,
+            user
          })
      } 
      getMoviesPage(req,res) {

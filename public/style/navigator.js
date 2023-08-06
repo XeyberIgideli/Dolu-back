@@ -23,6 +23,7 @@ settingsBtn?.addEventListener('click', (e) => {
 })
 
 let bookmarksTab = document.querySelector('.bookmarks-tab'); 
+let bookmarkBtns = document.querySelectorAll('.bookmark-btn');
 let bookmarkBtn = document.querySelector('.bookmark-btn');
 let checkboxs = document.querySelectorAll('.bookmarks-tab input');
 let checkbox = document.querySelector('.bookmarks-tab input');
@@ -31,12 +32,18 @@ let arrayedCheckboxs = Array.from(checkboxs)
 // Add Bookmark
 const url = window.location.href;
 const slug = url.split('/').pop(); 
+let data = {} ;
+
 async function addBookmark(data) { 
-  const movieData = await axios.get(window.location.href)
+  const mediaData = await axios.get(window.location.href)
   const parser = new DOMParser();
-  const htmlDocument = parser.parseFromString(movieData.data, 'text/html'); 
-  const movieTitle = htmlDocument.querySelector('.movie-title').innerText; 
-  data.title = movieTitle 
+  const htmlDocument = parser.parseFromString(mediaData.data, 'text/html'); 
+  const mediaTitle = htmlDocument.querySelector('.movie-title')?.innerText; 
+  if(mediaTitle) {
+    data.title = mediaTitle
+  } 
+  console.log(data)
+
     await axios.post('../bookmarks/add',data, {headers: {
       "Content-Type": "application/json",
 
@@ -44,29 +51,38 @@ async function addBookmark(data) {
     .then(res => res.data) 
     .catch(err => console.log(err))  
 
-}
+  }
 checkboxs.forEach(item => {
   item.addEventListener('change', async (e) => {
     let checkedlist = arrayedCheckboxs.filter(box => box.checked === true)
     let bookmarkName = e.target.previousElementSibling.id
-    let data = {} 
     data.info = bookmarkName
     addBookmark(data)
 
-    if (checkedlist.length > 0) {
-        bookmarkBtn.classList.add('bookmarked');
+    bookmarkBtns.forEach(item => {
+      if (checkedlist.length > 0) {
+        item.classList.add('bookmarked');
     } else {
-        bookmarkBtn.classList.remove('bookmarked');
+        item.classList.remove('bookmarked');
     } 
+    })
+    
   })
 })
 
  
 // BOOKMARK BUTTON CLICK EVENT
-bookmarkBtn?.addEventListener('click', (e) => {
+bookmarkBtns?.forEach(item => {
+  item.addEventListener('click', (e) => {
     bookmarksTab.classList.toggle('hidden-tab')
+    const homeTitle = e.target.parentNode.parentNode.parentNode.querySelectorAll('.home-title')[0]
+    if(homeTitle) {
+      data.title = homeTitle.innerText
+      console.log(homeTitle.innerText)
+    }
     e.stopPropagation();
     e.preventDefault();
+})
 })
 
 // AVODING CLICKS OUTSIDE TABS
