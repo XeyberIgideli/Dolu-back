@@ -27,8 +27,12 @@
                             <a href="watch/<%= allMedia[i][0].slug %>" class="btn btn-primary"> Watch Now
                             </a>
                         </div>
-                        <div class="home-add-bookmark">
-                            <a href="javascript:void(0)" class="btn btn-outline-bookmark bookmark-btn">
+                        <div class="home-add-bookmark">                 
+                            <a href="javascript:void(0)" class="btn btn-outline-bookmark bookmark-btn <% bookmarks.forEach(item => { %>
+                                <% if (item.title === allMedia[i][0].title) { %>
+                                 bookmarked
+                                <% } %>
+                            <% }) %>">
                                 <i class="bx bx-bookmark"></i>
                             </a>
                         </div>
@@ -1275,12 +1279,8 @@
                         <li tabindex="1" >
                             <label class="label-container" tabindex='0' href="#">
                                 <span id="<%= user.bookmarks[i] %>"><%= user.bookmarks[i].split('-')[0] %></span>
-                                <!-- <% //for( let k = 0; k < bookmarks.length; k++ ) { %>
-                                     <% //if (bookmarks[k].bookmark === user.bookmarks[i]) { %>
-                                         <input type="checkbox" checked> 
-                                     <% //} %>
-                                <% //} %> -->
-                                <input type="checkbox">  
+                                
+                                <input type="checkbox" >  
                                 <span class="checkmark"></span>
                             </label>
                         </li> 

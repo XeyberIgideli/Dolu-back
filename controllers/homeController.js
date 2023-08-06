@@ -7,12 +7,14 @@ class home_Pages {
         const movies = await Movie.find()
         const shows = await Show.find() 
         const user = await User.findOne({_id: req.user.userId})
+        const bookmarks = await Bookmark.find({user: user.id}) 
         const allMedia = [shows,movies]
          res.render('home',{
             movies,
             shows,
             allMedia,
-            user
+            user,
+            bookmarks
          })
      } 
      getMoviesPage(req,res) {

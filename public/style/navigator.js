@@ -58,14 +58,14 @@ checkboxs.forEach(item => {
     let bookmarkName = e.target.previousElementSibling.id
     data.info = bookmarkName
     addBookmark(data)
-
-    bookmarkBtns.forEach(item => {
-      if (checkedlist.length > 0) {
-        item.classList.add('bookmarked');
-    } else {
-        item.classList.remove('bookmarked');
-    } 
-    })
+    console.log(data)
+    // bookmarkBtns.forEach(item => {
+    //   if (checkedlist.length > 0) {
+    //     item.classList.add('bookmarked');
+    // } else {
+    //     item.classList.remove('bookmarked');
+    // } 
+    // })
     
   })
 })
@@ -78,7 +78,7 @@ bookmarkBtns?.forEach(item => {
     const homeTitle = e.target.parentNode.parentNode.parentNode.querySelectorAll('.home-title')[0]
     if(homeTitle) {
       data.title = homeTitle.innerText
-      console.log(homeTitle.innerText)
+      console.log(homeTitle)
     }
     e.stopPropagation();
     e.preventDefault();
