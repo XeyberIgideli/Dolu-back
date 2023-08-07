@@ -236,7 +236,7 @@
             <div class="swiper-button-next"></div>
         </div> -->
     </div>
-
+    <% if (movies.filter(item => item.mode === 'Popular').length > 0) { %>
     <!-- Popular Section -->
     <section class="popular-section container" id="popular-section">
         <div class="heading">
@@ -248,7 +248,7 @@
             <!-- Additional required wrapper -->
             <div class="swiper-wrapper">
                 <!-- Slides --> 
-                <% for( let i = 0; i < movies.length; i++ ) { %>
+                <% for( let i = 0; i < movies.filter(item => item.mode === 'Popular').length; i++ ) { %>
                     <div class="swiper-slide">
                         <div class="card-box">
                             <img src="<%= movies[i].portraitImage %>" class="card-box-img" alt="">
@@ -268,7 +268,9 @@
             </div>
         </div>
     </section>
+    <% } %>
 
+    <% if (movies.filter(item => item.mode === 'Featured').length > 0) { %>
     <!-- Featured Tv Shows Section -->
     <section class="featured-shows container" id="featured-shows">
         <div class="heading">
@@ -299,7 +301,7 @@
             <a href="" class="next-btn">All Shows</a>
         </div>
     </section>
-
+    <% } %>
     <!-- Your Watchlist -->
     <section class="fav-list container"> 
         <div class="heading">
