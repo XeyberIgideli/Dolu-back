@@ -9,14 +9,16 @@ class home_Pages {
         const user = await User.findOne({_id: req.user.userId})
         const bookmarks = await Bookmark.find({user: user.id}) 
         const allMedia = [shows,movies]
-        const genres = allMedia.slice(0,10).map(item => item[0].genres)
+        const genres = shows.map(item => item.genres)
         let genreSet = [...new Set(genres.flat())] 
+        console.log(genreSet)
          res.render('home',{
             movies,
             shows,
             allMedia,
             user,
-            bookmarks
+            bookmarks,
+            genreSet
          })
      } 
      getMoviesPage(req,res) {
