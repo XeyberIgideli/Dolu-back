@@ -26,6 +26,7 @@ class movieController {
         const uploading = fileUploadMI('movie',files)
 
         let genresArr = req.body['genres[]'] ? req.body['genres[]'].split(',') : null
+
         let directorArr = req.body.director ? req.body.director.split(',') : null
  
         
