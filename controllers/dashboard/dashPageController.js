@@ -50,7 +50,7 @@ class get_DashPages {
         currentPage: page,
         totalPage: Math.ceil(totalPost / postPerPage)
     })
-     } 
+     }  
  }
  
  let getDashPages = new get_DashPages()

@@ -552,29 +552,6 @@
         </div>
     </section>
     <% } %>
-    <!-- Your Likes -->
-    <section class="fav-list container"> 
-        <div class="heading">
-            <h2 class="heading-title"><span class="main-span">Your</span> Likes</h2>
-        </div>
-        <div class="your-list swiper">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <div class="card-box">
-                        <img src="img/w1.jpg" class="card-box-img" alt="">
-                        <div class="box-content">
-                            <h2 class="content-title">Spider: No Way Home</h2>
-                            <span class="content-type">Action</span>
-                            <span class="content-duration">128 min</span>
-                            <span class="content-list-group"><i class="bx bxs-heart"></i></span>
-                            <a href="" class="play-btn hidden">
-                                <i class="bx bx-right-arrow"></i>
-                            </a>
-                        </div>
-                </div>
-            </div>
-        </div> 
-    </section>
     
     <!-- Last Three Shows Section -->
     <section class="top-three-of-day" id="last-three">
@@ -667,7 +644,30 @@
         </div>
     </section>
 
-    <!-- Tv Shows for categories -->
+    <!-- Your Likes -->
+    <section class="fav-list container"> 
+        <div class="heading">
+            <h2 class="heading-title"><span class="main-span">Your</span> Likes</h2>
+        </div>
+        <div class="your-list swiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <div class="card-box">
+                        <img src="img/w1.jpg" class="card-box-img" alt="">
+                        <div class="box-content">
+                            <h2 class="content-title">Spider: No Way Home</h2>
+                            <span class="content-type">Action</span>
+                            <span class="content-duration">128 min</span>
+                            <span class="content-list-group"><i class="bx bxs-heart"></i></span>
+                            <a href="" class="play-btn hidden">
+                                <i class="bx bx-right-arrow"></i>
+                            </a>
+                        </div>
+                </div>
+            </div>
+        </div> 
+    </section>
+    <!-- Tv Shows by categories -->
     <section class="categories-shows">
         <% for( let i = 0; i < genreSet.length; i++ ) { %>
             <div class="home-category container">
@@ -703,7 +703,7 @@
                         <% }) %> 
     
                         <div class="swiper-slide">
-                            <a href="shows/<%=  %>">
+                            <a href="shows/<%= genreSet[i] %>">
                                 <div class="card-box card-more">
                                     <div class="card-more-cover"></div>
                                     <div class="box-content">

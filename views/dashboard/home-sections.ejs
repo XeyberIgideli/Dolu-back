@@ -1,0 +1,48 @@
+<%- include('partials/header') %>
+        <!-- Menu -->
+
+        <%- include('partials/sidebar') %>
+        <!-- / Menu -->
+
+        <!-- Layout container -->
+        <div class="layout-page">
+          <!-- Navbar -->
+
+          <%- include('partials/navbar') %>
+         
+          <!-- / Navbar -->
+
+          <!-- Content wrapper -->
+          <div class="content-wrapper">
+            <!-- Content --> 
+            <div class="container-xxl flex-grow-1 container-p-y">
+              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Home Sections</span></h4>
+              <!-- Hoverable Table rows -->
+              <div class="card">
+                <div style="padding: 2rem">
+                    <form action="" method="post">
+                        <div class="form-check form-switch mb-2">
+                            <input class="form-check-input" type="checkbox" name="showsByCategoriesSection" id="flexSwitchCheckChecked" checked="">
+                            <label class="form-check-label" for="flexSwitchCheckChecked">"Shows by categories" section</label>
+                          </div>
+                          <div class="form-check form-switch mb-2">
+                            <input class="form-check-input" type="checkbox" name="featuredMoviesSection" id="flexSwitchCheckChecked" checked="">
+                            <label class="form-check-label" for="flexSwitchCheckChecked">"Featured movies" section</label>
+                          </div>
+                          <div class="form-check form-switch mb-2">
+                            <input class="form-check-input" type="checkbox" name="bookmarksSection" id="flexSwitchCheckChecked" checked="">
+                            <label class="form-check-label" for="flexSwitchCheckChecked">"Bookmarks" section</label>
+                          </div>
+                          <div class="form-check form-switch mb-2">
+                            <input class="form-check-input" type="checkbox" name="topThreeOfDaySection" id="flexSwitchCheckChecked" checked="">
+                            <label class="form-check-label" for="flexSwitchCheckChecked">"Top three of the day" section</label>
+                          </div>
+                    </form>
+                </div> 
+              </div>
+              <!--/ Hoverable Table rows -->
+            </div>
+            <!-- / Content -->
+
+            <!-- Footer -->
+<%- include('partials/footer') %>
