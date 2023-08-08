@@ -268,9 +268,8 @@
             </div>
         </div>
     </section>
-    <% } %>
-
-    <% if (shows.filter(item => item.mode === 'Featured').length > 0) { %>
+    <% } %> 
+    <% if (interfaceSettingData[0].homeSections.featuredMoviesSection === 'on' && shows.filter(item => item.mode === 'Featured').length > 0) { %>
     <!-- Featured Tv Shows Section -->
     <section class="featured-shows container" id="featured-shows">
         <div class="heading">
@@ -553,7 +552,8 @@
     </section>
     <% } %>
     
-    <!-- Last Three Shows Section -->
+    <% if (interfaceSettingData[0].homeSections.topThreeOfDaySection === 'on') { %>
+     <!-- Last Three Shows Section -->
     <section class="top-three-of-day" id="last-three">
         <div class="heading container">
             <h2 class="heading-title">Top three of the day</h2>
@@ -643,6 +643,7 @@
             </div>
         </div>
     </section>
+    <% } %>
 
     <!-- Your Likes -->
     <section class="fav-list container"> 
@@ -667,6 +668,8 @@
             </div>
         </div> 
     </section>
+
+    <% if (interfaceSettingData[0].homeSections.showsByCategoriesSection === 'on') { %>
     <!-- Tv Shows by categories -->
     <section class="categories-shows">
         <% for( let i = 0; i < genreSet.length; i++ ) { %>
@@ -719,7 +722,7 @@
             </div> 
         <% } %>        
     </section>
-
+    <% } %>
     <!-- TABS -->
     
     <!-- Settings Tab -->

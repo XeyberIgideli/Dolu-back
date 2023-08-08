@@ -2,12 +2,16 @@ import Bookmark from "../models/Bookmark.js"
 import User from "../models/User.js"
 import Movie from "../models/Movie.js"
 import Show from "../models/Show.js"
+import InterfaceSetting from "../models/Interface.js" 
+
 class home_Pages { 
      async getHomePage(req,res) { 
         const movies = await Movie.find().sort('-createdAt')
         const shows = await Show.find().sort('-createdAt') 
         const user = await User.findOne({_id: req.user.userId})
         const bookmarks = await Bookmark.find({user: user.id}) 
+        const interfaceSettingData = await InterfaceSetting.find()
+
         const allMedia = [shows,movies]
         const genres = shows.slice(0,10).map(item => item.genres)
         let genreSet = [...new Set(genres.flat())] 
@@ -17,7 +21,8 @@ class home_Pages {
             allMedia,
             user,
             bookmarks,
-            genreSet
+            genreSet,
+            interfaceSettingData
          })
      } 
      getMoviesPage(req,res) {
