@@ -20,23 +20,24 @@
               <!-- Hoverable Table rows -->
               <div class="card">
                 <div style="padding: 2rem">
-                    <form action="" method="post">
+                    <form action="home-sections/saveSections" method="POST">
                         <div class="form-check form-switch mb-2">
-                            <input class="form-check-input" type="checkbox" name="showsByCategoriesSection" id="flexSwitchCheckChecked" checked="">
+                            <input class="form-check-input" type="checkbox" name="showsByCategoriesSection" id="flexSwitchCheckChecked" <%= interfacedata.showsByCategoriesSection === 'on' ? 'checked' : '' %>>
                             <label class="form-check-label" for="flexSwitchCheckChecked">"Shows by categories" section</label>
                           </div>
                           <div class="form-check form-switch mb-2">
-                            <input class="form-check-input" type="checkbox" name="featuredMoviesSection" id="flexSwitchCheckChecked" checked="">
+                            <input class="form-check-input" type="checkbox" name="featuredMoviesSection" id="flexSwitchCheckChecked" <%= interfacedata.featuredMoviesSection === 'on' ? 'checked' : '' %>>
                             <label class="form-check-label" for="flexSwitchCheckChecked">"Featured movies" section</label>
                           </div>
                           <div class="form-check form-switch mb-2">
-                            <input class="form-check-input" type="checkbox" name="bookmarksSection" id="flexSwitchCheckChecked" checked="">
+                            <input class="form-check-input" type="checkbox" name="bookmarksSection" id="flexSwitchCheckChecked" <%= interfacedata.bookmarksSection === 'on' ? 'checked' : '' %>>
                             <label class="form-check-label" for="flexSwitchCheckChecked">"Bookmarks" section</label>
                           </div>
                           <div class="form-check form-switch mb-2">
-                            <input class="form-check-input" type="checkbox" name="topThreeOfDaySection" id="flexSwitchCheckChecked" checked="">
+                            <input class="form-check-input" type="checkbox" name="topThreeOfDaySection" id="flexSwitchCheckChecked" <%= interfacedata.topThreeOfDaySection === 'on' ? 'checked' : '' %>>
                             <label class="form-check-label" for="flexSwitchCheckChecked">"Top three of the day" section</label>
                           </div>
+                          <input type="submit" class="btn btn-primary" value="Submit">
                     </form>
                 </div> 
               </div>

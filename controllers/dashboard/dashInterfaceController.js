@@ -1,10 +1,14 @@
-import Movie from "../../models/Movie.js"
-import Show from "../../models/Show.js"
-import User from "../../models/User.js"
+import InterfaceSetting from "../../models/Interface.js" 
 
 class userInterface {  
     async getHomeSectionsPage(req,res) {
-      res.render('dashboard/home-sections', {pageName: 'userInterface'})
+      const interfaceSetting = await InterfaceSetting.find()
+      const interfacedata = interfaceSetting[0].homeSections
+      res.render('dashboard/home-sections', {pageName: 'userInterface',interfacedata})
+     }
+     async updateHomeSections(req,res) {
+        const update = await InterfaceSetting.updateMany({homeSections: req.body}) 
+        res.redirect('back')
      }
  }
  
