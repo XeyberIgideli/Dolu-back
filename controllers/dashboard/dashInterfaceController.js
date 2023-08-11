@@ -1,4 +1,5 @@
 import InterfaceSetting from "../../models/Interface.js" 
+import fs from 'fs'
 
 class userInterface {  
     async getHomeSectionsPage(req,res) {
@@ -8,15 +9,17 @@ class userInterface {
      }
     async getLogoFaviconPage(req,res) {
       const interfaceSetting = await InterfaceSetting.find() 
-      res.render('dashboard/logo-favicon', {pageName: 'userInterface',interfaceSetting})
+      res.render('dashboard/logo-favicon', {pageName: 'userInterface',data:interfaceSetting})
      }
      async updateHomeSections(req,res) {
         const update = await InterfaceSetting.create({homeSections: req.body}) 
         res.redirect('back')
      }
      async updateLogoFavicon(req,res) {
-        // const update = await InterfaceSetting.updateMany({homeSections: req.body}) 
-          console.log(req.files)
+       let obj = {}
+       const buffers = Object.keys(req.files).map(item => obj[item] = req.files[item].data.toString('base64'))
+       const update = await InterfaceSetting.updateMany({logo: obj.logo, favicon: obj.favicon}) 
+
 
         // res.redirect('back')
      }

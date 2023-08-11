@@ -24,14 +24,16 @@
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label" for="basic-default-name">Logo</label>
                             <div class="col-sm-10">
-                                <input type="file" name="logo" class="form-control" id="inputGroupFile02" />
+                              <input type="file" name="logo" class="form-control" id="inputGroupFile02" />
+                              <i><%= data.map(item => item.logo ? 'Image added' : '') %></i>
                             </div>
-                      </div>  
-
-                      <div class="row mb-3">
+                          </div>  
+                          
+                          <div class="row mb-3">
                             <label class="col-sm-2 col-form-label" for="basic-default-name">Favicon</label>
                             <div class="col-sm-10">
-                                <input type="file" name="favicon" class="form-control" id="inputGroupFile02" />
+                              <input type="file" name="favicon" class="form-control" id="inputGroupFile02" />
+                              <i><%= data.map(item => item.favicon ? 'Image added' : '') %></i>
                             </div>
                       </div>
                       <div style="display: flex;justify-content: center;width: 100%;">
