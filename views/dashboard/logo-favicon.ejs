@@ -1,0 +1,48 @@
+<%- include('partials/header') %>
+        <!-- Menu -->
+
+        <%- include('partials/sidebar') %>
+        <!-- / Menu -->
+
+        <!-- Layout container -->
+        <div class="layout-page">
+          <!-- Navbar -->
+
+          <%- include('partials/navbar') %>
+         
+          <!-- / Navbar -->
+
+          <!-- Content wrapper -->
+          <div class="content-wrapper">
+            <!-- Content --> 
+            <div class="container-xxl flex-grow-1 container-p-y">
+              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Logo & Favicon</span></h4>
+              <!-- Hoverable Table rows -->
+              <div class="card">
+                <div style="padding: 2rem">
+                    <form action="logo-favicon/saveLogoFavicon" method="POST" enctype="multipart/form-data"> 
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label" for="basic-default-name">Logo</label>
+                            <div class="col-sm-10">
+                                <input type="file" name="logo" class="form-control" id="inputGroupFile02" />
+                            </div>
+                      </div>  
+
+                      <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label" for="basic-default-name">Favicon</label>
+                            <div class="col-sm-10">
+                                <input type="file" name="favicon" class="form-control" id="inputGroupFile02" />
+                            </div>
+                      </div>
+                      <div style="display: flex;justify-content: center;width: 100%;">
+                        <input type="submit" class="btn btn-primary" value="Save">
+                      </div>
+                    </form>
+                </div> 
+              </div>
+              <!--/ Hoverable Table rows -->
+            </div>
+            <!-- / Content -->
+
+            <!-- Footer -->
+<%- include('partials/footer') %>

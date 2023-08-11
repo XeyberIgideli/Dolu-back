@@ -14,7 +14,10 @@ function checkUpload (sort) {
     }) 
       
     return (req,res,next) => {  
-        if(req.files !== null && req.files.landscapeImage && req.files.portraitImage) { 
+        if(req.files !== null) { 
+            if(Object.keys(req.files).map(item => req.files[item] === 'undefined')[0]) {
+                return res.json('All picture fields require to be filled in!')
+            }
             for(let fileKey in req.files) { 
                 const file = req.files[fileKey]
                 const fileExtension = file.name.substring(file.name.lastIndexOf('.') + 1).toLowerCase()
@@ -40,7 +43,7 @@ function checkUpload (sort) {
        } else {
             // req.flash('error', 'Please upload an image!')
             // return res.status(400).redirect('/register')
-            return res.json('Please, provide two images!')
+            return res.json('Please, provide any images!')
              
        }
     }
