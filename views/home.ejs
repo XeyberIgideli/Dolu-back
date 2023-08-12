@@ -257,7 +257,7 @@
                                 <span class="content-type"><%= movies[i].genres.slice(0,3) %></span>
                                 <span class="content-duration"><%= movies[i].duration %> min</span>
                                 <span class="content-rate">Imdb: <%= movies[i].rating %></span>
-                                <a href="" class="play-btn hidden">
+                                <a href="watch/<%= movies[i].slug %>" class="play-btn hidden">
                                     <i class="bx bx-right-arrow"></i>
                                 </a>
                             </div>

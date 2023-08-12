@@ -326,32 +326,24 @@
                             <div class="detail-genre">
                                 <h3>Genre</h3>
                                 <ul class="genre-list">
-                                    <li><a class="btn btn-black" href="">Comedy</a></li>
-                                    <li><a class="btn btn-black" href="">Adventure</a></li>
-                                    <li><a class="btn btn-black" href="">Action</a></li>
-                                    <li><a class="btn btn-black" href="">Fantasy</a></li>
+                                    <% media.genres.forEach(genre => { %>
+                                    <li><a class="btn btn-black" href=""><%= genre %></a></li>
+                                    <% }) %>
                                 </ul>
                             </div>
                             <div class="detail-production">
                                 <h3>Production</h3>
                                 <ul class="production-list">
-                                    <li><a class="btn btn-black" href="">Columbia Pictures</a></li>
-                                    <li><a class="btn btn-black" href="">Radar Pictures</a></li>
-                                    <li><a class="btn btn-black" href="">Matt Tolmach Productions</a></li>
+                                    <% media.production.forEach(production => { %>
+                                        <li><a class="btn btn-black" href=""><%= production %></a></li>
+                                    <% }) %>
                                 </ul>
                             </div>
 
                             <div class="detail-cast">
                                 <div class="producer swiper" id="producer-list">
                                     <h3>Producer</h3>
-                                    <div class="swiper-wrapper">
-
-                                        <div class="swiper-slide">
-                                            <div class="list-item"> 
-                                                    <a href=""><img src="../img/play-page/cast1.jpg" alt=""></a>
-                                                    <a href="" class="cast-title">Jake Kasdan</a>
-                                            </div>
-                                        </div>
+                                    <div class="swiper-wrapper" id="producer-wrapper">
                                         
                                     </div>
                                 </div>
@@ -444,9 +436,8 @@
                     width="100%" height="100%" frameborder="0"></iframe>
                 </div> -->
         </div>
-            
-        <!-- Stream Tab -->
-        <div class="side-tab hidden-tab streamTab">
+
+        <!-- <div class="side-tab hidden-tab streamTab">
             <div class="tab-inside" tabindex="0">
                 <div class="server-tab">
                     <div class="tab-nav">
@@ -481,6 +472,35 @@
                                 </div>
                                 </a>
                         </li> 
+                    </ul>
+                </div>
+            </div>
+
+        </div> -->
+            
+        <!-- Stream Tab -->
+        <div class="side-tab hidden-tab streamTab">
+            <div class="tab-inside" tabindex="0">
+                <div class="server-tab">
+                    <div class="tab-nav">
+                        <h3 class="tab-title">Servers</h3>
+                        <select name="" class="season-list">
+                            <% seasons.map(season => { %>
+                            <option value=""><%= season %></option>
+                            <% }) %>
+                        </select>
+                    </div>
+                    <ul class="tab-list">
+                        <% media.embed.forEach(embed => { %>
+                            <li tabindex="1" ><a tabindex='0' href=""><i class="bx bx-play-circle"></i> <span><%= embed %></span></a></li>
+                        <% }) %>
+                    </ul>
+                </div>
+                <div class="trailer-tab">
+                    <h3 class="tab-title">Trailers</h3>
+                    <ul class="tab-list" id="trailer-list">
+               
+                  
                     </ul>
                 </div>
             </div>

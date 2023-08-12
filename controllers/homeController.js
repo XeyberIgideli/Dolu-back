@@ -2,6 +2,7 @@ import Bookmark from "../models/Bookmark.js"
 import User from "../models/User.js"
 import Movie from "../models/Movie.js"
 import Show from "../models/Show.js"
+import Episode from "../models/Episode.js"
 import InterfaceSetting from "../models/Interface.js" 
 
 class home_Pages { 
@@ -40,11 +41,18 @@ class home_Pages {
      async getWatchPage(req,res) {
          const media = await Movie.findOne({slug: req.params.slug}) ?? await Show.findOne({slug: req.params.slug})
          const user = await User.findOne({_id: req.user.userId})
+         let episodes
+         if(media.season){
+            episodes = await Episode.find({show:media.id})
+         }
+         const seasons = episodes.map(episode => [...new Set([episode.season])]).flat()
          const bookmarks = await Bookmark.find({title: media.title})
          res.status(200).render('watch', {
             media,
             user,
-            bookmarks
+            bookmarks,
+            episodes,
+            seasons
          })
      }
  }

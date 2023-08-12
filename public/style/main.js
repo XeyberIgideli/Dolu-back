@@ -20,7 +20,9 @@ window.onload = visible;
 const apiKey = 'e8b3201ef028f52f8def6d5e7aeb2636';
 const slugUrl = window.location.href.split('/').pop()
 const movieName = slugUrl.split('-').join(' ')
-
+let trailerList = document.getElementById('trailer-list')
+let castWrapper = document.getElementById('cast-wrapper')
+let producerWrapper = document.getElementById('producer-wrapper')
 async function getMovieData() { 
   const apiUrl = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(movieName)}`;
   try {
@@ -28,9 +30,6 @@ async function getMovieData() {
     const media = response.data.results;
 
     if (media) {
-      let trailerList = document.getElementById('trailer-list')
-      let castWrapper = document.getElementById('cast-wrapper')
-      let producerWrapper = document.getElementById('producer-wrapper')
 
       const mediaData = media[0]; 
 
