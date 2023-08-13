@@ -485,15 +485,13 @@
                     <div class="tab-nav">
                         <h3 class="tab-title">Servers</h3>
                         <select name="" class="season-list">
-                            <% seasons.map(season => { %>
-                            <option value=""><%= season %></option>
+                            <% seasonSet.map(season => { %>
+                            <option class="season" value=""><%= season %></option>
                             <% }) %>
                         </select>
                     </div>
-                    <ul class="tab-list">
-                        <% media.embed.forEach(embed => { %>
-                            <li tabindex="1" ><a tabindex='0' href=""><i class="bx bx-play-circle"></i> <span><%= embed %></span></a></li>
-                        <% }) %>
+                    <ul class="tab-list" id="show-episodes">
+                         
                     </ul>
                 </div>
                 <div class="trailer-tab">

@@ -23,6 +23,7 @@ const movieName = slugUrl.split('-').join(' ')
 let trailerList = document.getElementById('trailer-list')
 let castWrapper = document.getElementById('cast-wrapper')
 let producerWrapper = document.getElementById('producer-wrapper')
+
 async function getMovieData() { 
   const apiUrl = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(movieName)}`;
   try {
@@ -42,7 +43,6 @@ async function getMovieData() {
       const cast = castResponse.data.cast; 
       const crew = castResponse.data.crew;
       const trailer = trailerData.filter(item => item.site === 'YouTube')
-      console.log(trailer)
       trailer.forEach(item => {
         trailerList.insertAdjacentHTML('beforeend', `
         <li>
@@ -188,3 +188,46 @@ body.addEventListener('click', function(e) {
 }) 
 
 
+const seasonList = document.querySelector('.season-list')
+const showEpisodes = document.querySelector('#show-episodes')
+
+seasonList?.addEventListener('change', (e) => {
+  let season = Number(seasonList.options[seasonList.selectedIndex].text)
+  getEpisodes(season)
+
+})
+const pageName = window.location.href.split('/')[3]
+async function getEpisodes (seasonIn) {
+  const inserted = document.querySelectorAll('.inserted')
+  
+  const response = await axios.get(`../watch/getEpisodes/${slugUrl}`, {
+    headers: {
+      'Accept': 'application/json'
+    }
+  })
+  const data = response.data
+  if(!seasonIn){
+    data.filter(item => {
+      if(item.season === 1) {
+        showEpisodes.insertAdjacentHTML('beforeend', ` 
+        <li class="inserted" tabindex="1" ><a tabindex='0' href=""><i class="bx bx-play-circle"></i><span>${item.title} / ${item.episode}</span></a></li>
+        `)
+      }
+    })
+  }
+  data.forEach(item => {
+    if(seasonIn === item.season) {
+      showEpisodes.insertAdjacentHTML('beforeend', ` 
+      <li class="inserted" tabindex="1" ><a tabindex='0' href=""><i class="bx bx-play-circle"></i><span>${item.title} / ${item.episode}</span></a></li>
+      `)
+    } else {
+      inserted.forEach(item => {
+        item.remove()
+      })
+    }
+
+  })
+}
+if(pageName === 'watch') {
+getEpisodes()
+}

@@ -45,15 +45,23 @@ class home_Pages {
          if(media.season){
             episodes = await Episode.find({show:media.id})
          }
-         const seasons = episodes.map(episode => [...new Set([episode.season])]).flat()
+         const seasons = [episodes?.map(episode => episode.season)]
+         const seasonSet = [...new Set(seasons.flat())] 
          const bookmarks = await Bookmark.find({title: media.title})
          res.status(200).render('watch', {
             media,
             user,
             bookmarks,
             episodes,
-            seasons
+            seasonSet
          })
+     }
+     async getEpisodes(req,res) {
+      const showData = await Show.findOne({slug: req.params.slug})
+      if(showData) {
+         const episodes = await Episode.find({show:showData._id})
+         res.json(episodes)
+      }
      }
  }
  
