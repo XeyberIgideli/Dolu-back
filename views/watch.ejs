@@ -36,7 +36,7 @@
                     </div>
                     <ul class="movie-details">
                         <li class="movie-duration"><%= media.duration %> min</li>
-                        <li class="movie-category"><%= media.genres.join(' | ') %></li>
+                        <li class="movie-category"><%= media.genres.map(item => item.charAt(0).toUpperCase() + item.slice(1)).join(' | ') %></li>
                     </ul>
                     
                     <div class="release-date">
@@ -277,10 +277,10 @@
                     <img src="../img/got.jpg" class="movie-card-box-img" alt="">
                     <p class="media-type">TV</p>    
                 <div class="movie-text">
-                    <p class="movie-timezone">2011,United Kingdom | USA</p>
+                    <p class="movie-timezone"><%= media.releaseDate.split('-')[0] %>,<%= media.releaseCountry %></p>
                     <div>
-                        <h2 class="movie-title">Game of Thrones</h2>
-                        <p class="movie-second-title">Winter is Coming</p>
+                        <h2 class="movie-title"><%= media.title %></h2>
+                        <p class="movie-second-title"><%= media.subTitle %></p>
                     </div>
                     <div class="movie-rating">
                         <div class="rating">
@@ -292,13 +292,13 @@
                             <p class="rate-source">IMDB</p>
                         </div>
                         <div class="pg">
-                            <p>PG-13</p>
+                            <p><%= media.guidance %></p>
                         </div>
                     </div>
                     <ul class="movie-details">
-                        <li class="show-season">Seasons: 8</li>
+                        <li class="show-season">Seasons: <%= media.season %></li>
                         <li class="show-episode">Episodes: 73</li>
-                        <li class="movie-category">Sci-Fi | Drama | Action</li>
+                        <li class="movie-category"><%= media.genres.map(item => item.charAt(0).toUpperCase() + item.slice(1)).join(' | ') %></li>
                         <li class="reviews">Reviews: 12020</li>
                     </ul>
                     
