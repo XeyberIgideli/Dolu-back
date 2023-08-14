@@ -30,8 +30,7 @@ let checkbox = document.querySelector('.bookmarks-tab input');
 let arrayedCheckboxs = Array.from(checkboxs)
 
 // Add Bookmark
-const url = window.location.href;
-const slug = url.split('/').pop(); 
+const slug = slugUrl;
 let data = {} ;
 
 async function addBookmark(data) { 
@@ -42,7 +41,6 @@ async function addBookmark(data) {
   if(mediaTitle) {
     data.title = mediaTitle
   } 
-  console.log(data)
 
     await axios.post('../bookmarks/add',data, {headers: {
       "Content-Type": "application/json",
@@ -58,7 +56,6 @@ checkboxs.forEach(item => {
     let bookmarkName = e.target.previousElementSibling.id
     data.info = bookmarkName
     addBookmark(data)
-    console.log(data)
     // bookmarkBtns.forEach(item => {
     //   if (checkedlist.length > 0) {
     //     item.classList.add('bookmarked');
@@ -78,7 +75,6 @@ bookmarkBtns?.forEach(item => {
     const homeTitle = e.target.parentNode.parentNode.parentNode.querySelectorAll('.home-title')[0]
     if(homeTitle) {
       data.title = homeTitle.innerText
-      console.log(homeTitle)
     }
     e.stopPropagation();
     e.preventDefault();

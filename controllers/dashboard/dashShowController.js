@@ -59,7 +59,7 @@ class showController {
         arr.forEach(item => {
           fs.unlinkSync(path + item)
         })  
-        res.redirect('tv-shows')
+        res.redirect('back')
        } catch(err) {
         next(err)
        } 

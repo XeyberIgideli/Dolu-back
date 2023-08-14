@@ -125,7 +125,7 @@ const showSchema = new mongoose.Schema({
 },{timestamps:true})
 
 showSchema.pre('validate', function (next) {
-    this.slug = speakingurl(this.title, {
+    this.slug = speakingurl(this.title+'?show', {
         maintainCase: false,
         separator: '-',
         custom: {

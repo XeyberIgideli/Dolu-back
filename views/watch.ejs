@@ -2,8 +2,8 @@
 
     <!-- Sidebar -->
     <%- include('partials/sidebar') %> 
-    <!-- Single movie page -->
     <% if (media.mediaType) { %>
+     <!-- Single movie page -->
     <div class="movie-detail" id="">
         <div class="movie-image-full">
             <img src="<%= media.landscapeImage %>" alt="" class="movie-img">
@@ -267,14 +267,14 @@
     <!-- Single show page -->
     <div class="movie-detail" id="">
         <div class="movie-image-full">
-            <img src="../img/gotback.png" alt="" class="movie-img">
+            <img src="<%= media.landscapeImage %>" alt="" class="movie-img">
         </div>
         <div class="res-image" >
-            <img src="../img/gotback.png" class="" alt="">
+            <img src="<%= media.portraitImage %>" class="" alt="">
         </div>
         <div class="movie-card">
                 <div class="movie-card-box">
-                    <img src="../img/got.jpg" class="movie-card-box-img" alt="">
+                    <img src="<%= media.portraitImage %>" class="movie-card-box-img" alt="">
                     <p class="media-type">TV</p>    
                 <div class="movie-text">
                     <p class="movie-timezone"><%= media.releaseDate.split('-')[0] %>,<%= media.releaseCountry %></p>
@@ -297,7 +297,7 @@
                     </div>
                     <ul class="movie-details">
                         <li class="show-season">Seasons: <%= media.season %></li>
-                        <li class="show-episode">Episodes: 73</li>
+                        <!-- <li class="show-episode">Episodes: 73</li> -->
                         <li class="movie-category"><%= media.genres.map(item => item.charAt(0).toUpperCase() + item.slice(1)).join(' | ') %></li>
                         <li class="reviews">Reviews: 12020</li>
                     </ul>
@@ -318,10 +318,7 @@
                 <div class="in-detail">
                             <div class="detail-text">
                                 <h2>In detail</h2>
-                                <p class="detail-description">Four teenagers in detention discover an old video game console with a game they’ve never heard of. 
-                                    When they decide to play, they are immediately sucked into the jungle world of Jumanji in the 
-                                    bodies of their avatars. They’ll have to complete the adventure of their lives filled with fun, 
-                                    thrills and danger or be stuck in the game forever!</p>
+                                <p class="detail-description"><%= media.description %></p>
                             </div>
                             <div class="detail-genre">
                                 <h3>Genre</h3>
@@ -430,54 +427,11 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div class="player">
-                    <div></div>
-                    <iframe id="iframe" src="https://www.2embed.to/embed/tmdb/movie?id=877269" 
-                    width="100%" height="100%" frameborder="0"></iframe>
-                </div> -->
         </div>
 
-        <!-- <div class="side-tab hidden-tab streamTab">
-            <div class="tab-inside" tabindex="0">
-                <div class="server-tab">
-                    <div class="tab-nav">
-                        <h3 class="tab-title">Episodes</h3>
-                        <select name="" class="season-list">
-                            <option value="">Season 1</option>
-                            <option value="">Season 2</option>
-                            <option value="">Season 3</option>
-                        </select>
-                    </div>
-                    <ul class="tab-list">
-                        <li tabindex="1" >
-                            <a tabindex='0' href="">
-                                <img src="img/w9.jpg" class="side-tab-img" alt="">
-                                <div class="episode-text">
-                                    <span>Episode #1</span>
-                                    <span>49:03</span>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="trailer-tab">
-                    <h3 class="tab-title">Trailers</h3>
-                    <ul class="tab-list">
-                        <li>
-                            <a href="" tabindex='0'>
-                                <img src="img/thumb.jpg" class="side-tab-img" alt=""> 
-                                <div class="trailer-text">
-                                    <span>Trailer #1</span>
-                                    <span>6 April 2023</span>
-                                </div>
-                                </a>
-                        </li> 
-                    </ul>
-                </div>
-            </div>
-
-        </div> -->
-            
+        
+ 
+ 
         <!-- Stream Tab -->
         <div class="side-tab hidden-tab streamTab">
             <div class="tab-inside" tabindex="0">
@@ -506,6 +460,17 @@
         </div>
     </div>
     <% } %>
+
+    <div class="tvPlayer player-hidden">
+        
+        <ul class="embed-options">
+            <li><button class="spembed">Server 1</button></li>
+            <li><button class="vdsrc">Server 2</button></li>
+            <li><button class="aembed">Server 3</button></li>
+            <li><button class="mapi">Server 4</button></li>
+        </ul>
+    </div>
+
     <!-- Settings Tab -->
     <div class="side-tab hidden-tab settings-tab">
         <div class="tab-inside" tabindex="0">
