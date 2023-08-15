@@ -1309,6 +1309,7 @@ input[type="submit"] {
     width: 6em;
     height: 3em;
     object-fit: cover;
+    aspect-ratio: 4/2;
     vertical-align: middle;
 }
  
