@@ -21,6 +21,7 @@ const apiKey = 'e8b3201ef028f52f8def6d5e7aeb2636';
 const slugUrl = window.location.href.split('/').pop()
 const movieName = slugUrl.split('-').slice(-1)[0] === 'show' ? slugUrl.split('-').slice(0,-1).join(' ') : slugUrl; 
 const pageName = window.location.href.split('/')[3]
+const showName = slugUrl.split('-').slice(0,-1).join('-')
 const mediaType = slugUrl.split('-').slice(-1)[0] === 'show' ? 'tv' : 'movie';
 let tmdbID;
 let trailerList = document.getElementById('trailer-list')
@@ -199,6 +200,7 @@ seasonList?.addEventListener('change', (e) => {
   getEpisodes(season)
 
 })
+
 async function getEpisodes (seasonIn) {
   const inserted = document.querySelectorAll('.inserted')
   
@@ -208,6 +210,7 @@ async function getEpisodes (seasonIn) {
     }
   })
   const data = response.data
+
   if(!seasonIn){
     data.filter(item => {
       if(item.season === 1) {
@@ -217,6 +220,7 @@ async function getEpisodes (seasonIn) {
       }
     })
   }
+
   data.forEach(item => {
     if(seasonIn === item.season) {
       showEpisodes.insertAdjacentHTML('beforeend', ` 
@@ -229,48 +233,49 @@ async function getEpisodes (seasonIn) {
     }
 
   })
+
   const playEpisodes = document.querySelectorAll('.playEpisode')
   const tvPlayer = document.querySelector('.tvPlayer')
 
-
   let embedLinks;
+  // Opening player for watching the show
   playEpisodes.forEach(item => {
     item.addEventListener('click', (e) => {
       embedLinks = {
-        spembed: `https://multiembed.mov/directstream.php?video_id=${tmdbID}&tmdb=1&s=${seasonIn || 1}&e=${item.dataset.episode}`,
-        mapi: `https://moviesapi.club/tv/${tmdbID}-${seasonIn || 1}-${item.dataset.episode}`,
+        spembed: `https://multiembed.mov/?video_id=${tmdbID}&tmdb=1&s=${seasonIn || 1}&e=${item.dataset.episode}`,
+        gomo: `https://user.gomo.to/show/${showName}/0${seasonIn || 1}-0${item.dataset.episode}`,
         aembed: `https://autoembed.to/tv/tmdb/${tmdbID}-${seasonIn || 1}-${item.dataset.episode}`,
         vdsrc: `https://vidsrc.to/embed/tv/${tmdbID}/${seasonIn || 1}/${item.dataset.episode}`
       }
-
-      tvPlayer.insertAdjacentHTML('beforeend', `<iframe gesture="media" allow="encrypted-media"  scrolling="no" id="iframe" src="https://multiembed.mov/directstream.php?video_id=${tmdbID}&tmdb=1&s=${seasonIn || 1}&e=${item.dataset.episode}" 
+      tvPlayer.insertAdjacentHTML('beforeend', `<iframe allow="encrypted-media" scrolling="no" id="iframe" src="https://vidsrc.to/embed/tv/${tmdbID}/${seasonIn || 1}/${item.dataset.episode}" 
       width="100%" height="100%" frameborder="0" allowfullscreen></iframe>`)
       tvPlayer.classList.remove('player-hidden')
 
       const iframe = document.querySelector('#iframe')
       
-
       document.querySelector('.movie-detail').style.display = 'none'
       document.querySelector('.sidebar').style.display = 'none'
       document.querySelector('.header').style.display = 'none' 
 
       const embedOptions = document.querySelectorAll('.embed-options button')
+      iframe.setAttribute("sandbox", "allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation");
 
       embedOptions.forEach(item => {
         item.addEventListener('click', (e) => {
           const embedName = e.target.classList[0]
           if(Object.keys(embedLinks).includes(embedName)) {
+            console.log(iframe)
              iframe.src = embedLinks[embedName]
-             console.log(iframe)
-             iframe.setAttribute("sandbox", "allow-modals allow-orientation-lock allow-pointer-lock allow-presentation allow-scripts allow-top-navigation allow-forms");
+             if(iframe.src) {
+              iframe.setAttribute("sandbox", "allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation");
+             }
           }
         })
       })
     })
   })
-
-
 }
+
 if(pageName === 'watch') {
     getEpisodes()
 }
