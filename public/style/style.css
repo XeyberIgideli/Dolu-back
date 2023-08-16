@@ -1671,11 +1671,11 @@ input[type="submit"] {
     color: #747474;
     font-size: 2rem;
     z-index: 1000; 
+    transition: .3s all ease-in-out;
 }
 .closePlayer:hover,
 .backServers:hover {
     color: rgb(185, 184, 184);
-    transition: .3s all ease-in-out;
 }
 .video-container {
     height: 100vw!important;

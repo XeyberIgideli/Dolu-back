@@ -246,22 +246,23 @@ async function getEpisodes (seasonIn) {
         aembed: `https://autoembed.to/tv/tmdb/${tmdbID}-${seasonIn || 1}-${item.dataset.episode}`,
         vdsrc: `https://vidsrc.to/embed/tv/${tmdbID}/${seasonIn || 1}/${item.dataset.episode}`
       }
-      tvPlayer.insertAdjacentHTML('beforeend', `<iframe allow="encrypted-media" scrolling="no" id="iframe" src="https://vidsrc.to/embed/tv/${tmdbID}/${seasonIn || 1}/${item.dataset.episode}" 
-      width="100%" height="100%" frameborder="0" allowfullscreen></iframe>`)
+      const iframe = document.querySelector('#iframe') 
+      iframe.src = embedLinks.vdsrc
+      console.log(iframe)
+      // tvPlayer.insertAdjacentHTML('beforeend', `<iframe allow="encrypted-media" scrolling="no" id="iframe" src="${embedLinks.vdsrc}" 
+      // width="100%" height="100%" sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation" frameborder="0" allowfullscreen></iframe>`)
       tvPlayer.classList.remove('player-hidden')
-      
-      const iframe = document.querySelector('#iframe')
       
       document.querySelector('.movie-detail').style.display = 'none'
       document.querySelector('.sidebar').style.display = 'none'
       document.querySelector('.header').style.display = 'none' 
 
+
       const embedOptions = document.querySelectorAll('.embed-options button')
-      iframe.setAttribute("sandbox", "allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation");
 
       embedOptions.forEach(item => {
         item.addEventListener('click', (e) => {
-          const embedName = e.target.classList[0]
+          const embedName = e.target.classList[0] || e.target.parentElement.classList[0]
           if(Object.keys(embedLinks).includes(embedName)) {
              iframe.src = embedLinks[embedName]
              if(iframe.src) {
@@ -270,6 +271,7 @@ async function getEpisodes (seasonIn) {
           }
         })
       })
+      streamTab.classList.add('hidden-tab')
     })
   })
 }

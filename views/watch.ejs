@@ -312,7 +312,7 @@
                     </ul>
                     
                     <div class="release-date">
-                        <p>Date of release: <span>16 May 2017</span></p>
+                        <p>Date of release: <span><%= media.releaseDate%></span></p>
                     </div>
                     <div class="movie-action">
                         <a href="#" class="btn btn-outline watch">
@@ -441,6 +441,8 @@
         
  
  
+
+    </div>
         <!-- Stream Tab -->
         <div class="side-tab hidden-tab streamTab">
             <div class="tab-inside" tabindex="0">
@@ -467,16 +469,19 @@
             </div>
 
         </div>
-    </div>
-
     <div class="tvPlayer player player-hidden">
-        <a class="closePlayer" href="javascript:void(0)"  onclick="window.location.reload()"><i class="bx bx-window-close"></i></a>
+        <div class="playerWrapper">
+            <a class="backServers" href="javascript:void(0)" ><i class="bx bx-collection"></i></a>
+            <a class="closePlayer" href="javascript:void(0)" onclick="window.location.reload()"><i class="bx bx-window-close"></i></a>
+        </div>
         <ul class="embed-options">
             <li><button class="vdsrc">Server 1</button></li>
             <li><button class="spembed">Server 2</button></li>
             <li><button class="aembed">Server 3</button></li>
             <li><button class="gomo">Server 4</button></li>
-        </ul>
+        </ul> 
+        <iframe allow="encrypted-media" scrolling="no" id="iframe" src="" 
+        width="100%" height="100%" frameborder="0" allowfullscreen></iframe>
     </div>
     <% } %>
 
