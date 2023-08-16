@@ -274,11 +274,12 @@ async function getEpisodes (seasonIn) {
   })
 }
 
-const movieServerLinks = document.querySelectorAll('.movie-tab-list li')
-const moviePlayer = document.querySelector('.moviePlayer')
+function getMoviePlay() {
+  const movieServerLinks = document.querySelectorAll('.movie-tab-list li a')
+  const moviePlayer = document.querySelector('.moviePlayer')
 
 movieServerLinks.forEach(item => {
-  item.addEventListener('click', (e) => {
+  item.addEventListener('click', (e) => {   
     const movieServers = {
       spembed: `https://multiembed.mov/?video_id=${tmdbID}&tmdb=1`,
       gomo: `https://gomo.to/movie/${movieName}`,
@@ -290,23 +291,22 @@ movieServerLinks.forEach(item => {
     document.querySelector('.movie-detail').style.display = 'none'
     document.querySelector('.sidebar').style.display = 'none'
     document.querySelector('.header').style.display = 'none' 
-
-    console.log(e.target)
-    const serverName = e.target.classList[0]
+    const serverName = e.target.classList[0] || e.target.parentElement.classList[0]
     let iframe = document.querySelector('#iframe')
-    if(Object.keys(movieServers).includes(serverName)) {
-      if(iframe) {
-        console.log(iframe)
-      }
+    if(Object.keys(movieServers).includes(serverName)) { 
       iframe.src = movieServers[serverName] 
       iframe.setAttribute("sandbox", "allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation");
-     } 
+     }  
 
-
+     streamTab.classList.add('hidden-tab')
   }, true)
 })
+}
+
 if(pageName === 'watch' && slugUrl.split('-').slice(-1)[0] === 'show') {
     getEpisodes()
+} else {
+   getMoviePlay()
 }
   
  

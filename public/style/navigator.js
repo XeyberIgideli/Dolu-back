@@ -101,15 +101,7 @@ sideTabs.forEach(item => {
     e.stopPropagation();
   })
 })
-
-const aStreamTab = document.querySelectorAll('.streamTab li a')
-
-aStreamTab.forEach(item => {
-  item.addEventListener('click', (e) => {
-    streamTab.classList.add('hidden-tab')
-    e.preventDefault()
-  })
-})
+ 
 
 // HIDDEN TAB, KEY NAVIGATION
 
