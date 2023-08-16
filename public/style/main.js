@@ -1,19 +1,21 @@
 // LOADER
-let loaderLogo = document.querySelector('.loader-logo')
-let loader = document.querySelector('#loader')
+let loaderLogo = document.querySelector('.loader-logo');
+let loader = document.querySelector('#loader');
 loader.style.visibility = 'visible';
 loaderLogo.style.visibility = 'visible';
-// document.body = 
-function visible () {
-  return setTimeout(() => {
-    loader.style.display = 'none';
-    loader.style.visibility = 'hidden';
-    loaderLogo.style.display = 'none';
-    document.body.classList.remove('loading')
-  }, 1600);
+
+function hideLoader() {
+  loader.style.display = 'none';
+  loader.style.visibility = 'hidden';
+  loaderLogo.style.display = 'none';
+  document.body.classList.remove('loading');
 }
 
-window.onload = visible;
+window.onload = function() {
+  // Loader'ı 1.6 saniye (1600ms) sonra gizle
+  setTimeout(hideLoader, 1600);
+};
+
 
 // Request to TMDB API
 

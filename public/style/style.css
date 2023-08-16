@@ -148,7 +148,6 @@ body {
    color: white!important;
 }
 #loader {
-/* Loader stilleri burada */
 border: 3px solid #ffb43a;
 border-radius: 50%;
 border-top: 3px solid #494848;
@@ -163,15 +162,20 @@ margin-top: -35px;
 margin-left: -35px;
 z-index: 1000;
 } 
+/* .loaderWrapper {
+    display: flex;
+    flex-direction: column; 
+} */
 .loader-logo {
-    visibility: hidden;
-    position: absolute;
-    top: 50%;
-    left: 50%;
+    visibility: hidden; 
+    position: fixed;
+    top: -2rem;
+    left: 38.5rem;
+    margin-top: -35px;
+    margin-left: -35px;
+    z-index: 1000;
+    color: orange; 
     font-size: 4rem;
-    margin: auto 0;
-    color: orange;
-    transform: translate(-50%, 40%);
 }
 .center {
 display: flex;
