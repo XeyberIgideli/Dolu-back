@@ -10,7 +10,15 @@ watchBtn?.addEventListener('click', (e) => {
     streamTab.classList.toggle('hidden-tab')
     e.stopPropagation();
     e.preventDefault();
-  })
+})
+
+const backServers = document.querySelector('.backServers')
+
+backServers?.addEventListener('click', (e) => {
+    streamTab.classList.toggle('hidden-tab')
+    e.stopPropagation();
+    e.preventDefault();
+})  
 
 let settingsTab = document.querySelector('.settings-tab'); 
 let settingsBtn = document.querySelector('.settings');
@@ -29,7 +37,8 @@ let checkboxs = document.querySelectorAll('.bookmarks-tab input');
 let checkbox = document.querySelector('.bookmarks-tab input');
 let arrayedCheckboxs = Array.from(checkboxs)
 
-// Add Bookmark
+// Add Bookmark functionality
+
 const slug = slugUrl;
 let data = {} ;
 
@@ -55,15 +64,7 @@ checkboxs.forEach(item => {
     let checkedlist = arrayedCheckboxs.filter(box => box.checked === true)
     let bookmarkName = e.target.previousElementSibling.id
     data.info = bookmarkName
-    addBookmark(data)
-    // bookmarkBtns.forEach(item => {
-    //   if (checkedlist.length > 0) {
-    //     item.classList.add('bookmarked');
-    // } else {
-    //     item.classList.remove('bookmarked');
-    // } 
-    // })
-    
+    addBookmark(data) 
   })
 })
 
@@ -98,6 +99,15 @@ document.body.addEventListener("click", tabOutsideClicks.bind(event, bookmarksTa
 sideTabs.forEach(item => {
   item.addEventListener("click", (e) => { 
     e.stopPropagation();
+  })
+})
+
+const aStreamTab = document.querySelectorAll('.streamTab li a')
+
+aStreamTab.forEach(item => {
+  item.addEventListener('click', (e) => {
+    streamTab.classList.add('hidden-tab')
+    e.preventDefault()
   })
 })
 
@@ -143,12 +153,9 @@ function keyNavigateList(e) {
     var aTags = filtered.querySelectorAll('a')
     if(aTags.length < 1) {
       aTags = filtered.querySelectorAll('label')
-    }
-  }
- 
+    } 
   
   // Navigate tabs
-  if(filtered) {
     switch (key) {
       case "ArrowUp":
           // Up pressed
@@ -166,9 +173,10 @@ function keyNavigateList(e) {
           }
           aTags[index].focus();
           break;
-          case "Enter": 
+      case "Enter": 
           if(aTags[index]) {
             aTags[index].click()
+            streamTab.classList.add('hidden-tab')
             aTags[index].focus();
           }
           break;  

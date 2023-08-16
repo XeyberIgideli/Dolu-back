@@ -28,12 +28,11 @@ let trailerList = document.getElementById('trailer-list')
 let castWrapper = document.getElementById('cast-wrapper')
 let producerWrapper = document.getElementById('producer-wrapper')
 
-async function getMovieData() { 
+async function getMediaData() { 
   const apiUrl = `https://api.themoviedb.org/3/search/${mediaType}?api_key=${apiKey}&query=${encodeURIComponent(movieName)}`;
   try {
     const response = await axios.get(apiUrl);
     const media = response.data.results;
-    console.log(media)
     tmdbID = media[0].id
     if (media) {
       const mediaData = media[0]; 
@@ -105,7 +104,7 @@ async function getMovieData() {
   }
 }
 if(pageName === 'watch'){
-    getMovieData();
+    getMediaData();
 }
 
 
@@ -250,7 +249,7 @@ async function getEpisodes (seasonIn) {
       tvPlayer.insertAdjacentHTML('beforeend', `<iframe allow="encrypted-media" scrolling="no" id="iframe" src="https://vidsrc.to/embed/tv/${tmdbID}/${seasonIn || 1}/${item.dataset.episode}" 
       width="100%" height="100%" frameborder="0" allowfullscreen></iframe>`)
       tvPlayer.classList.remove('player-hidden')
-
+      
       const iframe = document.querySelector('#iframe')
       
       document.querySelector('.movie-detail').style.display = 'none'
@@ -264,7 +263,6 @@ async function getEpisodes (seasonIn) {
         item.addEventListener('click', (e) => {
           const embedName = e.target.classList[0]
           if(Object.keys(embedLinks).includes(embedName)) {
-            console.log(iframe)
              iframe.src = embedLinks[embedName]
              if(iframe.src) {
               iframe.setAttribute("sandbox", "allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation");
@@ -276,6 +274,39 @@ async function getEpisodes (seasonIn) {
   })
 }
 
-if(pageName === 'watch') {
+const movieServerLinks = document.querySelectorAll('.movie-tab-list li')
+const moviePlayer = document.querySelector('.moviePlayer')
+
+movieServerLinks.forEach(item => {
+  item.addEventListener('click', (e) => {
+    const movieServers = {
+      spembed: `https://multiembed.mov/?video_id=${tmdbID}&tmdb=1`,
+      gomo: `https://gomo.to/movie/${movieName}`,
+      aembed: `https://autoembed.to/movie/tmdb/${tmdbID}`,
+      vdsrc: `https://vidsrc.to/embed/movie/${tmdbID}`
+    } 
+ 
+    moviePlayer.classList.remove('player-hidden')
+    document.querySelector('.movie-detail').style.display = 'none'
+    document.querySelector('.sidebar').style.display = 'none'
+    document.querySelector('.header').style.display = 'none' 
+
+    console.log(e.target)
+    const serverName = e.target.classList[0]
+    let iframe = document.querySelector('#iframe')
+    if(Object.keys(movieServers).includes(serverName)) {
+      if(iframe) {
+        console.log(iframe)
+      }
+      iframe.src = movieServers[serverName] 
+      iframe.setAttribute("sandbox", "allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation");
+     } 
+
+
+  }, true)
+})
+if(pageName === 'watch' && slugUrl.split('-').slice(-1)[0] === 'show') {
     getEpisodes()
 }
+  
+ 
