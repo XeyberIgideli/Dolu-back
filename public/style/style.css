@@ -169,13 +169,14 @@ z-index: 1000;
 .loader-logo {
     visibility: hidden; 
     position: fixed;
-    top: -2rem;
-    left: 38.5rem;
+    top: -52%;
+    left: 50%;
     margin-top: -35px;
     margin-left: -35px;
     z-index: 1000;
-    color: orange; 
+    color: var(--main-color); 
     font-size: 4rem;
+    transform: translate(-23%, 46%);
 }
 .center {
 display: flex;

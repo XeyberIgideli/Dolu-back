@@ -326,10 +326,7 @@
     .movie-details li,
     .release-date {
         font-size: 0.8rem;
-    }
-    .movie-card-box-img {
-        /* height: 88%; */
-    }
+    } 
     .movie-action .btn {
         padding: 15px 22px;
     }
@@ -435,7 +432,7 @@
         font-size: 0.8rem;
     }
     .movie-text {
-        gap: 0.85rem;
+        gap: 1.55rem;
     }
     .detail-description {
         width: 31.5rem;
@@ -661,6 +658,7 @@
         border-bottom-left-radius: 1rem;
         border-top-left-radius: 0;
         border-bottom-right-radius: 0;
+        font-weight: bolder;
     }
     .container:not(.bookmarks .container,.popular-section,.grid--footer,.wide-card,.home-text,.featured-shows,.featured-movie,.heading,.home-category) {
         padding-left: 0rem!important;

@@ -121,7 +121,9 @@ const movieSchema = new mongoose.Schema({
     }
 },{timestamps:true})
 
+
 movieSchema.pre('validate', function (next) {
+    console.log(this)
     this.slug = speakingurl(this.title, {
         maintainCase: false,
         separator: '-',
@@ -131,6 +133,22 @@ movieSchema.pre('validate', function (next) {
     })
     next()
 })
+
+movieSchema.pre('updateOne', function (next) {
+    const updatedFields = this.getUpdate();
+    console.log(updatedFields)
+    if (updatedFields.title) {
+        updatedFields.slug = speakingurl(updatedFields.title, {
+            maintainCase: false,
+            separator: '-',
+            custom: {
+                '+': '-plus'
+            }
+        });
+    }
+    
+    next();
+});
 
 const Movie = mongoose.model('Movie',movieSchema)
 

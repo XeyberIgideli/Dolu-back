@@ -125,7 +125,7 @@ const showSchema = new mongoose.Schema({
 },{timestamps:true})
 
 showSchema.pre('validate', function (next) {
-    this.slug = speakingurl(this.title+'?show', {
+    this.slug = speakingurl(this.title+'-show', {
         maintainCase: false,
         separator: '-',
         custom: {
@@ -134,6 +134,22 @@ showSchema.pre('validate', function (next) {
     })
     next()
 })
+
+showSchema.pre('updateOne', function (next) {
+    const updatedFields = this.getUpdate();
+    console.log(updatedFields)
+    if (updatedFields.title) {
+        updatedFields.slug = speakingurl(updatedFields.title+'-show', {
+            maintainCase: false,
+            separator: '-',
+            custom: {
+                '+': '-plus'
+            }
+        });
+    }
+    
+    next();
+});
 
 const Show = mongoose.model('Show',showSchema)
 

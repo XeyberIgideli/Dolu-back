@@ -46,7 +46,6 @@ class movieController {
     async updateMovie(req,res,next) {
       try { 
         const body = req.body
-        console.log(body.trailer)
         const genres = req.body['genres[]'] ? req.body['genres[]'] : null
         const embed = req.body.embed ? req.body.embed : null
         let updatingFile
@@ -54,7 +53,9 @@ class movieController {
           let files = req.files 
           updatingFile = await fileUpdate(Movie,'movie',files,body)
         }
+        const movie = new Movie()
         await Movie.updateOne({_id: body.movieID},{...body,...updatingFile,genres,embed},{ runValidators: true })  
+        // movie.sluglar(req.body.title)
         res.redirect('../movies')
       } catch (err) {
         next(err)
