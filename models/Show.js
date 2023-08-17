@@ -83,17 +83,7 @@ const showSchema = new mongoose.Schema({
     landscapeImage: {
         type: String,
         trim:true,
-    },
-    // trailer: {
-    //     type: [String],
-    //     required: [true,"Please provide the show's trailer link!"],
-    //     validate: {
-    //         validator: function(array) {
-    //           return array.every((v) => typeof v === 'string');
-    //         }, 
-    //     },
-    //     trim:true,
-    // },
+    }, 
     embed: {
         type: [String],
         required: [true,"Please provide the show's embed/server links!"],
@@ -137,7 +127,6 @@ showSchema.pre('validate', function (next) {
 
 showSchema.pre('updateOne', function (next) {
     const updatedFields = this.getUpdate();
-    console.log(updatedFields)
     if (updatedFields.title) {
         updatedFields.slug = speakingurl(updatedFields.title+'-show', {
             maintainCase: false,

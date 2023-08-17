@@ -53,9 +53,7 @@ class movieController {
           let files = req.files 
           updatingFile = await fileUpdate(Movie,'movie',files,body)
         }
-        const movie = new Movie()
         await Movie.updateOne({_id: body.movieID},{...body,...updatingFile,genres,embed},{ runValidators: true })  
-        // movie.sluglar(req.body.title)
         res.redirect('../movies')
       } catch (err) {
         next(err)

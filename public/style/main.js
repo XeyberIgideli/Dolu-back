@@ -12,7 +12,6 @@ function hideLoader() {
 }
 
 window.onload = function() {
-  // Loader'ı 1.6 saniye (1600ms) sonra gizle
   setTimeout(hideLoader, 1600);
 };
 
