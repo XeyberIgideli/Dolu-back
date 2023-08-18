@@ -46,7 +46,7 @@ class movieController {
     async updateMovie(req,res,next) {
       try { 
         const body = req.body
-        const genres = req.body['genres[]'] ? req.body['genres[]'] : null
+        const genres = req.body['genres[]'] ? req.body['genres[]'].split(',') : null
         const embed = req.body.embed ? req.body.embed : null
         let updatingFile
         if(req.files) {

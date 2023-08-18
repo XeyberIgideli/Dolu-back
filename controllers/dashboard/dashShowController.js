@@ -95,19 +95,19 @@ class showController {
     async updateShow (req,res,next) {
       try { 
         const body = req.body
-        const genres = req.body['genres[]'] ? req.body['genres[]'] : null
+        const genres = req.body['genres[]'] ? req.body['genres[]'].split(',') : null
         const trailer = req.body.trailer ? req.body.trailer : null 
         let updatingFile
         if(req.files) {
           let files = req.files 
           updatingFile = await fileUpdate(Show,'show',files,body)
+          
         }
         await Show.updateOne({_id: body.showID},{...body,...updatingFile,genres,trailer},{ runValidators: true })  
         res.redirect('../tv-shows')
       } catch (err) {
         next(err)
       }
-
      }
 
     async createEpisode(req,res,next) {

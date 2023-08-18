@@ -2,8 +2,12 @@ import Movie from "../models/Movie.js"
 import Show from "../models/Show.js"
 import User from "../models/User.js"
 import Bookmark from '../models/Bookmark.js'
+import InterfaceSetting from "../models/Interface.js" 
 import {uniqueID} from '../utils/Helper.js'
 
+async function interfaceData () {
+    return await InterfaceSetting.find();
+ }
 
 class bookmarks {
    async createBookmark (req,res,next) { 
@@ -40,7 +44,9 @@ class bookmarks {
         res.render('bookmark-list', {
             media,
             bookmarks,
-            bookmarkTitle
+            bookmarkTitle,
+            interfaceSettingData: await interfaceData(),
+            title: bookmarkTitle
         })
     }
     
