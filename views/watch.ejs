@@ -318,8 +318,8 @@
                         <a href="#" class="btn btn-outline watch">
                             <i class="bx bx-play-circle"></i>
                         </a>
-                        <a href="" class="btn btn-outline-bookmark <%= bookmarks.filter(bookmark => String(bookmark.user) === user.id)[0] ? 'bookmarked' : ''  %>">
-                            <i class="bx bx-bookmark"></i>
+                        <a href="" class="btn btn-outline-bookmark bookmark-btn <%= bookmarks.filter(bookmark => String(bookmark.user) === user.id)[0] ? 'bookmarked' : ''  %>">
+                            <i class="bx bx-bookmark"></i>  
                         </a>
                     </div>
                 </div>

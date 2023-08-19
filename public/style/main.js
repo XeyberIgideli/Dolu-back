@@ -249,9 +249,6 @@ async function getEpisodes (seasonIn) {
       }
       const iframe = document.querySelector('#iframe') 
       iframe.src = embedLinks.vdsrc
-      console.log(iframe)
-      // tvPlayer.insertAdjacentHTML('beforeend', `<iframe allow="encrypted-media" scrolling="no" id="iframe" src="${embedLinks.vdsrc}" 
-      // width="100%" height="100%" sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation" frameborder="0" allowfullscreen></iframe>`)
       tvPlayer.classList.remove('player-hidden')
       
       document.querySelector('.movie-detail').style.display = 'none'
@@ -267,7 +264,7 @@ async function getEpisodes (seasonIn) {
           if(Object.keys(embedLinks).includes(embedName)) {
              iframe.src = embedLinks[embedName]
              if(iframe.src) {
-              iframe.setAttribute("sandbox", "allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation");
+              iframe.setAttribute("sandbox", "allow-modals allow-orientation-lock allow-pointer-lock allow-presentation allow-scripts allow-top-navigation allow-forms");
              }
           }
         })
