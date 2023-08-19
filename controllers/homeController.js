@@ -30,8 +30,13 @@ class home_Pages {
          })
      } 
      async getMoviesPage(req,res) {
+         const movies = await Movie.find().sort('-createdAt')
+         const genres = movies.slice(0,10).map(item => item.genres)
+         let genreSet = [...new Set(genres.flat())]
          res.render('movies', {
             title:'Movies',
+            movies,
+            genreSet,
             interfaceSettingData: await interfaceData(),
          })
      } 

@@ -672,7 +672,7 @@
     <% if (interfaceSettingData[0].homeSections.showsByCategoriesSection === 'on') { %>
     <!-- Tv Shows by categories -->
     <section class="categories-shows">
-        <% for( let i = 0; i < genreSet.length; i++ ) { %>
+        <% for( let i = 0; i < genreSet.slice(0,3).length; i++ ) { %>
             <div class="home-category container">
                 <div class="heading">
                     <h2 class="heading-title"><%= genreSet[i].charAt(0).toUpperCase() + genreSet[i].slice(1) %> Shows</h2>
