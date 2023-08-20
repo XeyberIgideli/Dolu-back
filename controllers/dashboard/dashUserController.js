@@ -38,9 +38,9 @@ class userController {
     async deleteUser(req,res,next) {
       try {
         const user = await User.findOne({_id: req.params.id})
-        const bookmark = await Bookmark.findOne({user:req.params.id})
+        const bookmark = await Bookmark.find({user:req.params.id})
         if(bookmark) {
-          bookmark.deleteOne()
+          bookmark.deleteMany()
         }
         user.deleteOne()  
         res.redirect('back')

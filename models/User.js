@@ -42,10 +42,12 @@ const userSchema = new mongoose.Schema({
         type: String,
         trim: true,
     },
-    bookmarks: {
-        type: [String],
-        unique:true
-    }
+    bookmarks: [{
+        bookmark:{type: String},
+        icon: {type: String}
+        // type: [String],
+        // unique:true
+    }]
 }) 
 
 // Password hashing

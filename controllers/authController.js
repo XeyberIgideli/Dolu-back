@@ -7,8 +7,20 @@ import { BadRequestError,UnauthenticatedError } from '../utils/Error.js'
 async function register (req,res,next) {
     try { 
         let id = uniqueID('fav', 4)
-        let arr = [`My Favorites-${id}`,`Liked-${id}`,`Later-${id}`] 
-        const user = await User.create({...req.body,bookmarks: arr})
+        let obj = [
+            {
+                 bookmark: `My Favorites-${id}`,
+                 icon: 'test1'
+            },
+            {
+                 bookmark: `Liked-${id}`,
+                 icon: 'test1'
+             },
+            {
+                 bookmark: `Later-${id}`,
+                 icon: 'test1'
+            }]
+        const user = await User.create({...req.body,bookmarks: obj})
         const token = user.createJWT()
         res.cookie('token',`Bearer: ${token}`, {maxAge: 1000*60*60*24,httpOnly:true,secure:true})
         

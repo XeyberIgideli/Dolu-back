@@ -12,19 +12,22 @@ async function interfaceData () {
 class bookmarks {
    async createBookmark (req,res,next) { 
     const bookmark = await User.findOne({_id: req.user.userId})
-    let id = bookmark.bookmarks[0].split('-')[1]
-    let bookmarkName = req.body.name + '-' + id
-       try {
+    let id = bookmark.bookmarks[0].bookmark.split('-')[1]
+    let obj = {
+             bookmark: `${req.body.name}-${id}`,
+             icon: 'test1'
+        }
+    try {
             if (req.body.name.length === 0) {
                 throw new Error("Name can't be empty!")
             }
            const result = await User.updateOne(
                 { _id: req.user.userId },
-                { $addToSet: { bookmarks: bookmarkName} },
+                { $addToSet: { bookmarks: obj} },
                 {new:false, runValidators: true }
             )
             if(result.modifiedCount === 0) {
-                res.status(400).json({ message: "The bookmark you try to add is already exist!" })
+                res.status(400).json({ message: "The bookmark you are trying to add already exists!" })
                 return
             }
             res.redirect('back')

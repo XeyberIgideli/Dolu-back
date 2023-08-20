@@ -510,9 +510,9 @@
                     <% for( let i = 0; i < user.bookmarks.length; i++ ) { %>
                         <li tabindex="1" >
                             <label class="label-container" tabindex='0' href="#">
-                                <span id="<%= user.bookmarks[i] %>"><%= user.bookmarks[i].split('-')[0] %></span>
+                                <span id="<%= user.bookmarks[i].bookmark %>"><%= user.bookmarks[i].bookmark.split('-')[0] %></span>
                                 <% for( let k = 0; k < bookmarks.length; k++ ) { %>
-                                    <% if (bookmarks[k].bookmark === user.bookmarks[i]) { %>
+                                    <% if (bookmarks[k].bookmark === user.bookmarks[i].bookmark) { %>
                                         <input type="checkbox" checked> 
                                     <% } %>
                                 <% } %>

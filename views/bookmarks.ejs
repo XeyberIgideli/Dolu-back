@@ -16,9 +16,9 @@
               <ul class="items">
                 <% for( let i = 0; i < bookmarks.length; i++ ) { %>
                      <li>
-                        <a href="bookmarks/<%= bookmarks[i].split(' ').join('-').toLowerCase()%>" class="bookmark-item">
-                            <i class="bx bxs-<%= bookmarks[i] %>-ul"></i>
-                            <span><%= bookmarks[i].split('-')[0]%></span>
+                        <a href="bookmarks/<%= bookmarks[i].bookmark.split(' ').join('-').toLowerCase()%>" class="bookmark-item">
+                            <i class="bx bxs-<%= bookmarks[i].icon %>-ul"></i>
+                            <span><%= bookmarks[i].bookmark.split('-')[0]%></span>
                         </a>
                      </li> 
                 <% } %>
