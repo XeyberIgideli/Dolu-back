@@ -170,7 +170,11 @@
                                     <div class="card-box">
                                         <img src="<%= movies[k].portraitImage %>" class="card-box-img" alt="">
                                         <div class="box-content">
-                                            <i class="bx bx-time card-bookmark"></i>
+                                            <% bookmarks.filter(item => { %>
+                                                <% if ((item.title === movies[k].title)) { %>
+                                                    <i class="bx bx-time card-bookmark"></i>
+                                                <% } %>
+                                            <% }) %>
                                             <a href="watch/<%= movies[k].slug %>"><h2 class="content-title"><%= movies[k].title %></h2></a>
                                             <span class="content-type"><%= movies[k].genres.slice(0,3) %></span>
                                             <span class="content-duration"><%= movies[k].duration %> min</span>
@@ -194,6 +198,7 @@
                                 </div>
                             </a>
                         </div>
+
                     </div>
                 </div> 
             <% } %>

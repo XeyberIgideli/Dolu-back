@@ -4,45 +4,42 @@
 
     <!-- Home -->
     <div class="home swiper" id="home">
-
         <div class="swiper-wrapper">
-            <% for( let i = 0; i < allMedia.slice(0,3).length; i++ ) { %>
+            <% for( let i = 0; i < allMedia.length; i++ ) { %>
                
-            <div class="swiper-slide">
-                <div class="home-image-full">
-                    <img src="<%= allMedia[i][0].landscapeImage %>" alt="<%= allMedia[i][0].title %>" class="home-img">
-                </div>
-                <div class="home-text container">
-                    <% if (allMedia[i][0].season) { %>
-                        <div class="tv-details">
-                            <img src="img/companies/netflix.png" class="company" alt=""> 
-                            <p>Season <%= allMedia[i][0].season %></p>
-                        </div>
-                    <% } %>
-                    <h1 class="home-title"><%= allMedia[i][0].title %></h1>
-                    <p class="home-imdb"><i class="bx bx-star"></i> <%= allMedia[i][0].rating %>/10</p>
-                    <p class="home-description"><%= allMedia[i][0].description %></p>
-                    <div class="home-links">
-                        <div class="home-watch">
-                            <a href="watch/<%= allMedia[i][0].slug %>" class="btn btn-primary"> Watch Now
-                            </a>
-                        </div>
-                        <div class="home-add-bookmark">                 
-                            <a href="javascript:void(0)" class="btn btn-outline-bookmark bookmark-btn <% bookmarks.forEach(item => { %>
-                                <% if (item.title === allMedia[i][0].title) { %>
-                                 bookmarked
-                                <% } %>
-                            <% }) %>">
-                                <i class="bx bx-bookmark"></i>
-                            </a>
+                <div class="swiper-slide">
+                    <div class="home-image-full">
+                        <img src="<%= allMedia[i].landscapeImage %>" alt="<%= allMedia[i].title %>" class="home-img">
+                    </div>
+                    <div class="home-text container">
+                        <% if (allMedia[i].season) { %>
+                            <div class="tv-details">
+                                <img src="img/companies/netflix.png" class="company" alt=""> 
+                                <p>Season <%= allMedia[i].season %></p>
+                            </div>
+                        <% } %>
+                        <h1 class="home-title"><%= allMedia[i].title %></h1>
+                        <p class="home-imdb"><i class="bx bx-star"></i> <%= allMedia[i].rating %>/10</p>
+                        <p class="home-description"><%= allMedia[i].description %></p>
+                        <div class="home-links">
+                            <div class="home-watch">
+                                <a href="watch/<%= allMedia[i].slug %>" class="btn btn-primary"> Watch Now
+                                </a>
+                            </div>
+                            <div class="home-add-bookmark">                 
+                                <a href="javascript:void(0)" class="btn btn-outline-bookmark bookmark-btn <% bookmarks.forEach(item => { %>
+                                    <% if (item.title === allMedia[i].title) { %>
+                                     bookmarked
+                                    <% } %>
+                                <% }) %>">
+                                    <i class="bx bx-bookmark"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-            </div> 
-            <% } %>
-
-
+    
+                </div> 
+                <% } %>
         </div>
 
         <div class="continue-watching">
@@ -230,45 +227,45 @@
                 </div>
                 </div>
             </div> -->
-        </div>      
-        <!-- <div class="swiper-btn">
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-button-next"></div>
-        </div> -->
+        </div>       
     </div>
-    <% if (allMedia.filter(item => item[0].mode === 'Popular').length > 0) { %>
-    <!-- Popular Section -->
-    <section class="popular-section container" id="popular-section">
-        <div class="heading">
-            <h2 class="heading-title">Popular on <span class="main-span">Dolu</span></h2>
-        </div>
-        <!-- Content -->
-        <!-- Slider main container -->
-        <div class="content-1 swiper">
-            <!-- Additional required wrapper -->
-            <div class="swiper-wrapper">
-                <!-- Slides --> 
-                <% for( let i = 0; i < movies.filter(item => item.mode === 'Popular').length; i++ ) { %>
-                    <div class="swiper-slide">
-                        <div class="card-box">
-                            <img src="<%= movies[i].portraitImage %>" class="card-box-img" alt="">
-                            <div class="box-content">
-                                <h2 class="content-title"><a href="watch/<%= movies[i].slug %>"><%= movies[i].title %></a></h2>
-                                <span class="content-type"><%= movies[i].genres.slice(0,3) %></span>
-                                <span class="content-duration"><%= movies[i].duration %> min</span>
-                                <span class="content-rate">Imdb: <%= movies[i].rating %></span>
-                                <a href="watch/<%= movies[i].slug %>" class="play-btn hidden">
-                                    <i class="bx bx-right-arrow"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                <% } %> 
-
+    
+    <% if (allMedia.filter(item => item).length > 0) { %>
+        <!-- Popular Section -->
+        <section class="popular-section container" id="popular-section">
+            <div class="heading">
+                <h2 class="heading-title">Popular on <span class="main-span">Dolu</span></h2>
             </div>
-        </div>
-    </section>
-    <% } %> 
+            <!-- Content -->
+            <!-- Slider main container -->
+            <div class="content-1 swiper">
+                <!-- Additional required wrapper -->
+                <div class="swiper-wrapper">
+                    <!-- Slides --> 
+                    <% for( let i = 0; i < allMedia.length; i++ ) { %>
+                        <% if (allMedia[i].mode === 'Popular') { %>
+                            <div class="swiper-slide">
+                                <div class="card-box">
+                                    <img src="<%= allMedia[i].portraitImage %>" class="card-box-img" alt="">
+                                    <div class="box-content">
+                                        <h2 class="content-title"><a href="watch/<%= allMedia[i].slug %>"><%= allMedia[i].title %></a></h2>
+                                        <span class="content-type"><%= allMedia[i].genres.slice(0,3) %></span>
+                                        <span class="content-duration"><%= allMedia[i].duration %> min</span>
+                                        <span class="content-rate">Imdb: <%= allMedia[i].rating %></span>
+                                        <a href="watch/<%= allMedia[i].slug %>" class="play-btn hidden">
+                                            <i class="bx bx-right-arrow"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        <% } %>
+                    <% } %>
+    
+                </div>
+            </div>
+        </section>
+        <% } %> 
+
     <% if (interfaceSettingData[0].homeSections.featuredMoviesSection === 'on' && shows.filter(item => item.mode === 'Featured').length > 0) { %>
     <!-- Featured Tv Shows Section -->
     <section class="featured-shows container" id="featured-shows">

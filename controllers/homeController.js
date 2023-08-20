@@ -15,7 +15,7 @@ class home_Pages {
         const user = await User.findOne({_id: req.user.userId})
         const bookmarks = await Bookmark.find({user: user.id}) 
 
-        const allMedia = [shows,movies]
+        const allMedia = [...shows,...movies]
         const genres = shows.slice(0,10).map(item => item.genres) 
         let genreSet = [...new Set(genres.flat())] 
          res.render('home',{
@@ -32,11 +32,14 @@ class home_Pages {
      async getMoviesPage(req,res) {
          const movies = await Movie.find().sort('-createdAt')
          const genres = movies.slice(0,10).map(item => item.genres)
+         const user = await User.findOne({_id: req.user.userId})
+         const bookmarks = await Bookmark.find({user: user.id}) 
          let genreSet = [...new Set(genres.flat())]
          res.render('movies', {
             title:'Movies',
             movies,
             genreSet,
+            bookmarks,
             interfaceSettingData: await interfaceData(),
          })
      } 
