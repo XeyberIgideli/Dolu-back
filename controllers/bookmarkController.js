@@ -15,7 +15,7 @@ class bookmarks {
     let id = bookmark.bookmarks[0].bookmark.split('-')[1]
     let obj = {
              bookmark: `${req.body.name}-${id}`,
-             icon: 'test1'
+             icon: req.body.icon
         }
     try {
             if (req.body.name.length === 0) {

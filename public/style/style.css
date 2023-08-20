@@ -399,7 +399,7 @@ section {
     align-items: center;
     gap: 0.5rem; 
 }
-.bx-star {
+.bx-star:not(.icon-bookmark i) {
     color: var(--main-color);
 }
 .home-add-bookmark {
@@ -1538,6 +1538,24 @@ input[type="submit"] {
 }
 .bookmarks .movie-image-full {
     z-index: -1;
+}
+
+.icons-bookmarks {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-bookmark {
+    font-size: 1.8rem;
+    color: #797877;
+}
+
+.selected {
+    border: 1px solid #393836; 
+    padding: 0.5rem;
+    color:var(--main-color)
 }
  
 .bookmarks .grid-content,

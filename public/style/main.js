@@ -308,5 +308,19 @@ if(pageName === 'watch' && slugUrl.split('-').slice(-1)[0] === 'show') {
 } else {
    getMoviePlay()
 }
-  
+// Bookmark icon selecting 
+const icons = document.querySelectorAll('.icon-bookmark')
+const iconBtn = document.querySelector('.iconBookmark')
+
+icons.forEach(item => { 
+  item.addEventListener('click', (e) => { 
+    iconBtn.value = e.target.classList[0] + ' ' + e.target.classList[1]  
+    const selectedIcon = item.parentElement.querySelector('.selected')
+
+    if (selectedIcon) {
+      selectedIcon.classList.remove('selected')
+    }
+     e.target.classList.toggle('selected')
+  })
+})
  

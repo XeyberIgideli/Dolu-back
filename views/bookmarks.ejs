@@ -17,7 +17,7 @@
                 <% for( let i = 0; i < bookmarks.length; i++ ) { %>
                      <li>
                         <a href="bookmarks/<%= bookmarks[i].bookmark.split(' ').join('-').toLowerCase()%>" class="bookmark-item">
-                            <i class="bx bxs-<%= bookmarks[i].icon %>-ul"></i>
+                            <i class="<%= bookmarks[i].icon %>"></i>
                             <span><%= bookmarks[i].bookmark.split('-')[0]%></span>
                         </a>
                      </li> 
@@ -52,6 +52,15 @@
           <div class="modal-bookmark">
             <form action="bookmarks/create" method="POST">
                 <input type="text" class="form-control" name="name"  id="basic-default-name" placeholder="Classics..." />
+                <ul class="icons-bookmarks">
+                    <li class="icon-bookmark"><i class="bx bx-heart"></i></li>
+                    <li class="icon-bookmark"><i class="bx bx-list-ul"></i></li>
+                    <li class="icon-bookmark"><i class="bx bx-time"></i></li>
+                    <li class="icon-bookmark"><i class="bx bxs-bookmark-heart"></i></li>
+                    <li class="icon-bookmark"><i class="bx bx-like"></i></li>
+                    <li class="icon-bookmark"><i class="bx bx-star"></i></li>
+                </ul>
+                <input type="hidden" class="iconBookmark" name="icon" value="">
                 <button class="create-bookmark-list"> Create New List</button>
             </form>
           </div>
