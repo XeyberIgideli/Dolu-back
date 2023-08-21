@@ -14,7 +14,6 @@ class home_Pages {
         const shows = await Show.find().sort('-createdAt') 
         const user = await User.findOne({_id: req.user.userId})
         const bookmarks = await Bookmark.find({user: user.id}) 
-
         const allMedia = [...shows,...movies]
         const genres = shows.slice(0,10).map(item => item.genres) 
         let genreSet = [...new Set(genres.flat())] 

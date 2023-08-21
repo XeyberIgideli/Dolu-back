@@ -10,15 +10,15 @@ async function register (req,res,next) {
         let obj = [
             {
                  bookmark: `My Favorites-${id}`,
-                 icon: 'test1'
+                 icon: 'bx bx-heart'
             },
             {
                  bookmark: `Liked-${id}`,
-                 icon: 'test1'
+                 icon: 'bx bx-like'
              },
             {
                  bookmark: `Later-${id}`,
-                 icon: 'test1'
+                 icon: 'bx bx-time'
             }]
         const user = await User.create({...req.body,bookmarks: obj})
         const token = user.createJWT()

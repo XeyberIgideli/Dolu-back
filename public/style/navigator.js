@@ -50,7 +50,7 @@ async function addBookmark(data) {
   if(mediaTitle) {
     data.title = mediaTitle
   } 
-
+  console.log(data)
     await axios.post('../bookmarks/add',data, {headers: {
       "Content-Type": "application/json",
 

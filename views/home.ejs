@@ -208,7 +208,7 @@
                 </div>
             </div> 
             
-            <!-- If user watched anything, then display it -->
+            <!-- If the user has not watched anything,then show it -->
 
             <!-- <div class="watching-list swiper">
                 <div class="swiper-wrapper">
@@ -232,39 +232,39 @@
     
     <% if (allMedia.filter(item => item).length > 0) { %>
         <!-- Popular Section -->
-        <section class="popular-section container" id="popular-section">
-            <div class="heading">
-                <h2 class="heading-title">Popular on <span class="main-span">Dolu</span></h2>
-            </div>
-            <!-- Content -->
-            <!-- Slider main container -->
-            <div class="content-1 swiper">
-                <!-- Additional required wrapper -->
-                <div class="swiper-wrapper">
-                    <!-- Slides --> 
-                    <% for( let i = 0; i < allMedia.length; i++ ) { %>
-                        <% if (allMedia[i].mode === 'Popular') { %>
-                            <div class="swiper-slide">
-                                <div class="card-box">
-                                    <img src="<%= allMedia[i].portraitImage %>" class="card-box-img" alt="">
-                                    <div class="box-content">
-                                        <h2 class="content-title"><a href="watch/<%= allMedia[i].slug %>"><%= allMedia[i].title %></a></h2>
-                                        <span class="content-type"><%= allMedia[i].genres.slice(0,3) %></span>
-                                        <span class="content-duration"><%= allMedia[i].duration %> min</span>
-                                        <span class="content-rate">Imdb: <%= allMedia[i].rating %></span>
-                                        <a href="watch/<%= allMedia[i].slug %>" class="play-btn hidden">
-                                            <i class="bx bx-right-arrow"></i>
-                                        </a>
-                                    </div>
+    <section class="popular-section container" id="popular-section">
+        <div class="heading">
+            <h2 class="heading-title">Popular on <span class="main-span">Dolu</span></h2>
+        </div>
+        <!-- Content -->
+        <!-- Slider main container -->
+        <div class="content-1 swiper">
+            <!-- Additional required wrapper -->
+            <div class="swiper-wrapper">
+                <!-- Slides --> 
+                <% for( let i = 0; i < allMedia.length; i++ ) { %>
+                    <% if (allMedia[i].mode === 'Popular') { %>
+                        <div class="swiper-slide">
+                            <div class="card-box">
+                                <img src="<%= allMedia[i].portraitImage %>" class="card-box-img" alt="">
+                                <div class="box-content">
+                                    <h2 class="content-title"><a href="watch/<%= allMedia[i].slug %>"><%= allMedia[i].title %></a></h2>
+                                    <span class="content-type"><%= allMedia[i].genres.slice(0,3) %></span>
+                                    <span class="content-duration"><%= allMedia[i].duration %> min</span>
+                                    <span class="content-rate">Imdb: <%= allMedia[i].rating %></span>
+                                    <a href="watch/<%= allMedia[i].slug %>" class="play-btn hidden">
+                                        <i class="bx bx-right-arrow"></i>
+                                    </a>
                                 </div>
                             </div>
-                        <% } %>
+                        </div>
                     <% } %>
-    
-                </div>
+                <% } %>
+
             </div>
-        </section>
-        <% } %> 
+        </div>
+    </section>
+    <% } %> 
 
     <% if (interfaceSettingData[0].homeSections.featuredMoviesSection === 'on' && shows.filter(item => item.mode === 'Featured').length > 0) { %>
     <!-- Featured Tv Shows Section -->
@@ -301,131 +301,32 @@
     <!-- Your Watchlist -->
     <section class="fav-list container"> 
         <div class="heading">
-            <h2 class="heading-title"><span class="main-span">Your</span> Watchlist</h2>
+            <h2 class="heading-title"><span class="main-span">Your</span> <%= user.bookmarks[user.bookmarks.length-1].bookmark.split('-')[0] %></h2>
         </div>
         <div class="your-list swiper">
             <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <div class="card-box">
-                        <img src="img/w1.jpg" class="card-box-img" alt="">
-                        <div class="box-content">
-                            <h2 class="content-title">Spider: No Way Home</h2>
-                            <span class="content-type">Action</span>
-                            <span class="content-duration">128 min</span>
-                            <span class="content-list-group"><i class="bx bxs-bookmark"></i></span>
-                            <a href="" class="play-btn hidden">
-                                <i class="bx bx-right-arrow"></i>
-                            </a>
-                        </div>
-                    </div>
-                 </div>
-
-                 <div class="swiper-slide">
-                    <div class="card-box">
-                        <img src="img/w1.jpg" class="card-box-img" alt="">
-                        <div class="box-content">
-                            <h2 class="content-title">Spider: No Way Home</h2>
-                            <span class="content-type">Action</span>
-                            <span class="content-duration">128 min</span>
-                            <span class="content-list-group"><i class="bx bxs-bookmark"></i></span>
-                            <a href="" class="play-btn hidden">
-                                <i class="bx bx-right-arrow"></i>
-                            </a>
-                        </div>
-                    </div>
-                 </div>
-
-                 <div class="swiper-slide">
-                    <div class="card-box">
-                        <img src="img/w1.jpg" class="card-box-img" alt="">
-                        <div class="box-content">
-                            <h2 class="content-title">Spider: No Way Home</h2>
-                            <span class="content-type">Action</span>
-                            <span class="content-duration">128 min</span>
-                            <span class="content-list-group"><i class="bx bxs-bookmark"></i></span>
-                            <a href="" class="play-btn hidden">
-                                <i class="bx bx-right-arrow"></i>
-                            </a>
-                        </div>
-                    </div>
-                 </div>
-
-                 <div class="swiper-slide">
-                    <div class="card-box">
-                        <img src="img/w1.jpg" class="card-box-img" alt="">
-                        <div class="box-content">
-                            <h2 class="content-title">Spider: No Way Home</h2>
-                            <span class="content-type">Action</span>
-                            <span class="content-duration">128 min</span>
-                            <span class="content-list-group"><i class="bx bxs-bookmark"></i></span>
-                            <a href="" class="play-btn hidden">
-                                <i class="bx bx-right-arrow"></i>
-                            </a>
-                        </div>
-                    </div>
-                 </div>
-
-                 <div class="swiper-slide">
-                    <div class="card-box">
-                        <img src="img/w1.jpg" class="card-box-img" alt="">
-                        <div class="box-content">
-                            <h2 class="content-title">Spider: No Way Home</h2>
-                            <span class="content-type">Action</span>
-                            <span class="content-duration">128 min</span>
-                            <span class="content-list-group"><i class="bx bxs-bookmark"></i></span>
-                            <a href="" class="play-btn hidden">
-                                <i class="bx bx-right-arrow"></i>
-                            </a>
-                        </div>
-                    </div>
-                 </div>
-
-                 <div class="swiper-slide">
-                    <div class="card-box">
-                        <img src="img/w1.jpg" class="card-box-img" alt="">
-                        <div class="box-content">
-                            <h2 class="content-title">Spider: No Way Home</h2>
-                            <span class="content-type">Action</span>
-                            <span class="content-duration">128 min</span>
-                            <span class="content-list-group"><i class="bx bxs-bookmark"></i></span>
-                            <a href="" class="play-btn hidden">
-                                <i class="bx bx-right-arrow"></i>
-                            </a>
-                        </div>
-                    </div>
-                 </div>
-
-                 <div class="swiper-slide">
-                    <div class="card-box">
-                        <img src="img/w1.jpg" class="card-box-img" alt="">
-                        <div class="box-content">
-                            <h2 class="content-title">Spider: No Way Home</h2>
-                            <span class="content-type">Action</span>
-                            <span class="content-duration">128 min</span>
-                            <span class="content-list-group"><i class="bx bxs-bookmark"></i></span>
-                            <a href="" class="play-btn hidden">
-                                <i class="bx bx-right-arrow"></i>
-                            </a>
-                        </div>
-                    </div>
-                 </div>
-
-                 <div class="swiper-slide">
-                    <div class="card-box">
-                        <img src="img/w1.jpg" class="card-box-img" alt="">
-                        <div class="box-content">
-                            <h2 class="content-title">Spider: No Way Home</h2>
-                            <span class="content-type">Action</span>
-                            <span class="content-duration">128 min</span>
-                            <span class="content-list-group"><i class="bx bxs-bookmark"></i></span>
-                            <a href="" class="play-btn hidden">
-                                <i class="bx bx-right-arrow"></i>
-                            </a>
-                        </div>
-                    </div>
-                 </div>
-
-
+                <% bookmarks.forEach(item => { %>
+                    <% if (item.bookmark === user.bookmarks[user.bookmarks.length-1].bookmark) { %>
+                        <% allMedia.forEach(media => { %>
+                            <% if (item.title === media.title) { %>
+                                <div class="swiper-slide">
+                                    <div class="card-box">
+                                        <img src="<%= media.portraitImage %>" class="card-box-img" alt="">
+                                        <div class="box-content">
+                                            <a href="watch/<%= media.slug %>"><h2 class="content-title"><%= media.title %></h2></a>
+                                            <span class="content-type"><%= media.genres.slice(0,3) %></span>
+                                            <span class="content-duration"><%= media.duration %> min</span>
+                                            <span class="content-list-group"><i class="<%= user.bookmarks[user.bookmarks.length-1].icon %>"></i></span>
+                                            <a href="watch/<%= media.slug %>" class="play-btn hidden">
+                                                <i class="bx bx-right-arrow"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                 </div> 
+                            <% } %>
+                        <% }) %>
+                    <% } %>
+                <% }) %>
              </div> 
         </div>
     </section>
@@ -720,6 +621,7 @@
         <% } %>        
     </section>
     <% } %>
+
     <!-- TABS -->
     
     <!-- Settings Tab -->
