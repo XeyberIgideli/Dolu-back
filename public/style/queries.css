@@ -13,7 +13,7 @@
 }
 @media (min-width: 1350px) {
     .continue-watching {
-        top: 25rem!important; 
+        top: 21rem!important; 
     }  
     .continue-watching .card-box {
         height: 210px;
@@ -72,10 +72,7 @@
     .movie-text {
         gap: 0.87rem;
         padding-top: 0.5rem;
-    }
-    .sidebar {
-        height: 100vh;
-    }
+    } 
     .sidebar-user {
         padding-left: 0;
     }
