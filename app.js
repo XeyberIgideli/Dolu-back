@@ -82,7 +82,7 @@ app.use((req,res,next) => {
 
 // Security
 app.use(cors({
-    origin: 'http://localhost:8300',
+    origin: '*',
 	credentials: true
 }))
 

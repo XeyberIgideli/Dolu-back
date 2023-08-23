@@ -15,7 +15,6 @@ window.onload = function() {
   setTimeout(hideLoader, 1600);
 };
 
-
 // Request to TMDB API
 
 const apiKey = 'e8b3201ef028f52f8def6d5e7aeb2636';

@@ -4,6 +4,8 @@ import Movie from "../models/Movie.js"
 import Show from "../models/Show.js"
 import Episode from "../models/Episode.js"
 import InterfaceSetting from "../models/Interface.js" 
+import WebTorrent from "webtorrent"
+const client = new WebTorrent()
 
 async function interfaceData () {
    return await InterfaceSetting.find();
@@ -14,6 +16,7 @@ class home_Pages {
         const shows = await Show.find().sort('-createdAt') 
         const user = await User.findOne({_id: req.user.userId})
         const bookmarks = await Bookmark.find({user: user.id}) 
+
         const allMedia = [...shows,...movies]
         const genres = shows.slice(0,10).map(item => item.genres) 
         let genreSet = [...new Set(genres.flat())] 
@@ -77,6 +80,41 @@ class home_Pages {
          const episodes = await Episode.find({show:showData._id})
          res.json(episodes)
       }
+     }
+
+     streamFile(req,res,next) {
+      const torrentID = 'https://zoink.ch/torrent/Ahsoka.S01E02.720p.WEB.x265-MiNX[eztv.re].mkv.torrent'
+      
+      client.add(torrentID,{addUID:true,strategy:'sequential'}, function (torrent) {
+         const file = torrent.files.find(function (file) {
+         return file.name.endsWith('.mkv')})
+ 
+         if (!file) {
+         res.status(404).send('MKV file not found in the torrent.');
+         return;
+         }
+         const fileStream = file.createReadStream()
+         
+         res.setHeader('Content-Type', 'video/mkv')
+
+         fileStream.pipe(res,{end:false}) 
+
+         fileStream.on('end', () => {
+            res.end() // Close the response when the stream finished
+         });
+      
+         fileStream.on('error', (error) => {
+            res.end() // Close the response when error appeared
+         });
+      
+         res.on('close', () => {
+            // Destroy stream when browser connection lost
+            fileStream.destroy();
+         })
+
+         client.on('error', err => {})
+      })  
+      
      }
  }
  
