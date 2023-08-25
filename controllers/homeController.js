@@ -6,6 +6,7 @@ import Episode from "../models/Episode.js"
 import InterfaceSetting from "../models/Interface.js" 
 import TorrentSearchApi from 'torrent-search-api'
 import WebTorrent from "webtorrent"
+import {Transform} from 'stream'
 
 TorrentSearchApi.enableProvider('1337x')
 const client = new WebTorrent()
@@ -86,58 +87,90 @@ class home_Pages {
       }
      }
 
-     async streamFile(req,res) {
-      // const torrents = await TorrentSearchApi.search(req.params.slug, 'Movies', 4);
-      // const magnet = await TorrentSearchApi.getMagnet(torrents[0]); 
+   async streamFile(req,res) {
+      const torrents = await TorrentSearchApi.search('Titanic 1997', 'Movies', 7);
+      const torrentFiltered = torrents.filter(torrent => torrent.seeds > 3 && torrent.size < '1.3 GB' )
+      // const magnet = await TorrentSearchApi.getMagnet(torrentFiltered[0]); 
+
       const torrentID = 'https://webtorrent.io/torrents/sintel.torrent'
-      
-      client.add(torrentID,{addUID:true,strategy:'sequential'}, function (torrent) {
-         const file = torrent.files.find(function (file) {
+       
+      client.add(torrentID,{addUID:true,strategy:'rarest'}, function (torrent) {
+         
+         const subtitleLang = req.query.subtitle 
+
+         let file = torrent.files.find(function (file) {
          return file.name.endsWith('.mp4')})
-
-         if (!file) {
-         res.status(404).send('MKV file not found in the torrent.')
-         return
-         } 
-
-         res.setHeader('Content-Type', 'video/mp4')
-
-
-         // Doing this for sending stream data as piece, so preventing memory problems
-         // Also for enabling seeking
          
-         const range = req.headers.range
-         const positions = range.replace(/bytes=/, '').split('-')
-         
-         const start = parseInt(positions[0],10)
-         const end = positions[1] ? parseInt(positions[1], 10) : file.length - 1
-
-         const chunksize = (end - start) + 1
-
-         res.statusCode = 206
-         res.setHeader('Content-Range', `bytes ${start}-${end}/${file.length}`)
-         res.setHeader('Accept-Ranges', 'bytes')
-         res.setHeader('Content-Length', chunksize)
-
-         const fileStream = file.createReadStream({ start, end })
-
-         fileStream.pipe(res) 
-
-         fileStream.on('end', () => {
-            res.end() // Close the response when the stream finished
-         });
-      
-         fileStream.on('error', (error) => {
-            res.end() // Close the response when error appeared
-         });
-      
-         res.on('close', () => {
-            // Destroy stream when browser connection lost
-            fileStream.destroy();
+         const subtitle = torrent.files.find(file => {
+            return file.name.endsWith('.srt')
          })
 
-         client.on('error', err => {})
+         if (!subtitle) {
+            res.status(404).send('SRT file not found in the torrent.')
+            return
+         } 
+
+         if (!file) {
+            res.status(404).send('MEDIA file not found in the torrent.')
+            return
+         } 
+
+         let start = 0
+         let end = 0
+         
+         if(subtitleLang) {
+            res.setHeader('Content-Type', 'text/plain')
+            file = subtitle
+         } else {
+            res.setHeader('Content-Type', 'video/mp4')
+             // ****
+            // Doing this for sending stream data as piece, so preventing memory problems
+            // Also for enabling seeking
+            const range = req.headers.range
+            const positions = range.replace(/bytes=/, '').split('-')
+            
+            start = parseInt(positions[0],10)
+            end = positions[1] ? parseInt(positions[1], 10) : file.length - 1
+            const chunksize = (end - start) + 1
+
+            res.statusCode = 206
+            res.setHeader('Content-Range', `bytes ${start}-${end}/${file.length}`)
+            res.setHeader('Accept-Ranges', 'bytes')
+            res.setHeader('Content-Length', chunksize)
+            // ***
+         }
+         const fileStream = file.createReadStream({start,end})
+
+            // Create a Transform stream to intercept errors
+            const errorHandler = new Transform({
+               transform(chunk, encoding, callback) {
+                   // Pass the chunk as-is to the output, but catch errors
+                   try {
+                       callback(null, chunk);
+                   } catch (error) {
+                       console.error(error);
+                       res.end();
+                   }
+               }
+           });
+
+         fileStream.pipe(errorHandler).pipe(res,{end:false}) 
+
+         fileStream.on('error', error => {
+            console.error(error); 
+        });
+
+        fileStream.on('end', () => {
+            res.end();
+        });
+          
+         // res.on('close', () => {
+         //    // Destroy stream when browser connection lost
+         //    fileStream.destroy();
+         // })
+
       })  
+      client.on('error', err => {})
       
      }
  }
