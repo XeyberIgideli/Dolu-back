@@ -10,6 +10,7 @@ import {Transform} from 'stream'
 
 TorrentSearchApi.enableProvider('1337x')
 const client = new WebTorrent()
+client.torrentsAdded = []
 
 async function interfaceData () {
    return await InterfaceSetting.find();
@@ -59,7 +60,6 @@ class home_Pages {
          })
      }
      async getWatchPage(req,res) { 
-
          const media = await Movie.findOne({slug: req.params.slug}) ?? await Show.findOne({slug: req.params.slug})
          const user = await User.findOne({_id: req.user.userId})
          let episodes
@@ -79,6 +79,7 @@ class home_Pages {
             title: media.title
          })
      }
+
      async getEpisodes(req,res) {
       const showData = await Show.findOne({slug: req.params.slug})
       if(showData) {
@@ -87,93 +88,106 @@ class home_Pages {
       }
      }
 
-   async streamFile(req,res) {
-      const torrents = await TorrentSearchApi.search('Titanic 1997', 'Movies', 7);
-      const torrentFiltered = torrents.filter(torrent => torrent.seeds > 3 && torrent.size < '1.3 GB' )
-      // const magnet = await TorrentSearchApi.getMagnet(torrentFiltered[0]); 
+    streamFile(req,res) {
+         // const torrents = await TorrentSearchApi.search('Titanic 1997', 'Movies', 7);
+         // const torrentFiltered = torrents.filter(torrent => torrent.seeds > 3 && torrent.size < '1.3 GB' )
+         // const magnet = await TorrentSearchApi.getMagnet(torrentFiltered[0]); 
 
-      const torrentID = 'https://webtorrent.io/torrents/sintel.torrent'
-       
-      client.add(torrentID,{addUID:true,strategy:'rarest'}, function (torrent) {
+         const torrentId = 'magnet:?xt=urn:btih:08ada5a7a6183aae1e09d831df6748d566095a10&dn=Sintel&tr=udp%3A%2F%2Fexplodie.org%3A6969&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.empire-js.us%3A1337&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337&tr=wss%3A%2F%2Ftracker.btorrent.xyz&tr=wss%3A%2F%2Ftracker.fastcast.nz&tr=wss%3A%2F%2Ftracker.openwebtorrent.com&ws=https%3A%2F%2Fwebtorrent.io%2Ftorrents%2F&xs=https%3A%2F%2Fwebtorrent.io%2Ftorrents%2Fsintel.torrent'
          
-         const subtitleLang = req.query.subtitle 
+         client.get(torrentId).then(result => {
+            if(result) {
+               result.destroy()
+               addTorrent()
+            } else {
+               addTorrent()
+            }
+         }) 
 
-         let file = torrent.files.find(function (file) {
-         return file.name.endsWith('.mp4')})
+         function addTorrent() {
+            client.add(torrentId,{private:true,destroyStoreOnDestroy:true}, function ontorrent (torrent) {
+               const subtitleLang = req.query.subtitle 
+      
+               let file = torrent.files.find(function (file) {
+                  return file.name.endsWith('.mp4')
+               })
+               
+               const subtitle = torrent.files.find(file => {
+                  return file.name.endsWith('.srt')
+               })
+      
+               if (!subtitle) {
+                  res.status(404).send('SRT file not found in the torrent.')
+                  return
+               } 
+      
+               if (!file) {
+                  res.status(404).send('MEDIA file not found in the torrent.')
+                  return
+               } 
+      
+               let start = 0
+               let end = 0
+               
+               if(subtitleLang) {
+                  res.setHeader('Content-Type', 'text/plain')
+                  file = subtitle
+               } else {
+                  res.setHeader('Content-Type', 'video/mp4')
+                  // ****
+                  // Doing this for sending stream data as piece, so preventing memory problems
+                  // Also for enabling seeking
+                  const range = req.headers.range
+                  const positions = range.replace(/bytes=/, '').split('-')
+                  
+                  start = parseInt(positions[0],10)
+                  end = positions[1] ? parseInt(positions[1], 10) : file.length - 1
+                  const chunksize = (end - start) + 1
+      
+                  res.statusCode = 206
+                  res.setHeader('Content-Range', `bytes ${start}-${end}/${file.length}`)
+                  res.setHeader('Accept-Ranges', 'bytes')
+                  res.setHeader('Content-Length', chunksize)
+                  // ****
+      
+               }
+      
+               const fileStream = file.createReadStream({start,end})
+      
+               // a Transform stream to intercept errors
+               const errorHandler = new Transform({
+                  transform(chunk, encoding, callback) {
+                        // Pass the chunk as-is to the output, but catch errors
+                        try {
+                           callback(null, chunk); 
+                           
+                        } catch (error) {
+                           console.error(error);
+                           res.end();
+                        }
+                  }
+               });
+      
+               fileStream.pipe(errorHandler).pipe(res,{end:true}) 
+      
+               fileStream.on('end', () => {
+                     res.end();
+               });
+               
+               res.on('close', () => {
+                  // Destroy stream when browser connection lost
+                  fileStream.destroy();
+               }) 
+               
+         })  
+         }
          
-         const subtitle = torrent.files.find(file => {
-            return file.name.endsWith('.srt')
+         client.on('error' , (err) => {
+            console.log(err)
          })
 
-         if (!subtitle) {
-            res.status(404).send('SRT file not found in the torrent.')
-            return
-         } 
-
-         if (!file) {
-            res.status(404).send('MEDIA file not found in the torrent.')
-            return
-         } 
-
-         let start = 0
-         let end = 0
-         
-         if(subtitleLang) {
-            res.setHeader('Content-Type', 'text/plain')
-            file = subtitle
-         } else {
-            res.setHeader('Content-Type', 'video/mp4')
-             // ****
-            // Doing this for sending stream data as piece, so preventing memory problems
-            // Also for enabling seeking
-            const range = req.headers.range
-            const positions = range.replace(/bytes=/, '').split('-')
-            
-            start = parseInt(positions[0],10)
-            end = positions[1] ? parseInt(positions[1], 10) : file.length - 1
-            const chunksize = (end - start) + 1
-
-            res.statusCode = 206
-            res.setHeader('Content-Range', `bytes ${start}-${end}/${file.length}`)
-            res.setHeader('Accept-Ranges', 'bytes')
-            res.setHeader('Content-Length', chunksize)
-            // ***
-         }
-         const fileStream = file.createReadStream({start,end})
-
-            // Create a Transform stream to intercept errors
-            const errorHandler = new Transform({
-               transform(chunk, encoding, callback) {
-                   // Pass the chunk as-is to the output, but catch errors
-                   try {
-                       callback(null, chunk);
-                   } catch (error) {
-                       console.error(error);
-                       res.end();
-                   }
-               }
-           });
-
-         fileStream.pipe(errorHandler).pipe(res,{end:false}) 
-
-         fileStream.on('error', error => {
-            console.error(error); 
-        });
-
-        fileStream.on('end', () => {
-            res.end();
-        });
-          
-         // res.on('close', () => {
-         //    // Destroy stream when browser connection lost
-         //    fileStream.destroy();
-         // })
-
-      })  
-      client.on('error', err => {})
-      
-     }
- }
+      }
+   }
  
  let homePages = new home_Pages()
  
