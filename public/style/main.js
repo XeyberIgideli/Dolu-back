@@ -291,7 +291,21 @@ movieServerLinks.forEach(item => {
     document.querySelector('.sidebar').style.display = 'none'
     document.querySelector('.header').style.display = 'none' 
     const serverName = e.target.classList[0] || e.target.parentElement.classList[0]
-    let iframe = document.querySelector('#iframe')
+    let player
+    let iframe
+    if(serverName === 'dolusrc') {
+      moviePlayer.insertAdjacentHTML('afterbegin', `<div style="width:100%;height:100%;" id="player"></div>`)
+      player = new Playerjs({id:'player', file:"[480p]../stream/titanic-1997,[720p]../stream/titanic-1997",cuid:"video123",autoplay:1,default_quality:'720p'})
+      if(iframe) {
+        document.querySelector('#iframe').remove()
+      }
+    } else {
+      document.querySelector('#player').remove()
+      moviePlayer.insertAdjacentHTML('beforeend', ` <iframe allow="encrypted-media" scrolling="no" id="iframe" src="" 
+      width="100%" height="100%" frameborder="0" allowfullscreen></iframe> -->`)
+      iframe = document.querySelector('#iframe')
+    }
+
     if(Object.keys(movieServers).includes(serverName)) { 
       iframe.src = movieServers[serverName] 
       iframe.setAttribute("sandbox", "allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation");

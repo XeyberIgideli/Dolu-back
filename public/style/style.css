@@ -1663,9 +1663,6 @@ input[type="submit"] {
   
 /* Player */
  
-#player {
-    width: 97%!important;
-}
 .playerWrapper {
     position: absolute;
     top: 0.6rem;
