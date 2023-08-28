@@ -4,7 +4,7 @@ import Movie from "../models/Movie.js"
 import Show from "../models/Show.js"
 import Episode from "../models/Episode.js"
 import InterfaceSetting from "../models/Interface.js" 
-
+import Storage from 'memory-chunk-store'
 import { torrentSearch } from "../utils/torrent.js"
 import WebTorrent from "webtorrent"
 import {Transform} from 'stream'
@@ -89,7 +89,7 @@ class home_Pages {
 
    async streamFile(req,res) {
       const title = req.params.slug
-      const torrentId = 'magnet:?xt=urn:btih:08ada5a7a6183aae1e09d831df6748d566095a10&dn=Sintel&tr=udp%3A%2F%2Fexplodie.org%3A6969&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.empire-js.us%3A1337&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337&tr=wss%3A%2F%2Ftracker.btorrent.xyz&tr=wss%3A%2F%2Ftracker.fastcast.nz&tr=wss%3A%2F%2Ftracker.openwebtorrent.com&ws=https%3A%2F%2Fwebtorrent.io%2Ftorrents%2F&xs=https%3A%2F%2Fwebtorrent.io%2Ftorrents%2Fsintel.torrent'
+      const torrentId = await torrentSearch(title)
 
       client.on('error' , (err) => {
          console.log(err)
@@ -109,7 +109,7 @@ class home_Pages {
       }) 
 
       function addTorrent() {
-         client.add(torrentId,{destroyStoreOnDestroy:true}, function ontorrent (torrent) {
+         client.add(torrentId,{destroyStoreOnDestroy:true,store: Storage}, function ontorrent (torrent) {
             const subtitleLang = req.query.subtitle  
             let file = torrent.files.find(function (file) {
                return file.name.endsWith('.mp4')
@@ -174,15 +174,14 @@ class home_Pages {
                }
             });
    
-            fileStream.pipe(errorHandler).pipe(res,{end:true}) 
-   
+            fileStream.pipe(errorHandler).pipe(res,{end:true})  
+
             fileStream.on('end', () => {
                   res.end();
             }); 
-             
             res.on('close', () => {
                // Destroy stream when browser connection lost 
-               fileStream.destroy();
+               fileStream.destroy(); 
             }) 
             
       })  
