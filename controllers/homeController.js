@@ -89,13 +89,18 @@ class home_Pages {
 
    async streamFile(req,res) {
       const title = req.params.slug
-      const torrentId = await torrentSearch(title)
-      client.on('error' , (err) => {})
+      const torrentId = 'magnet:?xt=urn:btih:08ada5a7a6183aae1e09d831df6748d566095a10&dn=Sintel&tr=udp%3A%2F%2Fexplodie.org%3A6969&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.empire-js.us%3A1337&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337&tr=wss%3A%2F%2Ftracker.btorrent.xyz&tr=wss%3A%2F%2Ftracker.fastcast.nz&tr=wss%3A%2F%2Ftracker.openwebtorrent.com&ws=https%3A%2F%2Fwebtorrent.io%2Ftorrents%2F&xs=https%3A%2F%2Fwebtorrent.io%2Ftorrents%2Fsintel.torrent'
+
+      client.on('error' , (err) => {
+         console.log(err)
+      })
+      
       let destroyed = false
+
       client.get(torrentId).then(result => {
          if(result) { 
             result.destroy({destroyStoreOnDestroy:true}, () => {
-               destroyed = true
+               console.log('Destroyed')
             })
             addTorrent()
          } else {
@@ -105,12 +110,10 @@ class home_Pages {
 
       function addTorrent() {
          client.add(torrentId,{destroyStoreOnDestroy:true}, function ontorrent (torrent) {
-            const subtitleLang = req.query.subtitle 
-   
+            const subtitleLang = req.query.subtitle  
             let file = torrent.files.find(function (file) {
                return file.name.endsWith('.mp4')
             })
-            
             // const subtitle = torrent.files.find(file => {
             //    return file.name.endsWith('.srt')
             // })
@@ -132,7 +135,8 @@ class home_Pages {
                res.setHeader('Content-Type', 'text/plain')
                // file = subtitle
             } else {
-               res.setHeader('Content-Type', 'video/mp4')
+               res.setHeader("Content-Type","video/mp4")
+               
                // ****
                // Doing this for sending stream data as piece, so preventing memory problems
                // Also for enabling seeking
@@ -146,10 +150,12 @@ class home_Pages {
                end = positions[1] ? parseInt(positions[1], 10) : file.length - 1
                const chunksize = (end - start) + 1
    
+
                res.statusCode = 206
                res.setHeader('Content-Range', `bytes ${start}-${end}/${file.length}`)
                res.setHeader('Accept-Ranges', 'bytes')
                res.setHeader('Content-Length', chunksize)
+
                // ****
    
             }
@@ -172,10 +178,10 @@ class home_Pages {
    
             fileStream.on('end', () => {
                   res.end();
-            });
+            }); 
              
             res.on('close', () => {
-               // Destroy stream when browser connection lost
+               // Destroy stream when browser connection lost 
                fileStream.destroy();
             }) 
             
