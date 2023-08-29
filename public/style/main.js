@@ -199,7 +199,6 @@ seasonList?.addEventListener('change', (e) => {
   getEpisodes(season)
 
 })
-
 async function getEpisodes (seasonIn) {
   const inserted = document.querySelectorAll('.inserted')
   
@@ -239,16 +238,17 @@ async function getEpisodes (seasonIn) {
   let embedLinks;
   // Opening player for watching the show
   playEpisodes.forEach(item => {
-    item.addEventListener('click', (e) => {
-      embedLinks = {
+    item.addEventListener('click', (event) => {
+      embedLinks = { 
         spembed: `https://multiembed.mov/?video_id=${tmdbID}&tmdb=1&s=${seasonIn || 1}&e=${item.dataset.episode}`,
         gomo: `https://user.gomo.to/show/${showName}/0${seasonIn || 1}-0${item.dataset.episode}`,
         aembed: `https://autoembed.to/tv/tmdb/${tmdbID}-${seasonIn || 1}-${item.dataset.episode}`,
         vdsrc: `https://vidsrc.to/embed/tv/${tmdbID}/${seasonIn || 1}/${item.dataset.episode}`
       }
-      const iframe = document.querySelector('#iframe') 
-      iframe.src = embedLinks.vdsrc
       tvPlayer.classList.remove('player-hidden')
+      const iframe = document.querySelector('#iframe') 
+      tvPlayer.insertAdjacentHTML('afterbegin', `<div style="width:100%;height:100%;" id="${showName}Player"></div>`)
+            let player = new Playerjs({id:`${showName}Player`, file:`[720p]../stream/${showName}-${event.target.innerText.split(' ').slice(0,-2).join('-')}`,autoplay:1,default_quality:'720p'})
       
       document.querySelector('.movie-detail').style.display = 'none'
       document.querySelector('.sidebar').style.display = 'none'
@@ -256,18 +256,28 @@ async function getEpisodes (seasonIn) {
 
 
       const embedOptions = document.querySelectorAll('.embed-options button')
-
       embedOptions.forEach(item => {
         item.addEventListener('click', (e) => {
           const embedName = e.target.classList[0] || e.target.parentElement.classList[0]
-          if(Object.keys(embedLinks).includes(embedName)) {
-             iframe.src = embedLinks[embedName]
-             if(iframe.src) {
-              iframe.setAttribute("sandbox", "allow-modals allow-orientation-lock allow-pointer-lock allow-presentation allow-scripts allow-top-navigation allow-forms");
-             }
+          if(embedName === 'dolusrc') {
+            console.log(event.target)
+            tvPlayer.insertAdjacentHTML('afterbegin', `<div style="width:100%;height:100%;" id="${showName}Player"></div>`)
+            let player = new Playerjs({id:`${showName}Player`, file:`[720p]../stream/${showName}-${event.target.innerText}`,autoplay:1,default_quality:'720p'})
+            if(iframe) {
+              iframe.remove()
+            }
+          } else {
+          if(Object.keys(embedLinks).includes(embedName)) {  
+              tvPlayer.appendChild(iframe)
+              iframe.src = embedLinks[embedName]
+              if(iframe.src) {
+                iframe.setAttribute("sandbox", "allow-modals allow-orientation-lock allow-pointer-lock allow-presentation allow-scripts allow-top-navigation allow-forms");
+              }
+              document.querySelector(`#${showName}Player`)?.remove()
           }
+        }
         })
-      })
+      }) 
       streamTab.classList.add('hidden-tab')
     })
   })

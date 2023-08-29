@@ -100,7 +100,7 @@ class home_Pages {
       client.get(torrentId).then(result => {
          if(result) { 
             result.destroy({destroyStoreOnDestroy:true}, () => {
-               console.log('Destroyed')
+               destroyed = !destroyed
             })
             addTorrent()
          } else {
@@ -112,7 +112,7 @@ class home_Pages {
          client.add(torrentId,{destroyStoreOnDestroy:true,store: Storage}, function ontorrent (torrent) {
             const subtitleLang = req.query.subtitle  
             let file = torrent.files.find(function (file) {
-               return file.name.endsWith('.mp4')
+               return file.name.endsWith('.mkv')
             })
             // const subtitle = torrent.files.find(file => {
             //    return file.name.endsWith('.srt')
@@ -135,7 +135,7 @@ class home_Pages {
                res.setHeader('Content-Type', 'text/plain')
                // file = subtitle
             } else {
-               res.setHeader("Content-Type","video/mp4")
+               res.setHeader("Content-Type","x-matroska")
                
                // ****
                // Doing this for sending stream data as piece, so preventing memory problems
