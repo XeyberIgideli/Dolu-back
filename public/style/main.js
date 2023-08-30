@@ -248,7 +248,7 @@ async function getEpisodes (seasonIn) {
       tvPlayer.classList.remove('player-hidden')
       const iframe = document.querySelector('#iframe') 
       tvPlayer.insertAdjacentHTML('afterbegin', `<div style="width:100%;height:100%;" id="${showName}Player"></div>`)
-            let player = new Playerjs({id:`${showName}Player`, file:`[720p]../stream/${showName}-${event.target.innerText.split(' ').slice(0,-2).join('-')}`,autoplay:1,default_quality:'720p'})
+            let player = new Playerjs({id:`${showName}Player`, file:`[720p]../stream/${showName}-S0${seasonIn ? seasonIn : 1}E0${item.dataset.episode}`,autoplay:1,default_quality:'720p'})
       
       document.querySelector('.movie-detail').style.display = 'none'
       document.querySelector('.sidebar').style.display = 'none'
@@ -256,13 +256,13 @@ async function getEpisodes (seasonIn) {
 
 
       const embedOptions = document.querySelectorAll('.embed-options button')
-      embedOptions.forEach(item => {
-        item.addEventListener('click', (e) => {
+      embedOptions.forEach(data => {
+        data.addEventListener('click', (e) => {
           const embedName = e.target.classList[0] || e.target.parentElement.classList[0]
           if(embedName === 'dolusrc') {
             console.log(event.target)
             tvPlayer.insertAdjacentHTML('afterbegin', `<div style="width:100%;height:100%;" id="${showName}Player"></div>`)
-            let player = new Playerjs({id:`${showName}Player`, file:`[720p]../stream/${showName}-${event.target.innerText}`,autoplay:1,default_quality:'720p'})
+            let player = new Playerjs({id:`${showName}Player`, file:`[720p]../stream/${showName}-S0${seasonIn ? seasonIn : 1}E0${item.dataset.episode}`,autoplay:1,default_quality:'720p'})
             if(iframe) {
               iframe.remove()
             }
@@ -310,7 +310,9 @@ movieServerLinks.forEach(item => {
         document.querySelector('#iframe').remove()
       }
     } else {
-      document.querySelector(`#${slugUrl}Player`).remove()
+      if(player) {
+        player.remove()
+      }
       moviePlayer.insertAdjacentHTML('beforeend', `<iframe allow="encrypted-media" scrolling="no" id="iframe" src="" 
       width="100%" height="100%" frameborder="0" allowfullscreen></iframe>`)
       iframe = document.querySelector('#iframe')

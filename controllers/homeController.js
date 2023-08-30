@@ -4,10 +4,18 @@ import Movie from "../models/Movie.js"
 import Show from "../models/Show.js"
 import Episode from "../models/Episode.js"
 import InterfaceSetting from "../models/Interface.js" 
+
+import fs from 'fs' 
+import fluentFfmpeg from "fluent-ffmpeg" 
+import { spawn } from "child_process"
 import Storage from 'memory-chunk-store'
 import { torrentSearch } from "../utils/torrent.js"
 import WebTorrent from "webtorrent"
-import {Transform} from 'stream'
+import {Transform} from 'stream' 
+
+
+fluentFfmpeg.setFfmpegPath(process.env.FFMPEG_PATH);
+fluentFfmpeg.setFfprobePath(process.env.FFPROBE_PATH);
 
 const client = new WebTorrent() 
 
@@ -89,7 +97,7 @@ class home_Pages {
 
    async streamFile(req,res) {
       const title = req.params.slug
-      const torrentId = await torrentSearch(title)
+      let torrentId = await torrentSearch(title,0)
 
       client.on('error' , (err) => {
          console.log(err)
@@ -97,22 +105,26 @@ class home_Pages {
       
       let destroyed = false
 
-      client.get(torrentId).then(result => {
-         if(result) { 
-            result.destroy({destroyStoreOnDestroy:true}, () => {
-               destroyed = !destroyed
-            })
-            addTorrent()
-         } else {
-            addTorrent()
-         }
-      }) 
+      function checkTorrent() {
+         client.get(torrentId).then(result => {
+            if(result) { 
+               result.destroy({destroyStoreOnDestroy:true}, () => {
+                  destroyed = !destroyed
+               })
+               addTorrent()
+            } else {
+               addTorrent()
+            }
+         }) 
+      }
+      checkTorrent()
 
       function addTorrent() {
-         client.add(torrentId,{destroyStoreOnDestroy:true,store: Storage}, function ontorrent (torrent) {
+         let i = 1
+         client.add(torrentId,{destroyStoreOnDestroy:true,store: Storage}, async function ontorrent (torrent) {
             const subtitleLang = req.query.subtitle  
             let file = torrent.files.find(function (file) {
-               return file.name.endsWith('.mkv')
+               return file.name.endsWith('.mp4') || file.name.endsWith('.mkv')
             })
             // const subtitle = torrent.files.find(file => {
             //    return file.name.endsWith('.srt')
@@ -124,7 +136,8 @@ class home_Pages {
             // } 
    
             if (!file) {
-               res.status(404).send('MEDIA file not found in the torrent.')
+               torrentId = await torrentSearch(title,i++) 
+               checkTorrent()
                return
             } 
    
@@ -135,7 +148,7 @@ class home_Pages {
                res.setHeader('Content-Type', 'text/plain')
                // file = subtitle
             } else {
-               res.setHeader("Content-Type","x-matroska")
+               res.setHeader("Content-Type","video/webm")
                
                // ****
                // Doing this for sending stream data as piece, so preventing memory problems
@@ -149,19 +162,19 @@ class home_Pages {
                start = parseInt(positions[0],10)
                end = positions[1] ? parseInt(positions[1], 10) : file.length - 1
                const chunksize = (end - start) + 1
-   
 
                res.statusCode = 206
                res.setHeader('Content-Range', `bytes ${start}-${end}/${file.length}`)
                res.setHeader('Accept-Ranges', 'bytes')
+               res.setHeader('Cache-Control', 'no-store')
                res.setHeader('Content-Length', chunksize)
 
                // ****
    
             }
    
-            const fileStream = file.createReadStream({start,end})
-   
+            const fileStream = file.createReadStream({start,end}) 
+
             // a Transform stream to intercept errors
             const errorHandler = new Transform({
                transform(chunk, encoding, callback) {
@@ -172,16 +185,27 @@ class home_Pages {
                         res.end();
                      }
                }
-            });
-   
-            fileStream.pipe(errorHandler).pipe(res,{end:true})  
+            });  
+            // var stream = file.createReadStream({ start,end });
+            // fluentFfmpeg(stream)
+            //   .format('matroska')
+            //   .videoCodec('libx264')
+            //   .audioCodec('libmp3lame')
+            //   .on('start', console.log)
+            //   .on('error', console.error)
+            //   .pipe(res); 
+            fileStream.pipe(errorHandler).pipe(res, { end: true });
 
             fileStream.on('end', () => {
                   res.end();
-            }); 
+            });  
+            fileStream.on('error', err => {
+               console.log(err)
+            })
             res.on('close', () => {
                // Destroy stream when browser connection lost 
                fileStream.destroy(); 
+               // console.log('Closed')
             }) 
             
       })  
