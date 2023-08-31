@@ -1,5 +1,15 @@
 import fs from 'fs'
 
+async function paginateResult(queryString,model,pageCount) {
+	const page = queryString * 1 || 1
+	const postPerPage = pageCount
+	const totalPost = await model.find().countDocuments()
+
+	const result = await model.find().sort('-dateCreated').skip((page - 1) * postPerPage).limit(postPerPage)
+	return [result, {currentPage: page,totalPage: Math.ceil(totalPost / postPerPage)}]
+
+}
+
 function uniqueID(string,length = 7) {
 	return string + Math.random().toString(36).substring(2,length + 2)
 }
@@ -58,4 +68,4 @@ async function fileUpdate(model,pathname,files,body) {
 	return uploadPaths
 } 
 
-export {uniqueID,fileUpdate,fileUploadSI,fileUploadMI}
+export {uniqueID,fileUpdate,fileUploadSI,fileUploadMI,paginateResult}

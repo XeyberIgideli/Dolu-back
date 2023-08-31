@@ -1,54 +1,39 @@
 import Movie from "../../models/Movie.js"
 import Show from "../../models/Show.js"
 import User from "../../models/User.js"
+import {paginateResult} from '../../utils/Helper.js'
 
 class get_DashPages { 
     getDashboardPage(req,res) {
          res.render('dashboard/index',{pageName: 'index'})
      } 
     async getDashMoviesPage(req,res) {
-        const page = req.query.page || 1
-        const postPerPage = 10
-        const totalPost = await Movie.find().countDocuments()
-  
-        const movies = await Movie.find().sort('-dateCreated').skip((page - 1) * postPerPage).limit(postPerPage)
+      const result = await paginateResult(req.query.page,Movie,10)
 
         res.render('dashboard/movies', {
-        movies,
+        movies: result[0],
         pageName: 'movies',
-        currentPage: page,
-        totalPage: Math.ceil(totalPost / postPerPage)
+        ...result[1]
         })
      }
      
     async getDashShowsPage(req,res) {
-      const page = req.query.page || 1
-      const postPerPage = 10
-      const totalPost = await Show.find().countDocuments()
-
-      const shows = await Show.find().sort('-dateCreated').skip((page - 1) * postPerPage).limit(postPerPage)
+      const result = await paginateResult(req.query.page,Show,10)
 
       res.render('dashboard/tv-shows', {
-        shows,
+        shows: result[0],
         pageName: 'shows',
-        currentPage: page,
-        totalPage: Math.ceil(totalPost / postPerPage)
+        ...result[1]
     })
      } 
 
     async getDashUsersPage(req,res) {
-      const page = req.query.page || 1
-      const postPerPage = 10
-      const totalPost = await User.find().countDocuments()
-
-
-      const users = await User.find().sort('-dateCreated').skip((page - 1) * postPerPage).limit(postPerPage)
+      const result = await paginateResult(req.query.page,User,10)
 
       res.render('dashboard/users', {
-        users,
+        users: result[0],
         pageName: 'users',
-        currentPage: page,
-        totalPage: Math.ceil(totalPost / postPerPage)
+        ...result[1]
     })
      }  
  }
