@@ -1,6 +1,5 @@
 import express from 'express'
 import homePages from '../controllers/homeController.js'
-
 const router = express.Router()
 
 router.get('/home',homePages.getHomePage)

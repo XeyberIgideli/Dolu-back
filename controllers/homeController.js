@@ -6,6 +6,7 @@ import Episode from "../models/Episode.js"
 import InterfaceSetting from "../models/Interface.js" 
 
 import fs from 'fs' 
+import axios from "axios"
 import fluentFfmpeg from "fluent-ffmpeg" 
 import { spawn } from "child_process"
 import Storage from 'memory-chunk-store'
@@ -97,7 +98,7 @@ class home_Pages {
 
    async streamFile(req,res) {
       const title = req.params.slug
-      let torrentId = await torrentSearch(title,0)
+      let torrentId =  await torrentSearch(title,0)
 
       client.on('error' , (err) => {
          console.log(err)
@@ -117,6 +118,7 @@ class home_Pages {
             }
          }) 
       }
+
       checkTorrent()
 
       function addTorrent() {
@@ -125,16 +127,8 @@ class home_Pages {
             const subtitleLang = req.query.subtitle  
             let file = torrent.files.find(function (file) {
                return file.name.endsWith('.mp4') || file.name.endsWith('.mkv')
-            })
-            // const subtitle = torrent.files.find(file => {
-            //    return file.name.endsWith('.srt')
-            // })
-   
-            // if (!subtitle) {
-            //    res.status(404).send('SRT file not found in the torrent.')
-            //    return
-            // } 
-   
+            })  
+
             if (!file) {
                torrentId = await torrentSearch(title,i++) 
                checkTorrent()
@@ -142,38 +136,30 @@ class home_Pages {
             } 
    
             let start = 0
-            let end = 0
+            let end = 0 
+            res.setHeader("Content-Type","video/webm")
             
-            if(subtitleLang) {
-               res.setHeader('Content-Type', 'text/plain')
-               // file = subtitle
-            } else {
-               res.setHeader("Content-Type","video/webm")
-               
-               // ****
-               // Doing this for sending stream data as piece, so preventing memory problems
-               // Also for enabling seeking
-               let range = req.headers.range
-               if(!range) {
-                  range = 'bytes=0-'
-               }
-               const positions = range.replace(/bytes=/, '').split('-')
-               
-               start = parseInt(positions[0],10)
-               end = positions[1] ? parseInt(positions[1], 10) : file.length - 1
-               const chunksize = (end - start) + 1
-
-               res.statusCode = 206
-               res.setHeader('Content-Range', `bytes ${start}-${end}/${file.length}`)
-               res.setHeader('Accept-Ranges', 'bytes')
-               res.setHeader('Cache-Control', 'no-store')
-               res.setHeader('Content-Length', chunksize)
-
-               // ****
-   
+            // ****
+            // Doing this for sending stream data as piece, so preventing memory problems
+            // Also for enabling seeking
+            let range = req.headers.range
+            if(!range) {
+               range = 'bytes=0-'
             }
-   
-            const fileStream = file.createReadStream({start,end}) 
+            const positions = range.replace(/bytes=/, '').split('-')
+            
+            start = parseInt(positions[0],10)
+            end = positions[1] ? parseInt(positions[1], 10) : file.length - 1
+            const chunksize = (end - start) + 1
+
+            res.statusCode = 206
+            res.setHeader('Content-Range', `bytes ${start}-${end}/${file.length}`)
+            res.setHeader('Accept-Ranges', 'bytes')
+            res.setHeader('Cache-Control', 'no-store')
+            res.setHeader('Content-Length', chunksize)
+
+            // **** 
+            const fileStream = file.createReadStream({start,end,highWaterMark: 8}) 
 
             // a Transform stream to intercept errors
             const errorHandler = new Transform({
@@ -186,6 +172,7 @@ class home_Pages {
                      }
                }
             });  
+
             // var stream = file.createReadStream({ start,end });
             // fluentFfmpeg(stream)
             //   .format('matroska')
@@ -194,6 +181,7 @@ class home_Pages {
             //   .on('start', console.log)
             //   .on('error', console.error)
             //   .pipe(res); 
+
             fileStream.pipe(errorHandler).pipe(res, { end: true });
 
             fileStream.on('end', () => {
@@ -210,10 +198,10 @@ class home_Pages {
             
       })  
       }
-      
-
-
+       
      }
+
+
  }
  
  let homePages = new home_Pages()

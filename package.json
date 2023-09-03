@@ -10,7 +10,10 @@
   "author": "Igidali",
   "license": "ISC",
   "dependencies": {
+    "adm-zip": "^0.5.10",
+    "axios": "^1.5.0",
     "bcryptjs": "^2.4.3",
+    "cheerio": "^1.0.0-rc.12",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
@@ -27,6 +30,7 @@
     "multer": "^1.4.5-lts.1",
     "speakingurl": "^14.0.1",
     "torrent-search-api": "^2.1.4",
+    "unzipper": "^0.10.14",
     "webtorrent": "^2.1.25"
   },
   "devDependencies": {

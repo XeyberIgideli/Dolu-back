@@ -133,10 +133,9 @@ movieSchema.pre('validate', function (next) {
     })
     next()
 })
-
+// Update the slug when updating title
 movieSchema.pre('updateOne', function (next) {
     const updatedFields = this.getUpdate();
-    console.log(updatedFields)
     if (updatedFields.title) {
         updatedFields.slug = speakingurl(updatedFields.title, {
             maintainCase: false,

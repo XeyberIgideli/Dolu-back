@@ -288,7 +288,7 @@ function getMoviePlay() {
   const moviePlayer = document.querySelector('.moviePlayer')
 
 movieServerLinks.forEach(item => {
-  item.addEventListener('click', (e) => {   
+  item.addEventListener('click', async (e) => {   
     const movieServers = {
       spembed: `https://multiembed.mov/?video_id=${tmdbID}&tmdb=1`,
       gomo: `https://gomo.to/movie/${movieName}`,
@@ -304,8 +304,20 @@ movieServerLinks.forEach(item => {
     let player
     let iframe
     if(serverName === 'dolusrc') {
+      const allowedLangs = ['eng','tur','ara','rus']
+      const response = await axios.get(`../api/${allowedLangs.join(',')}/${movieName}?totalLink=6`, {
+        headers: {
+          'Accept': 'application/json'
+        }
+      })
+      const downloadLinks = response.data.downloadLinks
+      let linkArr = []
+      downloadLinks.forEach((link,index) => {
+        linkArr.push(`[${link.downloadLink.split('-')[0].toUpperCase()}]../api/${slugUrl}/${link.downloadLink.split('-')[0]}/${downloadLinks.length}/${index}/downloadSubtitle?subtitle.srt`)
+      })
+      const subtitles = linkArr.join(',')
       moviePlayer.insertAdjacentHTML('afterbegin', `<div style="width:100%;height:100%;" id="${slugUrl}Player"></div>`)
-      player = new Playerjs({id:`${slugUrl}Player`, file:`[720p]../stream/${slugUrl}`,autoplay:1,default_quality:'720p'})
+      player = new Playerjs({id:`${slugUrl}Player`, file:`[720p]../stream/${slugUrl}`,subtitle: subtitles,autoplay:1,default_quality:'720p'})
       if(iframe) {
         document.querySelector('#iframe').remove()
       }
