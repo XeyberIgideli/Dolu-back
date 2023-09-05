@@ -7,7 +7,7 @@ class showController {
 
   // Get pages
     getAddNewShowPage(req,res) {
-        res.render('dashboard/add-new-show',{pageName:'shows'})
+        res.render('dashboard/add-new-show',{pageName:'shows',roleData: req.role})
      }
      
     async getUpdateShowPage(req,res) {

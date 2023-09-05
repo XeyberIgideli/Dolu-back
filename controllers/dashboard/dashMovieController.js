@@ -7,7 +7,7 @@ import {uniqueID,fileUpdate,fileUploadMI} from '../../utils/Helper.js'
 class movieController { 
   // Get pages
     getAddNewMoviePage(req,res) {
-        res.render('dashboard/add-new-movie', {pageName:'movies'})
+        res.render('dashboard/add-new-movie', {pageName:'movies',roleData: req.role})
      }
     async getUpdateMoviePage(req,res) {
       const movie = await Movie.findById(req.params.id) 

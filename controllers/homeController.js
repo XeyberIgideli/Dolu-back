@@ -141,16 +141,16 @@ class home_Pages {
                range = 'bytes=0-'
             }
             const positions = range.replace(/bytes=/, '').split('-')
-            
+
             const start = parseInt(positions[0],10)
             const end = positions[1] ? parseInt(positions[1], 10) : file.length - 1
-            let chunkSize = (end - start) + 1
+            const chunksize = (end - start) + 1
 
             res.statusCode = 206
             res.setHeader('Content-Range', `bytes ${start}-${end}/${file.length}`)
             res.setHeader('Accept-Ranges', 'bytes')
-            res.setHeader('Cache-Control', 'public, max-age=3600')
-            res.setHeader('Content-Length', chunkSize)
+            res.setHeader('Cache-Control', 'no-store')
+            res.setHeader('Content-Length', chunksize)
             // ****  
             const fileStream = file.createReadStream({start,end})  
             // a Transform stream to intercept errors
@@ -158,9 +158,7 @@ class home_Pages {
                transform(chunk, encoding, callback) {
                      // Pass the chunk as-is to the output, but catch errors
                      try {
-                        setTimeout(() => {
                            callback(null, chunk); 
-                        }, 1000)
                      } catch (error) {
                         res.end();
                      }

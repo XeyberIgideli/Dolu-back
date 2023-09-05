@@ -32,12 +32,12 @@ async function login(req,res,next) {
 }
 
 async function logout(req,res) {
-    const authHeader = req.headers.authorization
-    jwt.sign(authHeader,{expiresIn:1}, (logout) => {
-        if(logout) {
-            res.redirect('/')
-        }
-    })
+    
+    const authHeader = req.cookies.adToken
+    if(authHeader) {
+        res.clearCookie('adToken')
+        res.redirect('/admin')
+    }
 }
 
 export {login,logout,register}

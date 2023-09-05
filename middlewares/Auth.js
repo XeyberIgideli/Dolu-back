@@ -13,7 +13,7 @@ function verifyRole(req,res,next) {
 
     try {
         const payload = jwt.verify(token, process.env.JWT_SECRET)
-        req.role = {roleId:payload.roleId,username: payload.username,admin:true}
+        req.role = {roleId:payload.roleId,username: payload.username,role:'admin'}
         next()
     } catch(err) {
         throw new UnauthenticatedError('You are not authorized to perform this action!')

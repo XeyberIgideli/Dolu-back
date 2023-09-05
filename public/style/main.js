@@ -307,7 +307,8 @@ movieServerLinks.forEach(item => {
       spembed: `https://multiembed.mov/?video_id=${tmdbID}&tmdb=1`,
       gomo: `https://gomo.to/movie/${movieName}`,
       aembed: `https://autoembed.to/movie/tmdb/${tmdbID}`,
-      vdsrc: `https://vidsrc.to/embed/movie/${tmdbID}`
+      vdsrc: `https://vidsrc.to/embed/movie/${tmdbID}`,
+      smash: `https://embed.smashystream.com/playere.php?tmdb=${tmdbID}`
     } 
  
     moviePlayer.classList.remove('player-hidden')
