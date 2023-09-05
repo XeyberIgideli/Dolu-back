@@ -238,7 +238,7 @@ async function getEpisodes (seasonIn) {
   let embedLinks;
   // Opening player for watching the show
   playEpisodes.forEach(item => {
-    item.addEventListener('click', (event) => {
+    item.addEventListener('click', async (event) => {
       embedLinks = { 
         spembed: `https://multiembed.mov/?video_id=${tmdbID}&tmdb=1&s=${seasonIn || 1}&e=${item.dataset.episode}`,
         gomo: `https://user.gomo.to/show/${showName}/0${seasonIn || 1}-0${item.dataset.episode}`,
@@ -247,8 +247,22 @@ async function getEpisodes (seasonIn) {
       }
       tvPlayer.classList.remove('player-hidden')
       const iframe = document.querySelector('#iframe') 
+
+      const allowedLangs = ['eng','tur','ara','rus']
+      const response = await axios.get(`../api/${showName}-S0${seasonIn ? seasonIn : 1}E0${item.dataset.episode}/${allowedLangs.join(',')}/8/0/readShowSubtitle?listData=6`, {
+        headers: {
+          'Accept': 'application/json'
+        }
+      })
+      const downloadLinks = response.data.downloadLinks
+      let linkArr = []
+      downloadLinks.forEach((link,index) => {
+        linkArr.push(`[${link.downloadLink.split('-')[0].toUpperCase()}]../api/${slugUrl}/${link.downloadLink.split('-')[0]}/${downloadLinks.length}/${index}/readShowSubtitle?subtitle.srt`)
+      })
+      const subtitles = linkArr.join(',')
+
       tvPlayer.insertAdjacentHTML('afterbegin', `<div style="width:100%;height:100%;" id="${showName}Player"></div>`)
-            let player = new Playerjs({id:`${showName}Player`, file:`[720p]../stream/${showName}-S0${seasonIn ? seasonIn : 1}E0${item.dataset.episode}`,autoplay:1,default_quality:'720p'})
+      let player = new Playerjs({id:`${showName}Player`, file:`[720p]../stream/${showName}-S0${seasonIn ? seasonIn : 1}E0${item.dataset.episode}`,subtitle:subtitles,autoplay:1,default_quality:'720p'})
       
       document.querySelector('.movie-detail').style.display = 'none'
       document.querySelector('.sidebar').style.display = 'none'
@@ -257,12 +271,12 @@ async function getEpisodes (seasonIn) {
 
       const embedOptions = document.querySelectorAll('.embed-options button')
       embedOptions.forEach(data => {
-        data.addEventListener('click', (e) => {
+        data.addEventListener('click', async (e) => {
           const embedName = e.target.classList[0] || e.target.parentElement.classList[0]
           if(embedName === 'dolusrc') {
-            console.log(event.target)
+            
             tvPlayer.insertAdjacentHTML('afterbegin', `<div style="width:100%;height:100%;" id="${showName}Player"></div>`)
-            let player = new Playerjs({id:`${showName}Player`, file:`[720p]../stream/${showName}-S0${seasonIn ? seasonIn : 1}E0${item.dataset.episode}`,autoplay:1,default_quality:'720p'})
+            let player = new Playerjs({id:`${showName}Player`, file:`[720p]../stream/${showName}-S0${seasonIn ? seasonIn : 1}E0${item.dataset.episode}`,subtitle: subtitles,autoplay:1,default_quality:'720p'})
             if(iframe) {
               iframe.remove()
             }
@@ -313,7 +327,7 @@ movieServerLinks.forEach(item => {
       const downloadLinks = response.data.downloadLinks
       let linkArr = []
       downloadLinks.forEach((link,index) => {
-        linkArr.push(`[${link.downloadLink.split('-')[0].toUpperCase()}]../api/${slugUrl}/${link.downloadLink.split('-')[0]}/${downloadLinks.length}/${index}/downloadSubtitle?subtitle.srt`)
+        linkArr.push(`[${link.downloadLink.split('-')[0].toUpperCase()}]../api/${slugUrl}/${link.downloadLink.split('-')[0]}/${downloadLinks.length}/${index}/readSubtitle?subtitle.srt`)
       })
       const subtitles = linkArr.join(',')
       moviePlayer.insertAdjacentHTML('afterbegin', `<div style="width:100%;height:100%;" id="${slugUrl}Player"></div>`)

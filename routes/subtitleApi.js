@@ -8,13 +8,16 @@ import {Readable,Transform} from 'stream'
 const router = express.Router() 
 
 router.get('/api/:lang/:movieName', getMovie);
-router.get('/api/:movieName/:lang/:totLink/:num/downloadSubtitle', downloadMovieSubtitle)
+router.get('/api/:movieName/:lang/:totLink/:num/readSubtitle', readMovieSubtitle)
+router.get('/api/:showName/:lang/:totLink/:num/readShowSubtitle', readShowSubtitle)
 
 async function getMovie (req, res) { 
+    // api/tur/the-platform?totalLink=number
+
     let queryTotalLink = req.query.totalLink
     if(!queryTotalLink) {
         queryTotalLink = 3
-    }
+    } 
     try {
       const paramLang = req.params.lang
       const movieName = req.params.movieName;
@@ -31,7 +34,58 @@ async function getMovie (req, res) {
     }
 }
 
-async function downloadMovieSubtitle(req,res) {
+async function readShowSubtitle(req,res) {
+  const paramLang =  req.params.lang //req.query.lang.split('.')[0]
+  const listData = req.query.listData
+  try {
+      if(paramLang) {
+          const totalLink = req.params.totLink
+          const showName = req.params.showName;
+          const showId = await getMovieId(showName,paramLang);
+          const showData = await getSubtitleInfo(showId,paramLang,totalLink) 
+          
+          if(listData) {
+            res.json(showData)
+            return
+          }
+
+          const linkNum = showData.downloadLinks.length <= req.params.num ? showData.downloadLinks.length - 1 : req.params.num  
+          const url = showData.downloadLinks[linkNum].downloadLink.split('-')[1]
+          const options =  { 
+              method: 'GET',
+              url,
+              responseType: "arraybuffer"
+          };
+          const { data } = await axios(options);
+          const zip = new admZip(data)
+          const entries = zip.getEntries() 
+          let srtFileStream = null 
+          res.setHeader('Content-Type', 'text/plain; charset=utf-8')
+  
+          for (const entry of entries) {
+            if (entry.entryName.endsWith('.srt')) { 
+              const buffer = entry.getData() 
+              srtFileStream = Readable.from(buffer.toString('utf-8'))
+              break
+            }
+          } 
+          
+          if(srtFileStream) {
+              srtFileStream.pipe(res)
+          } else {
+              res.status(404).send('SRT file not found in the zip archive.')
+          }
+      } else {
+          res.status(404).send('No subtitle found in this language!')
+      }
+      
+  } catch (err) {
+      console.log(err)
+      res.status(500).send('Internal server error');
+  }
+}
+
+async function readMovieSubtitle(req,res) {
     const paramLang =  req.params.lang //req.query.lang.split('.')[0]
     try {
         if(paramLang) {
@@ -50,7 +104,7 @@ async function downloadMovieSubtitle(req,res) {
             const zip = new admZip(data)
             const entries = zip.getEntries() 
             let srtFileStream = null 
-            res.setHeader('Content-Type', 'text/plain')
+            res.setHeader('Content-Type', 'text/plain; charset=utf-8')
     
             for (const entry of entries) {
               if (entry.entryName.endsWith('.srt')) { 
@@ -75,16 +129,14 @@ async function downloadMovieSubtitle(req,res) {
     }
 }
 
-async function getMovieId(movieName,lang) {
-    const searchUrl = `https://www.opensubtitles.org/tr/search2/sublanguageid-${lang}/moviename-${encodeURIComponent(
+async function getMovieId(movieName,lang,show) {
+    const searchUrl = `https://www.opensubtitles.org/en/search2/sublanguageid-${lang}/moviename-${encodeURIComponent(
       movieName
     )}`;
-    
     try {
       const searchResponse = await axios.get(searchUrl);
       const $ = cheerio.load(searchResponse.data);
-      const movieLink = $('.bnone').attr('href');
-      
+      const movieLink = $('.bnone').attr('href'); 
       if (!movieLink) {
         return null;
       }
@@ -116,7 +168,7 @@ async function getSubtitleInfo(movieId,lang,totalLink) {
         });   
         if (!findLinks) {
           throw new Error('Download link not found')
-        }  
+        }   
         const downloadLinks = await Promise.all(downloadPageLinks.slice(0,totalLink).map(async (link) => await getDownloadLink(link)))
         return { title,pageLink:movieUrl,language, downloadLinks };
       } else {

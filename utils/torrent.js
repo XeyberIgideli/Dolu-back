@@ -7,9 +7,14 @@ async function torrentSearch(title,index) {
             console.log('No torrent found!')
             return;
       } 
-      const torrentFiltered = torrents.filter(torrent => torrent.seeds > -1 && Number(torrent.size.split(' ')[0]) < 1300 )
+      const torrentFiltered = torrents.filter(torrent => {
+           let sizeInMB = parseFloat(torrent.size)
+           if (torrent.size.includes("GB")) {
+            sizeInMB *= 1024; // 1 GB = 1024 MB
+          }
+           return torrent.seeds > -1 && sizeInMB < 1300 
+      })
       const magnet = await TorrentSearchApi.getMagnet(torrentFiltered[index])
-      // const torrentHtmlDetail = await TorrentSearchApi.getTorrentDetails(torrentFiltered[0])
       return magnet
 } 
 
