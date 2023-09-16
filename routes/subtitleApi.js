@@ -43,14 +43,13 @@ async function readShowSubtitle(req,res) {
           const showName = req.params.showName;
           const showId = await getMovieId(showName,paramLang);
           const showData = await getSubtitleInfo(showId,paramLang,totalLink) 
-          
           if(listData) {
-            res.json(showData)
+            res.json({...showData,langsShort:paramLang})
             return
           }
-
           const linkNum = showData.downloadLinks.length <= req.params.num ? showData.downloadLinks.length - 1 : req.params.num  
           const url = showData.downloadLinks[linkNum].downloadLink.split('-')[1]
+          console.log(url)
           const options =  { 
               method: 'GET',
               url,
@@ -63,7 +62,7 @@ async function readShowSubtitle(req,res) {
           res.setHeader('Content-Type', 'text/plain; charset=utf-8')
   
           for (const entry of entries) {
-            if (entry.entryName.endsWith('.srt')) { 
+            if (entry.entryName.endsWith('.srt') || entry.entryName.endsWith('.ass') || entry.entryName.endsWith('.vtt')) { 
               const buffer = entry.getData() 
               srtFileStream = Readable.from(buffer.toString('utf-8'))
               break
@@ -107,7 +106,7 @@ async function readMovieSubtitle(req,res) {
             res.setHeader('Content-Type', 'text/plain; charset=utf-8')
     
             for (const entry of entries) {
-              if (entry.entryName.endsWith('.srt')) { 
+              if (entry.entryName.endsWith('.srt') || entry.entryName.endsWith('.ass') || entry.entryName.endsWith('.vtt')) { 
                 const buffer = entry.getData() 
                 srtFileStream = Readable.from(buffer.toString('utf-8'))
                 break
@@ -165,7 +164,7 @@ async function getSubtitleInfo(movieId,lang,totalLink) {
         const language = lang.split(',').length > 1 ? $('.msg h1').text().trim().split(' ').slice(index+1).join(' ') : $('.msg h1').text().trim().split(' ').slice(-1).join(' ')
         const findLinks = $('.bnone').each((index,element) => {
           downloadPageLinks.push('https://www.opensubtitles.org' + element.attribs.href)
-        });   
+        });    
         if (!findLinks) {
           throw new Error('Download link not found')
         }   
@@ -190,7 +189,6 @@ async function getDownloadLink(subtitlePageLink) {
         ar:'ara',
         ru: 'rus'
       }
-    //   const title = $('.h1_subtitle').text().trim();
       const downloadLink = `${langShort[subtitlePageLink.slice(-2)]}-` + 'https://www.opensubtitles.org' + $('#bt-dwl-bt').attr('href'); 
       if (!downloadLink) {
         throw new Error('Download link not found');
