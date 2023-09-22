@@ -239,28 +239,35 @@ async function getEpisodes (seasonIn) {
   // Opening player for watching the show
   playEpisodes.forEach(item => {
     item.addEventListener('click', async (event) => { 
+
       embedLinks = { 
         spembed: `https://multiembed.mov/?video_id=${tmdbID}&tmdb=1&s=${seasonIn || 1}&e=${item.dataset.episode}`,
         gomo: `https://user.gomo.to/show/${showName}/0${seasonIn || 1}-0${item.dataset.episode}`,
         aembed: `https://autoembed.to/tv/tmdb/${tmdbID}-${seasonIn || 1}-${item.dataset.episode}`,
         vdsrc: `https://vidsrc.to/embed/tv/${tmdbID}/${seasonIn || 1}/${item.dataset.episode}`
       }
+      
       tvPlayer.classList.remove('player-hidden')
       const iframe = document.querySelector('#iframe') 
 
       const allowedLangs = ['eng','tur','ara','rus']
+
       const response = await axios.get(`../api/${showName}-S0${seasonIn ? seasonIn : 1}E0${Number(item.dataset.episode)}/${allowedLangs.join(',')}/8/0/readShowSubtitle?listData=6`, {
         headers: {
           'Accept': 'application/json'
         }
       }) 
+
       const downloadLinks = response.data.downloadLinks
       const langs = response.data.langsShort
+
       let linkArr = [] 
+
       downloadLinks.forEach((link,index) => {
-        linkArr.push(`[${link.downloadLink.split('-')[0].toUpperCase()}]../api/${showName}/${langs}/${downloadLinks.length}/${index}/readShowSubtitle?subtitle.srt`)
+        linkArr.push(`[${link.downloadLink.split('-')[0].toUpperCase()}]../api/${showName}-S0${seasonIn ? seasonIn : 1}E0${Number(item.dataset.episode)}/${link.downloadLink.split('-')[0]}/${downloadLinks.length}/0/readShowSubtitle?subtitle.srt`)
       })
-      const subtitles = linkArr.join(',')
+
+      const subtitles = linkArr.join(',') 
       tvPlayer.insertAdjacentHTML('afterbegin', `<div style="width:100%;height:100%;" id="${showName}Player"></div>`)
       let player = new Playerjs({id:`${showName}Player`, file:`[720p]../stream/${showName}-S0${seasonIn ? seasonIn : 1}E0${Number(item.dataset.episode)}`,subtitle:subtitles,autoplay:1,default_quality:'720p'})
       
@@ -269,6 +276,7 @@ async function getEpisodes (seasonIn) {
       document.querySelector('.header').style.display = 'none' 
 
       const embedOptions = document.querySelectorAll('.embed-options button')
+
       embedOptions.forEach(data => {
         data.addEventListener('click', async (e) => {
           const embedName = e.target.classList[0] || e.target.parentElement.classList[0]
