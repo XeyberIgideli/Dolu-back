@@ -1,6 +1,5 @@
 import User from '../models/User.js'
-import Bookmark from '../models/Bookmark.js'
-import jwt from 'jsonwebtoken'
+import Bookmark from '../models/Bookmark.js' 
 import {uniqueID} from '../utils/Helper.js'
 import { BadRequestError,UnauthenticatedError } from '../utils/Error.js'
 
@@ -21,9 +20,8 @@ async function register (req,res,next) {
                  icon: 'bx bx-time'
             }]
         const user = await User.create({...req.body,bookmarks: obj})
-        const token = user.createJWT()
-        res.cookie('token',`Bearer: ${token}`, {maxAge: 1000*60*60*24,httpOnly:true,secure:true})
-        
+        const token = user.createJWT() 
+        res.cookie('token',`Bearer: ${token}`, {maxAge: 1000*60*60*24,httpOnly:true,secure:true, sameSite: 'strict'})
         res.redirect('../home')
     } catch(err) {
         next(err)
@@ -51,9 +49,9 @@ async function login(req,res,next) {
             throw new BadRequestError('The password is not correct!')
         }
 
-        const token = user.createJWT() 
-        
-        res.cookie('token',`Bearer: ${token}`, {maxAge: 1000*60*60*24,httpOnly:true,secure:true})
+        const token = user.createJWT()  
+
+        res.cookie('token',`Bearer: ${token}`, {maxAge: 1000*60*60*24,httpOnly:true,secure:true,sameSite:'strict'})
         res.redirect('../home')
     } catch (err) {
         next(err)

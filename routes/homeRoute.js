@@ -9,4 +9,5 @@ router.get('/bookmarks',homePages.getBookmarksPage)
 router.get('/stream/:slug',homePages.streamFile)
 router.get('/watch/:slug',homePages.getWatchPage)
 router.get('/watch/getEpisodes/:slug',homePages.getEpisodes) 
+
 export default router

@@ -384,11 +384,9 @@ async function getDownloadLink(subtitlePageLink,lang,type) {
       if (!downloadLink) {
         throw new Error('Download link not found');
       } 
-        // arr.push(downloadLink)
         return {downloadLink};  
     } catch (error) {
-      // console.log(error)
-      // throw new Error('Failed to fetch subtitle page');
+      throw new Error('Failed to fetch subtitle page');
     }
 }
 
