@@ -252,21 +252,20 @@ async function getEpisodes (seasonIn) {
 
       const allowedLangs = ['eng','tur','ara','rus']
 
-      const response = await axios.get(`../api/${showName}-S0${seasonIn ? seasonIn : 1}E0${Number(item.dataset.episode)}/${allowedLangs.join(',')}/8/0/readShowSubtitle?listData=6`, {
+      const response = await axios.get(`../api/${showName}/${seasonIn ? seasonIn : 1}/${Number(item.dataset.episode)}/${allowedLangs.join(',')}/8/0/readShowSubtitle?listData=6`, {
         headers: {
           'Accept': 'application/json'
         }
       }) 
 
-      const downloadLinks = response.data.downloadLinks
+      const downloadLinks = response.data
       const langs = response.data.langsShort
-
       let linkArr = [] 
 
       downloadLinks.forEach((link,index) => {
-        linkArr.push(`[${link.downloadLink.split('-')[0].toUpperCase()}]../api/${showName}-S0${seasonIn ? seasonIn : 1}E0${Number(item.dataset.episode)}/${link.downloadLink.split('-')[0]}/${downloadLinks.length}/0/readShowSubtitle?subtitle.srt`)
+        linkArr.push(`[${link.downloadLink.split('-')[0].toUpperCase()}]../api/${showName}/${seasonIn ? seasonIn : 1}/${Number(item.dataset.episode)}/${link.downloadLink.split('-')[0]}/${downloadLinks.length}/${index}/readShowSubtitle?subtitle.srt`)
       })
-
+      console.log(linkArr)
       const subtitles = linkArr.join(',') 
       tvPlayer.insertAdjacentHTML('afterbegin', `<div style="width:100%;height:100%;" id="${showName}Player"></div>`)
       let player = new Playerjs({id:`${showName}Player`, file:`[720p]../stream/${showName}-S0${seasonIn ? seasonIn : 1}E0${Number(item.dataset.episode)}`,subtitle:subtitles,autoplay:1,default_quality:'720p'})
@@ -326,15 +325,15 @@ movieServerLinks.forEach(item => {
     let iframe
     if(serverName === 'dolusrc') {
       const allowedLangs = ['eng','tur','ara','rus']
-      const response = await axios.get(`../api/${allowedLangs.join(',')}/${movieName}?totalLink=6`, {
+      const response = await axios.get(`../api/search/movie/${allowedLangs.join(',')}/${movieName}?totalLink=6`, {
         headers: {
           'Accept': 'application/json'
         }
       })
-      const downloadLinks = response.data.downloadLinks
+      const downloadLinks = response.data.links
       let linkArr = []
       downloadLinks.forEach((link,index) => {
-        linkArr.push(`[${link.downloadLink.split('-')[0].toUpperCase()}]../api/${slugUrl}/${link.downloadLink.split('-')[0]}/${downloadLinks.length}/${index}/readSubtitle?subtitle.srt`)
+        linkArr.push(`[${link.downloadLink.split('-')[0].toUpperCase()}]../api/${slugUrl}/${link.downloadLink.split('-')[0]}/${downloadLinks.length}/${index}/readMovieSubtitle?subtitle.srt`)
       })
       const subtitles = linkArr.join(',')
       moviePlayer.insertAdjacentHTML('afterbegin', `<div style="width:100%;height:100%;" id="${slugUrl}Player"></div>`)

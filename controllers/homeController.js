@@ -124,7 +124,7 @@ class home_Pages {
          let i = 1
          client.add(torrentId,{destroyStoreOnDestroy:true,store: Storage}, async function ontorrent (torrent) {
             let file = torrent.files.find(function (file) {
-               return file.name.endsWith('.mp4') || file.name.endsWith('.mkv')
+               return file.name.endsWith('.mp4') || file.name.endsWith('.mkv') || file.name.endsWith('.avi')
             })   
             if (!file) {
                torrentId = await torrentSearch(title,i++)  
