@@ -94,8 +94,8 @@ app.use('/dashboard', [dashPageRoute,dashMovieRoute,dashShowRoute,dashUserRoute,
 app.use('/admin', dashboardAuthRoute) 
 // General routes
 app.use('/',pageRoute,subtitleApi) // Index,auth,admin pages route handling
+app.use('/', homeRoute) // Home pages route handling
 app.use('/auth',authRoute)
-app.use('/',verifyToken, homeRoute) // Home pages route handling
 app.use('/bookmarks',bookmarkRoute)
 
 

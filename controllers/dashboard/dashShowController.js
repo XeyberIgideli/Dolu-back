@@ -12,7 +12,7 @@ class showController {
      
     async getUpdateShowPage(req,res) {
       const show = await Show.findById(req.params.id) 
-      res.render('dashboard/edit-show',{show,pageName:'shows'})
+      res.render('dashboard/edit-show',{show,pageName:'shows', roleData: req.role,})
     }
 
     async getEpisodesPage(req,res) {

@@ -23,6 +23,8 @@ const movieName = slugUrl.split('-').slice(-1)[0] === 'show' ? slugUrl.split('-'
 const pageName = window.location.href.split('/')[3]
 const showName = slugUrl.split('-').slice(0,-1).join('-')
 const mediaType = slugUrl.split('-').slice(-1)[0] === 'show' ? 'tv' : 'movie';
+const usID = document.querySelector('.uid')
+
 let tmdbID;
 let trailerList = document.getElementById('trailer-list')
 let castWrapper = document.getElementById('cast-wrapper')
@@ -103,10 +105,10 @@ async function getMediaData() {
     console.error('API request is unsuccessful!:', error);
   }
 }
+
 if(pageName === 'watch'){
     getMediaData();
 }
-
 
 // When you have leisure time, make inifinite scroll functionality
 
@@ -265,7 +267,6 @@ async function getEpisodes (seasonIn) {
       downloadLinks.forEach((link,index) => {
         linkArr.push(`[${link.downloadLink.split('-')[0].toUpperCase()}]../api/${showName}/${seasonIn ? seasonIn : 1}/${Number(item.dataset.episode)}/${link.downloadLink.split('-')[0]}/${downloadLinks.length}/${index}/readShowSubtitle?subtitle.srt`)
       })
-      console.log(linkArr)
       const subtitles = linkArr.join(',') 
       tvPlayer.insertAdjacentHTML('afterbegin', `<div style="width:100%;height:100%;" id="${showName}Player"></div>`)
       let player = new Playerjs({id:`${showName}Player`, file:`[720p]../stream/${showName}-S0${seasonIn ? seasonIn : 1}E0${Number(item.dataset.episode)}`,subtitle:subtitles,autoplay:1,default_quality:'720p'})
@@ -281,8 +282,8 @@ async function getEpisodes (seasonIn) {
           const embedName = e.target.classList[0] || e.target.parentElement.classList[0]
           if(embedName === 'dolusrc') {
             
-            tvPlayer.insertAdjacentHTML('afterbegin', `<div style="width:100%;height:100%;" id="${showName}Player"></div>`)
-            let player = new Playerjs({id:`${showName}Player`, file:`[720p]../stream/${showName}-S0${seasonIn ? seasonIn : 1}E0${Number(item.dataset.episode)}`,subtitle: subtitles,autoplay:1,default_quality:'720p'})
+            tvPlayer.insertAdjacentHTML('afterbegin', `<div style="width:100%;height:100%;" id="${usID.value}-${showName}"></div>`)
+            let player = new Playerjs({id:`${usID.value}-${showName}`, file:`[720p]../stream/${showName}-S0${seasonIn ? seasonIn : 1}E0${Number(item.dataset.episode)}`,subtitle: subtitles,autoplay:1,default_quality:'720p'})
             if(iframe) {
               iframe.remove()
             }
@@ -336,8 +337,31 @@ movieServerLinks.forEach(item => {
         linkArr.push(`[${link.downloadLink.split('-')[0].toUpperCase()}]../api/${slugUrl}/${link.downloadLink.split('-')[0]}/${downloadLinks.length}/${index}/readMovieSubtitle?subtitle.srt`)
       })
       const subtitles = linkArr.join(',')
-      moviePlayer.insertAdjacentHTML('afterbegin', `<div style="width:100%;height:100%;" id="${slugUrl}Player"></div>`)
-      player = new Playerjs({id:`${slugUrl}Player`, file:`[720p]../stream/${slugUrl}`,subtitle: subtitles,autoplay:1,default_quality:'720p'})
+      moviePlayer.insertAdjacentHTML('afterbegin', `<div style="width:100%;height:100%;" id="${usID.value}-y${slugUrl}"></div>`)
+      player = new Playerjs({id:`${usID.value}-y${slugUrl}`, file:`[720p]../stream/${slugUrl}`,subtitle: subtitles,autoplay:1,default_quality:'720p'})
+      // const pjsDivs = document.getElementsByTagName('pjsdiv')
+
+      let noIndex = document.getElementsByTagName('noindex');
+      let arrayedTime = Array.from(noIndex)
+      let rememberedTime = arrayedTime.map(item => item.innerHTML)[0]
+
+      // Set timeinterval for playback and send it for "Continue Watching" 
+      if(!rememberedTime) {
+        let watchedTime = 0
+        let timeInterval = setInterval(async item => {
+          watchedTime++
+          if(watchedTime === 1) {
+            const post = await axios.post('../watch/addContinueList', {mediaTitle: movieName})
+            .catch(err => err)
+            
+            clearInterval(timeInterval)
+          }
+        },10000) 
+      } else {
+        const post = await axios.post('../watch/addContinueList', {time:rememberedTime,mediaTitle: movieName})
+
+      }
+
       if(iframe) {
         document.querySelector('#iframe').remove()
       }
@@ -369,6 +393,7 @@ if(pageName === 'watch' && slugUrl.split('-').slice(-1)[0] === 'show') {
 } else {
    getMoviePlay()
 }
+
 // Bookmark icon selecting 
 const icons = document.querySelectorAll('.icon-bookmark')
 const iconBtn = document.querySelector('.iconBookmark')

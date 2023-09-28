@@ -11,7 +11,7 @@ class movieController {
      }
     async getUpdateMoviePage(req,res) {
       const movie = await Movie.findById(req.params.id) 
-      res.render('dashboard/edit-movie',{movie,pageName:'movies'})
+      res.render('dashboard/edit-movie',{movie,pageName:'movies', roleData: req.role,})
     }
     
   // Post operations  

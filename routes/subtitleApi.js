@@ -218,6 +218,7 @@ async function getSubtitleInfo(mediaId,lang,totalLink,type) {
       const singleLink = $('#bt-dwl-bt').attr('href')
       let mediaDesc
       const textH1 = $('.msg h1').text().trim().split(' ')
+      const index =  textH1.indexOf('subtitles')
       let name = lang.split(',').length > 1 ? textH1.slice(0,index).join(' ') : textH1.slice(0,-1).join(' ') 
       let language = lang.split(',').length > 1 ? textH1.slice(index+1).join(' ') : textH1.slice(-1).join(' ')
       let links    
@@ -226,7 +227,6 @@ async function getSubtitleInfo(mediaId,lang,totalLink,type) {
         let downloadPageLinks = [] 
         mediaDesc = ($('fieldset p')[0].children[1].data).replace(/^\\|"|"\.$/g, '').replace(/^\s+|\s+$|\n/g, '')
         let episodePages = {}
-        const index =  textH1.indexOf('subtitles')
   
         const findLinks = $('.bnone').each((index,element) => {
           downloadPageLinks.push(siteUrl + element.attribs.href)

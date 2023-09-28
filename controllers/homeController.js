@@ -95,91 +95,104 @@ class home_Pages {
       }
      }
 
-   async streamFile(req,res) {
-      const title = req.params.slug
-      let torrentId =  await torrentSearch(title,0)
+     async streamFile(req,res) {
+         const title = req.params.slug
+         let torrentId =  await torrentSearch(title,0)
 
-      client.on('error' , (err) => {
-         console.log(err)
-      })
-      
-      let destroyed = false
+         client.on('error' , (err) => {
+            console.log(err)
+         })
+         
+         let destroyed = false
 
-      function checkTorrent() {
-         client.get(torrentId).then(result => {
-            if(result) { 
-               result.destroy({destroyStoreOnDestroy:true}, () => {
-                  destroyed = !destroyed
-               })
-               addTorrent()
-            } else {
-               addTorrent()
-            }
-         }) 
-      }
-
-      checkTorrent()
-
-      function addTorrent() {
-         let i = 1
-         client.add(torrentId,{destroyStoreOnDestroy:true,store: Storage}, async function ontorrent (torrent) {
-            let file = torrent.files.find(function (file) {
-               return file.name.endsWith('.mp4') || file.name.endsWith('.mkv') || file.name.endsWith('.avi')
-            })   
-            if (!file) {
-               torrentId = await torrentSearch(title,i++)  
-               checkTorrent()
-               return
-            } 
-            res.setHeader("Content-Type","video/webm")
-            
-            // ****
-            // Doing this for sending stream data as piece, so preventing memory problems
-            // Also for enabling seeking
-            let range = req.headers.range
-            if(!range) {
-               range = 'bytes=0-'
-            }
-            const positions = range.replace(/bytes=/, '').split('-')
-
-            const start = parseInt(positions[0],10)
-            const end = positions[1] ? parseInt(positions[1], 10) : file.length - 1
-            const chunksize = (end - start) + 1
-
-            res.statusCode = 206
-            res.setHeader('Content-Range', `bytes ${start}-${end}/${file.length}`)
-            res.setHeader('Accept-Ranges', 'bytes')
-            res.setHeader('Cache-Control', 'no-store')
-            res.setHeader('Content-Length', chunksize)
-            // ****  
-            const fileStream = file.createReadStream({start,end})  
-            // a Transform stream to intercept errors
-            const errorHandler = new Transform({
-               transform(chunk, encoding, callback) {
-                     // Pass the chunk as-is to the output, but catch errors
-                     try {
-                           callback(null, chunk); 
-                     } catch (error) {
-                        res.end();
-                     }
+         function checkTorrent() {
+            client.get(torrentId).then(result => {
+               if(result) { 
+                  result.destroy({destroyStoreOnDestroy:true}, () => {
+                     destroyed = !destroyed
+                  })
+                  addTorrent()
+               } else {
+                  addTorrent()
                }
-            });  
-              
-            fileStream.pipe(errorHandler).pipe(res,{end:true});
-
-            fileStream.on('end', () => {
-                  res.end()
-            });   
-            res.on('close', () => {
-               // Destroy stream when browser connection lost 
-               fileStream.destroy(); 
             }) 
-            
-      })  
-      }
-       
+         }
+
+         checkTorrent()
+
+         function addTorrent() {
+            let i = 1
+            client.add(torrentId,{destroyStoreOnDestroy:true,store: Storage}, async function ontorrent (torrent) {
+               let file = torrent.files.find(function (file) {
+                  return file.name.endsWith('.mp4') || file.name.endsWith('.mkv') || file.name.endsWith('.avi')
+               })   
+               if (!file) {
+                  torrentId = await torrentSearch(title,i++)  
+                  checkTorrent()
+                  return
+               } 
+               res.setHeader("Content-Type","video/webm")
+               
+               // ****
+               // Doing this for sending stream data as piece, so preventing memory problems
+               // Also for enabling seeking
+               let range = req.headers.range
+               if(!range) {
+                  range = 'bytes=0-'
+               }
+               const positions = range.replace(/bytes=/, '').split('-')
+
+               const start = parseInt(positions[0],10)
+               const end = positions[1] ? parseInt(positions[1], 10) : file.length - 1
+               const chunksize = (end - start) + 1
+
+               res.statusCode = 206
+               res.setHeader('Content-Range', `bytes ${start}-${end}/${file.length}`)
+               res.setHeader('Accept-Ranges', 'bytes')
+               res.setHeader('Cache-Control', 'no-store')
+               res.setHeader('Content-Length', chunksize)
+               // ****  
+               const fileStream = file.createReadStream({start,end})  
+               // a Transform stream to intercept errors
+               const errorHandler = new Transform({
+                  transform(chunk, encoding, callback) {
+                        // Pass the chunk as-is to the output, but catch errors
+                        try {
+                              callback(null, chunk); 
+                        } catch (error) {
+                           res.end();
+                        }
+                  }
+               });  
+               
+               fileStream.pipe(errorHandler).pipe(res,{end:true});
+
+               fileStream.on('end', () => {
+                     res.end()
+               });   
+               res.on('close', () => {
+                  // Destroy stream when browser connection lost 
+                  fileStream.destroy(); 
+               }) 
+               
+         })  
+         }
+         
      }
 
+     async addContinueList(req,res) { 
+      console.log(req.body)
+      const rememberedTime = req.body.time
+      const mediaTitle = req.body.mediaTitle
+      try {
+         const findOne = await User.findOne({_id: req.user.userId}) 
+         const update = await User.updateOne({_id: req.user.userId}, {continueList:req.body})
+         // if(findOne.continueList[0].mediaTitle !== mediaTitle) {
+         // }
+      } catch(err) {
+         console.log(err)
+      }
+     }
 
  }
  

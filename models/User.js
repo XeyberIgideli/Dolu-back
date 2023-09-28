@@ -45,6 +45,10 @@ const userSchema = new mongoose.Schema({
     bookmarks: [{
         bookmark:{type: String},
         icon: {type: String} 
+    }],
+    continueList: [{
+        mediaTitle: {type:String},
+        time: {type: Number}
     }]
 }) 
 
