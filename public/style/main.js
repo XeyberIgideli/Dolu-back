@@ -23,8 +23,8 @@ const movieName = slugUrl.split('-').slice(-1)[0] === 'show' ? slugUrl.split('-'
 const pageName = window.location.href.split('/')[3]
 const showName = slugUrl.split('-').slice(0,-1).join('-')
 const mediaType = slugUrl.split('-').slice(-1)[0] === 'show' ? 'tv' : 'movie';
-const usID = document.querySelector('.uid')
-
+const usID = document.querySelector('.uid') 
+const siteUrl = window.location.hostname + ':' + window.location.port + '/watch/' + slugUrl
 let tmdbID;
 let trailerList = document.getElementById('trailer-list')
 let castWrapper = document.getElementById('cast-wrapper')
@@ -340,27 +340,23 @@ movieServerLinks.forEach(item => {
       moviePlayer.insertAdjacentHTML('afterbegin', `<div style="width:100%;height:100%;" id="${usID.value}-y${slugUrl}"></div>`)
       player = new Playerjs({id:`${usID.value}-y${slugUrl}`, file:`[720p]../stream/${slugUrl}`,subtitle: subtitles,autoplay:1,default_quality:'720p'})
       // const pjsDivs = document.getElementsByTagName('pjsdiv')
-
+       
       let noIndex = document.getElementsByTagName('noindex');
+
+      const durationTag = document.querySelector('video')
+      let duration
+      // durationTag.onloadeddata = function () {
+      //   var hour = Math.floor(this.duration / 3600);
+      //   var minute = Math.floor((this.duration % 3600) / 60);
+      // }
+      
+      // console.log(hour,minute)
       let arrayedTime = Array.from(noIndex)
       let rememberedTime = arrayedTime.map(item => item.innerHTML)[0]
-
       // Set timeinterval for playback and send it for "Continue Watching" 
-      if(!rememberedTime) {
-        let watchedTime = 0
-        let timeInterval = setInterval(async item => {
-          watchedTime++
-          if(watchedTime === 1) {
-            const post = await axios.post('../watch/addContinueList', {mediaTitle: movieName})
-            .catch(err => err)
-            
-            clearInterval(timeInterval)
-          }
-        },10000) 
-      } else {
-        const post = await axios.post('../watch/addContinueList', {time:rememberedTime,mediaTitle: movieName})
 
-      }
+      await addContinueList(rememberedTime)
+
 
       if(iframe) {
         document.querySelector('#iframe').remove()
@@ -386,6 +382,23 @@ movieServerLinks.forEach(item => {
 
   }, true)
 })
+}
+ 
+
+async function addContinueList(remTime) {
+
+  const video = document.querySelector('video')
+  window.onbeforeunload = function() {
+    const watchedTimeInSeconds = localStorage.getItem('pljsplayfrom_' + `${usID.value}-y${slugUrl + siteUrl}`).split('--')[0]
+    const hour = watchedTimeInSeconds / 3600
+    const minute = ((hour % 1) * 60)
+    const minuteCheck = minute < 10 ? 0 + minute.toFixed(0).toString() : minute.toFixed(0) 
+    const watchedTime = Number(Math.floor(hour) + '.' + minuteCheck)
+    if(minute.toFixed(0) > 3) {
+      const post = axios.post('../watch/addContinueList', {time: watchedTime, mediaTitle: movieName})
+    }
+
+  }; 
 }
 
 if(pageName === 'watch' && slugUrl.split('-').slice(-1)[0] === 'show') {

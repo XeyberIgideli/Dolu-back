@@ -96,6 +96,9 @@
     .nav-link {
         font-size: 1.5rem;
     }
+    .sidebar {
+        gap:2.3rem;
+    }
     .grid-content {
         display: grid;
         grid-template-columns: repeat(3, minmax(5rem, 1fr));

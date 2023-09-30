@@ -104,7 +104,7 @@ class home_Pages {
          })
          
          let destroyed = false
-
+         // Check for torrent existing
          function checkTorrent() {
             client.get(torrentId).then(result => {
                if(result) { 
@@ -181,14 +181,17 @@ class home_Pages {
      }
 
      async addContinueList(req,res) { 
-      console.log(req.body)
-      const rememberedTime = req.body.time
+      const time = req.body.time
       const mediaTitle = req.body.mediaTitle
       try {
-         const findOne = await User.findOne({_id: req.user.userId}) 
-         const update = await User.updateOne({_id: req.user.userId}, {continueList:req.body})
-         // if(findOne.continueList[0].mediaTitle !== mediaTitle) {
-         // }
+         const existData = await User.findOne({_id: req.user.userId})  
+         const checkMediaTitle = existData.continueList.find(item => item.mediaTitle === mediaTitle);
+         if(checkMediaTitle) {
+            await User.updateOne({_id: req.user.userId}, {continueList:req.body})
+         } else {
+            await User.updateOne({_id: req.user.userId}, {$addToSet: {continueList:{mediaTitle,time}}}, {new:false,runValidators: true})
+         } 
+
       } catch(err) {
          console.log(err)
       }
