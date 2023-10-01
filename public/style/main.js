@@ -337,25 +337,13 @@ movieServerLinks.forEach(item => {
         linkArr.push(`[${link.downloadLink.split('-')[0].toUpperCase()}]../api/${slugUrl}/${link.downloadLink.split('-')[0]}/${downloadLinks.length}/${index}/readMovieSubtitle?subtitle.srt`)
       })
       const subtitles = linkArr.join(',')
-      moviePlayer.insertAdjacentHTML('afterbegin', `<div style="width:100%;height:100%;" id="${usID.value}-y${slugUrl}"></div>`)
-      player = new Playerjs({id:`${usID.value}-y${slugUrl}`, file:`[720p]../stream/${slugUrl}`,subtitle: subtitles,autoplay:1,default_quality:'720p'})
-      // const pjsDivs = document.getElementsByTagName('pjsdiv')
-       
-      let noIndex = document.getElementsByTagName('noindex');
+      moviePlayer.insertAdjacentHTML('afterbegin', `<div style="width:100%;height:100%;" id="${usID.value}-${slugUrl}"></div>`)
+      player = new Playerjs({id:`${usID.value}-${slugUrl}`, file:`[720p]../stream/${slugUrl}`,subtitle: subtitles,autoplay:1,default_quality:'720p'})
 
-      const durationTag = document.querySelector('video')
-      let duration
-      // durationTag.onloadeddata = function () {
-      //   var hour = Math.floor(this.duration / 3600);
-      //   var minute = Math.floor((this.duration % 3600) / 60);
-      // }
       
-      // console.log(hour,minute)
-      let arrayedTime = Array.from(noIndex)
-      let rememberedTime = arrayedTime.map(item => item.innerHTML)[0]
       // Set timeinterval for playback and send it for "Continue Watching" 
 
-      await addContinueList(rememberedTime)
+      await addContinueList()
 
 
       if(iframe) {
@@ -385,17 +373,35 @@ movieServerLinks.forEach(item => {
 }
  
 
-async function addContinueList(remTime) {
+async function addContinueList () {
 
-  const video = document.querySelector('video')
-  window.onbeforeunload = function() {
-    const watchedTimeInSeconds = localStorage.getItem('pljsplayfrom_' + `${usID.value}-y${slugUrl + siteUrl}`).split('--')[0]
-    const hour = watchedTimeInSeconds / 3600
-    const minute = ((hour % 1) * 60)
-    const minuteCheck = minute < 10 ? 0 + minute.toFixed(0).toString() : minute.toFixed(0) 
-    const watchedTime = Number(Math.floor(hour) + '.' + minuteCheck)
-    if(minute.toFixed(0) > 3) {
-      const post = axios.post('../watch/addContinueList', {time: watchedTime, mediaTitle: movieName})
+  window.onbeforeunload = function () {
+    const durationInSeconds = localStorage.getItem('pljsplayfrom_' + `${usID.value}-${slugUrl + siteUrl}`).split('--')[1]
+    const watchedTimeInSeconds = localStorage.getItem('pljsplayfrom_' + `${usID.value}-${slugUrl + siteUrl}`).split('--')[0]
+    const timeMin = Math.floor(watchedTimeInSeconds / 60);
+    const watchedTime = timeMin > 59 ? Number(Math.floor(timeMin / 60) + '.' + (timeMin % 60).toString()) : timeMin
+    const duration = Math.floor(durationInSeconds / 60)
+
+    if(watchedTime > 3) {
+
+      const video = document.querySelector('video')
+      
+        const canvas = document.createElement("canvas")
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        const context = canvas.getContext('2d')
+  
+        function captureScreenshot() {
+          context.drawImage(video,0,0,canvas.width,canvas.height)
+  
+          const imageDataUrl = canvas.toDataURL("image/jpeg")
+  
+          return imageDataUrl
+        }
+        const screenshot = captureScreenshot()
+  
+         axios.post('../watch/addContinueList', {time: watchedTime,duration, mediaTitle: movieName, image: screenshot, timeSeconds: watchedTimeInSeconds})
+
     }
 
   }; 

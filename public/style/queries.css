@@ -143,7 +143,7 @@
     } 
     .continue-watching {
         left: 38%;
-        top: 24.4rem;
+        top: 21.4rem;
         width: 90%;
     }
     .movie-details {
@@ -187,7 +187,7 @@
         padding-left: 0!important;
     } */
     .continue-watching {
-        top: 24.4rem;  
+        top: 22rem;  
         width: 70%;
     }
     .home-text {
@@ -927,7 +927,7 @@ and (max-height: 600px) {
        left: 6%;
     }
     .continue-watching {
-        top: 22.7rem;
+        top: 22rem;
     }
     .home-wrapper::after {
         height: 54vh!important;

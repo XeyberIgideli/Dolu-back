@@ -181,15 +181,15 @@ class home_Pages {
      }
 
      async addContinueList(req,res) { 
-      const time = req.body.time
-      const mediaTitle = req.body.mediaTitle
+      console.log(req.body)
+      const {time,duration,mediaTitle,image,timeSeconds} = req.body
       try {
          const existData = await User.findOne({_id: req.user.userId})  
          const checkMediaTitle = existData.continueList.find(item => item.mediaTitle === mediaTitle);
          if(checkMediaTitle) {
             await User.updateOne({_id: req.user.userId}, {continueList:req.body})
          } else {
-            await User.updateOne({_id: req.user.userId}, {$addToSet: {continueList:{mediaTitle,time}}}, {new:false,runValidators: true})
+            await User.updateOne({_id: req.user.userId}, {$addToSet: {continueList:{mediaTitle,time,timeSeconds,image,duration}}}, {new:false,runValidators: true})
          } 
 
       } catch(err) {

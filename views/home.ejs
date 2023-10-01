@@ -52,158 +52,30 @@
                 
                 <div class="swiper-wrapper">
 
-                    <div class="swiper-slide">
-                        <div class="card-box">
-                            <img src="img/w1.jpg" class="card-box-img" alt="">
-                            <div class="box-content">
-                                <h2 class="content-title">Joker</h2>
+                    <% for( let i = 0; i < user.continueList.length; i++ ) { %> 
+                       <% const mapped = allMedia.filter(item => item.slug === user.continueList[i]?.mediaTitle)%>
+                       <% mapped.forEach(item => { %>
+                        <div class="swiper-slide">
+                            <div class="card-box">
+                                <img src="<%=  user.continueList[i].image %>" class="card-box-img" alt="">
+                                <div class="box-content">
+                                    <h2 class="content-title"><%= item.title %></h2>
 
-                                <a href="" class="play-btn hidden">
-                                    <i class="bx bx-right-arrow"></i>
-                                </a>
-                                <div class="timeleft">
-                                    <div class="times">
-                                        <span>59:05</span>
-                                        <span>02:23:45</span>
+                                    <a href="watch/<%= user.continueList[i].mediaTitle %>" class="play-btn hidden">
+                                        <i class="bx bx-right-arrow"></i>
+                                    </a>
+                                    <div class="timeleft">
+                                        <div class="times">
+                                            <span><%= user.continueList[i].time < 60 ? user.continueList[i].time + ' min' : (user.continueList[i].time / 60).toFixed(2) %></span>
+                                            <span><%= user.continueList[i].duration < 60 ? user.continueList[i].duration + ' min' : (user.continueList[i].duration / 60).toFixed(2) %></span>
+                                        </div>
+                                        <div class="timeline" style="width:<%= ((Math.floor(user.continueList[i].timeSeconds / 60) * 100)) / user.continueList[i].duration %>%"></div>
                                     </div>
-                                    <div class="timeline" style="width:65%"></div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="card-box">
-                            <img src="img/w2.jpg" class="card-box-img" alt="">
-                            <div class="box-content">
-                                <h2 class="content-title">Don't Breathe</h2>
-
-                                <a href="" class="play-btn hidden">
-                                    <i class="bx bx-right-arrow"></i>
-                                </a>
-                                <div class="timeleft">
-                                    <div class="times">
-                                        <span>59:05</span>
-                                        <span>02:23:45</span>
-                                    </div>
-                                    <div class="timeline" style="width:75%"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="card-box">
-                            <img src="img/w3.jpg" class="card-box-img" alt="">
-                            <div class="box-content">
-                                <h2 class="content-title">Until Dawn</h2>
-
-                                <a href="" class="play-btn hidden">
-                                    <i class="bx bx-right-arrow"></i>
-                                </a>
-                                <div class="timeleft">
-                                    <div class="times">
-                                        <span>59:05</span>
-                                        <span>02:23:45</span>
-                                    </div>
-                                    <div class="timeline" style="width:65%"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="card-box">
-                            <img src="img/w4.png" class="card-box-img" alt="">
-                            <div class="box-content">
-                                <h2 class="content-title">Spider: No Way Home</h2>
-
-                                <a href="" class="play-btn hidden">
-                                    <i class="bx bx-right-arrow"></i>
-                                </a>
-                                <div class="timeleft">
-                                    <div class="times">
-                                        <span>59:05</span>
-                                        <span>02:23:45</span>
-                                    </div>
-                                    <div class="timeline" style="width:25%"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="card-box">
-                            <img src="img/w5.jpg" class="card-box-img" alt="">
-                            <div class="box-content">
-                                <h2 class="content-title">Spider: No Way Home</h2>
-
-                                <a href="" class="play-btn hidden">
-                                    <i class="bx bx-right-arrow"></i>
-                                </a>
-                                <div class="timeleft">
-                                    <div class="times">
-                                        <span>59:05</span>
-                                        <span>02:23:45</span>
-                                    </div>
-                                    <div class="timeline" style="width:35%"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="card-box">
-                            <img src="img/w6.jpg" class="card-box-img" alt="">
-                            <div class="box-content">
-                                <h2 class="content-title">Spider: No Way Home</h2>
-
-                                <a href="" class="play-btn hidden">
-                                    <i class="bx bx-right-arrow"></i>
-                                </a>
-                                <div class="timeleft">
-                                    <div class="times">
-                                        <span>59:05</span>
-                                        <span>02:23:45</span>
-                                    </div>
-                                    <div class="timeline" style="width:95%"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="card-box">
-                            <img src="img/w7.jpg" class="card-box-img" alt="">
-                            <div class="box-content">
-                                <h2 class="content-title">Spider: No Way Home</h2>
-
-                                <a href="" class="play-btn hidden">
-                                    <i class="bx bx-right-arrow"></i>
-                                </a>
-                                <div class="timeleft">
-                                    <div class="times">
-                                        <span>59:05</span>
-                                        <span>02:23:45</span>
-                                    </div>
-                                    <div class="timeline" style="width:55%"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="card-box">
-                            <img src="img/w8.jpg" class="card-box-img" alt="">
-                            <div class="box-content">
-                                <h2 class="content-title">Spider: No Way Home</h2>
-
-                                <a href="" class="play-btn hidden">
-                                    <i class="bx bx-right-arrow"></i>
-                                </a>
-                                <div class="timeleft">
-                                    <div class="times">
-                                        <span>59:05</span>
-                                        <span>02:23:45</span>
-                                    </div>
-                                    <div class="timeline" style="width:55%"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        </div> 
+                        <% }) %>
+                    <% } %>
 
                 </div>
             </div> 

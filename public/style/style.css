@@ -301,20 +301,15 @@ section {
 
 .home { 
     height: 100vh;
-    position: relative;
+    /* position: relative; */
 }
 .home-img {  
     width: 100%;
-    height: 80vh;
+    height: 100vh;
     object-fit: cover;
     object-position: center;
     transition: all .3s;
-    z-index: -1; 
-    /* -webkit-mask-image: radial-gradient(circle, black 24%, rgba(0, 0, 0, 0.3) 38%);
-    mask-image: radial-gradient(circle, black 24%, rgba(0, 0, 0, 0.5) 38%); */
-    /* Image gradient */
-    /* -webkit-mask-image:-webkit-gradient(linear,right top,left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
-    mask-image: linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0)); */
+    z-index: -1;  
 } 
 .home-image-full {
     position: relative;
@@ -328,8 +323,7 @@ section {
     left: 0; 
     height: 100%; 
     width: 100%;
-    background: linear-gradient(to top, var(--body-color), rgba(0, 0, 0, 0.068)); 
-}
+    background: linear-gradient(to top, var(--body-color) 7%, rgba(0, 0, 0, 0.068) 100%);}
 
 .home-text {  
     /* padding: 1.5rem 2rem; */  
@@ -426,8 +420,8 @@ section {
 /* Continue Watching */
 .continue-watching {
     position: absolute;
-    top: 23rem; 
-    left: 35rem;
+    top: 21rem; 
+    left: 24rem;
     z-index: 100; 
     width: 100vw;
     transition: all .3s;

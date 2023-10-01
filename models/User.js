@@ -48,7 +48,10 @@ const userSchema = new mongoose.Schema({
     }],
     continueList: [{
         mediaTitle: {type:String},
-        time: {type: Number}
+        time: {type: Number},
+        timeSeconds: {type: Number},
+        duration: {type: Number},
+        image: {type: String}
     }]
 }) 
 
