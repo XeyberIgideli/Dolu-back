@@ -310,6 +310,8 @@ section {
     object-position: center;
     transition: all .3s;
     z-index: -1;  
+    -webkit-mask-image:-webkit-gradient(linear,right top,left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+    mask-image: linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0));
 } 
 .home-image-full {
     position: relative;
@@ -732,7 +734,7 @@ section .content-rate:not(.top-three-of-day) {
     flex-direction: column;
     gap: 3rem;
     align-items: center; 
-    padding-bottom: 5rem;
+    padding-bottom: 2rem;
 }
 .nav-link{
     font-size: 1.62rem;
@@ -740,7 +742,7 @@ section .content-rate:not(.top-three-of-day) {
     transition: all .3s; 
 }
 .nav-link img {
-    width: 1.53rem
+    width: 1.65rem
 }
 .nav-link:hover,
 .nav-link:focus {
