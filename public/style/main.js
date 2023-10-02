@@ -29,7 +29,7 @@ let tmdbID;
 let trailerList = document.getElementById('trailer-list')
 let castWrapper = document.getElementById('cast-wrapper')
 let producerWrapper = document.getElementById('producer-wrapper')
-
+ 
 async function getMediaData() { 
   const apiUrl = `https://api.themoviedb.org/3/search/${mediaType}?api_key=${apiKey}&query=${encodeURIComponent(movieName)}`;
   try {
@@ -268,9 +268,11 @@ async function getEpisodes (seasonIn) {
         linkArr.push(`[${link.downloadLink.split('-')[0].toUpperCase()}]../api/${showName}/${seasonIn ? seasonIn : 1}/${Number(item.dataset.episode)}/${link.downloadLink.split('-')[0]}/${downloadLinks.length}/${index}/readShowSubtitle?subtitle.srt`)
       })
       const subtitles = linkArr.join(',') 
-      tvPlayer.insertAdjacentHTML('afterbegin', `<div style="width:100%;height:100%;" id="${showName}Player"></div>`)
-      let player = new Playerjs({id:`${showName}Player`, file:`[720p]../stream/${showName}-S0${seasonIn ? seasonIn : 1}E0${Number(item.dataset.episode)}`,subtitle:subtitles,autoplay:1,default_quality:'720p'})
+      tvPlayer.insertAdjacentHTML('afterbegin', `<div style="width:100%;height:100%;" id="${usID.value}-${showName}"></div>`)
+      let player = new Playerjs({id:`${usID.value}-${showName}`, file:`[720p]../stream/${showName}-S0${seasonIn ? seasonIn : 1}E0${Number(item.dataset.episode)}`,subtitle:subtitles,autoplay:1,default_quality:'720p'})
       
+      await addContinueList(showName)
+
       document.querySelector('.movie-detail').style.display = 'none'
       document.querySelector('.sidebar').style.display = 'none'
       document.querySelector('.header').style.display = 'none' 
@@ -294,7 +296,7 @@ async function getEpisodes (seasonIn) {
               if(iframe.src) {
                 iframe.setAttribute("sandbox", "allow-modals allow-orientation-lock allow-pointer-lock allow-presentation allow-scripts allow-top-navigation allow-forms");
               }
-              document.querySelector(`#${showName}Player`)?.remove()
+              document.querySelector(`#${showName}`)?.remove()
           }
         }
         })
@@ -338,13 +340,9 @@ movieServerLinks.forEach(item => {
       })
       const subtitles = linkArr.join(',')
       moviePlayer.insertAdjacentHTML('afterbegin', `<div style="width:100%;height:100%;" id="${usID.value}-${slugUrl}"></div>`)
-      player = new Playerjs({id:`${usID.value}-${slugUrl}`, file:`[720p]../stream/${slugUrl}`,subtitle: subtitles,autoplay:1,default_quality:'720p'})
+      player = new Playerjs({id:`${usID.value}-${slugUrl}`, file:`[720p]../stream/${slugUrl}`,subtitle: subtitles,autoplay:1,default_quality:'720p'}) 
 
-      
-      // Set timeinterval for playback and send it for "Continue Watching" 
-
-      await addContinueList()
-
+      await addContinueList(movieName)
 
       if(iframe) {
         document.querySelector('#iframe').remove()
@@ -371,13 +369,14 @@ movieServerLinks.forEach(item => {
   }, true)
 })
 }
- 
 
-async function addContinueList () {
+// Adding media's time datas to database
 
+async function addContinueList (title) { 
+  
   window.onbeforeunload = function () {
-    const durationInSeconds = localStorage.getItem('pljsplayfrom_' + `${usID.value}-${slugUrl + siteUrl}`).split('--')[1]
-    const watchedTimeInSeconds = localStorage.getItem('pljsplayfrom_' + `${usID.value}-${slugUrl + siteUrl}`).split('--')[0]
+    const durationInSeconds = localStorage.getItem('pljsplayfrom_' + `${usID.value}-${title + siteUrl}`).split('--')[1]
+    const watchedTimeInSeconds = localStorage.getItem('pljsplayfrom_' + `${usID.value}-${title + siteUrl}`).split('--')[0]
     const timeMin = Math.floor(watchedTimeInSeconds / 60);
     const watchedTime = timeMin > 59 ? Number(Math.floor(timeMin / 60) + '.' + (timeMin % 60).toString()) : timeMin
     const duration = Math.floor(durationInSeconds / 60)
@@ -398,9 +397,10 @@ async function addContinueList () {
   
           return imageDataUrl
         }
+
         const screenshot = captureScreenshot()
   
-         axios.post('../watch/addContinueList', {time: watchedTime,duration, mediaTitle: movieName, image: screenshot, timeSeconds: watchedTimeInSeconds})
+         axios.post('../watch/addContinueList', {time: watchedTime,duration, mediaTitle: title, image: screenshot, timeSeconds: watchedTimeInSeconds})
 
     }
 

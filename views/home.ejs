@@ -53,7 +53,7 @@
                 <div class="swiper-wrapper">
 
                     <% for( let i = 0; i < user.continueList.length; i++ ) { %> 
-                       <% const mapped = allMedia.filter(item => item.slug === user.continueList[i]?.mediaTitle)%>
+                       <% const mapped = allMedia.filter(item => item.title.toLowerCase().split(' ').join('-') === user.continueList[i]?.mediaTitle)%>
                        <% mapped.forEach(item => { %>
                         <div class="swiper-slide">
                             <div class="card-box">
