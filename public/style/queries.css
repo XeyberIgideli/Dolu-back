@@ -29,7 +29,7 @@
 
 @media (max-width: 1280px) {
     .container:not(.bookmark-wrapper,.grid--footer,.wide-card) { 
-        width: 85%;
+        width: 92%;
         padding-left: 3rem!important; 
     }
     .bookmark .container,
@@ -57,7 +57,7 @@
         padding: 1rem 5rem 0rem 5rem!important;
     }
     .home-text {
-        left: 10%;
+        left: 5%;
     } 
     .grid {
         column-gap: 3.5rem;
@@ -105,8 +105,8 @@
         gap: 1.5rem;
     }
     .wide-card.container {
-        width: 75%;
-        margin-right: 6rem;
+        width: 81%;
+        margin-right: 5rem;
     }
     .header {
         padding: 2rem 4rem 2rem 7rem;
@@ -142,8 +142,8 @@
         display: none;
     } 
     .continue-watching {
-        left: 43%;
-        top: 22rem;
+        left: 40%;
+        top: 24rem;
         width: 90%;
     }
     .movie-details {
@@ -545,7 +545,7 @@
         padding: 1rem 0 2rem;
     }
     .continue-watching {
-        top: 21rem; 
+        top: 23rem; 
         left: 6%;
         width: 89%;
     }
@@ -941,7 +941,37 @@ and (max-height: 600px) {
     .logo:not(.homepage-logo) {
         display: block;
     }
+    .sidebar {
+        gap: 3.8rem;
+    }
 }
+
+@media only screen and (device-width: 1280px) and (device-height: 800px) {
+    .sidebar {
+        gap: 8rem;
+    }
+    .menu {
+        gap: 4rem;
+    }
+    .home-text {
+        left: 8%;
+    }
+    .wide-card.container {
+        width: 87%;
+        margin-right: 5rem;
+    }
+    .header {
+        padding: 2rem 0rem 2rem 0rem!important;
+    }
+    .continue-watching {
+        top: 35rem;
+        left: 8rem;
+    }
+    .container:not(.bookmark-wrapper,.grid--footer,.wide-card) {
+        padding-left: 0!important;
+    }
+}
+
 @media only screen and (device-width: 820px) and (device-height: 1180px) {
     .continue-watching {
         top: 45rem;
@@ -1058,7 +1088,8 @@ and (max-height: 600px) {
 @media only screen and (device-width: 412px) and (device-height: 914px) {
     .continue-watching {
         top: 33rem;
-        left: 34%;
+        left: 6%;
+        width: 88%;
     } 
     .sidebar {
         top: 95%!important;
@@ -1077,7 +1108,11 @@ and (max-height: 600px) {
     }
     .continue-watching .card-box {
         height: 296px;
-        width: 72%;
+        width: 100%;
+    }
+    .home-img {
+        -webkit-mask-image: linear-gradient(210deg, rgba(0, 0, 0, 1), transparent 86%);
+        mask-image: linear-gradient(210deg, rgba(0, 0, 0, 1), transparent 86%);
     }
     .home-text {
         gap: 0.6rem;

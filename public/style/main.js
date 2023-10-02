@@ -268,10 +268,11 @@ async function getEpisodes (seasonIn) {
         linkArr.push(`[${link.downloadLink.split('-')[0].toUpperCase()}]../api/${showName}/${seasonIn ? seasonIn : 1}/${Number(item.dataset.episode)}/${link.downloadLink.split('-')[0]}/${downloadLinks.length}/${index}/readShowSubtitle?subtitle.srt`)
       })
       const subtitles = linkArr.join(',') 
-      tvPlayer.insertAdjacentHTML('afterbegin', `<div style="width:100%;height:100%;" id="${usID.value}-${showName}"></div>`)
-      let player = new Playerjs({id:`${usID.value}-${showName}`, file:`[720p]../stream/${showName}-S0${seasonIn ? seasonIn : 1}E0${Number(item.dataset.episode)}`,subtitle:subtitles,autoplay:1,default_quality:'720p'})
-      
-      await addContinueList(showName)
+      tvPlayer.insertAdjacentHTML('afterbegin', `<div style="width:100%;height:100%;" id="${usID.value}-${showName}&${seasonIn ? seasonIn : 1}/${Number(item.dataset.episode)}"></div>`)
+      let player = new Playerjs({id:`${usID.value}-${showName}&${seasonIn ? seasonIn : 1}/${Number(item.dataset.episode)}`, file:`[720p]../stream/${showName}-S0${seasonIn ? seasonIn : 1}E0${Number(item.dataset.episode)}`,subtitle:subtitles,autoplay:1,default_quality:'720p'})
+      const season = seasonIn ? seasonIn : 1
+
+      await addContinueList(showName + "&" + season + '/' + item.dataset.episode)
 
       document.querySelector('.movie-detail').style.display = 'none'
       document.querySelector('.sidebar').style.display = 'none'
@@ -373,7 +374,6 @@ movieServerLinks.forEach(item => {
 // Adding media's time datas to database
 
 async function addContinueList (title) { 
-  
   window.onbeforeunload = function () {
     const durationInSeconds = localStorage.getItem('pljsplayfrom_' + `${usID.value}-${title + siteUrl}`).split('--')[1]
     const watchedTimeInSeconds = localStorage.getItem('pljsplayfrom_' + `${usID.value}-${title + siteUrl}`).split('--')[0]

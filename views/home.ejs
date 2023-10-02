@@ -53,15 +53,17 @@
                 <div class="swiper-wrapper">
 
                     <% for( let i = 0; i < user.continueList.length; i++ ) { %> 
-                       <% const mapped = allMedia.filter(item => item.title.toLowerCase().split(' ').join('-') === user.continueList[i]?.mediaTitle)%>
+                       <% const mapped = allMedia.filter(item => item.title.toLowerCase().split(' ').join('-') === user.continueList[i]?.mediaTitle.split('&')[0])%>
                        <% mapped.forEach(item => { %>
+                        <% const seasonData = user.continueList[i]?.mediaTitle.split('&')[1] %>
                         <div class="swiper-slide">
                             <div class="card-box">
                                 <img src="<%=  user.continueList[i].image %>" class="card-box-img" alt="">
                                 <div class="box-content">
                                     <h2 class="content-title"><%= item.title %></h2>
+                                    <span class="watchedMediaSeason"><%= user.continueList[i]?.mediaTitle.split('&')[1] ?  'S' + seasonData.split('/')[0] + '/E' + seasonData.split('/')[1]  : '' %></span>
 
-                                    <a href="watch/<%= user.continueList[i].mediaTitle %>" class="play-btn hidden">
+                                    <a href="watch/<%= item.slug %>" class="play-btn hidden">
                                         <i class="bx bx-right-arrow"></i>
                                     </a>
                                     <div class="timeleft">
