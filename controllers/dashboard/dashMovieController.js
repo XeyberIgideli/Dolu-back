@@ -51,7 +51,8 @@ class movieController {
         let updatingFile
         if(req.files) {
           let files = req.files 
-          updatingFile = await fileUpdate(Movie,'movie',files,body)
+          console.log(body)
+          updatingFile = await fileUpdate(Movie,'movie',files,body.movieID)
         }
         await Movie.updateOne({_id: body.movieID},{...body,...updatingFile,genres,embed},{ runValidators: true })  
         res.redirect('../movies')

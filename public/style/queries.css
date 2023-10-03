@@ -834,15 +834,67 @@
 /* Device-specified scaling */
 @media only screen and (device-width: 390px) and (device-height: 844px) {
     .continue-watching {
-        top: 33rem;
+        top: 34rem;
     }
     .sidebar {
         padding-bottom: 0;
     }
+    .home-description {
+        font-size: 1rem;
+    }
+    .home-links .btn {
+        font-size: 1.8rem;
+    }
+    .home-text {
+        gap: 1.3rem;
+        top: -6rem;
+    }
+    .popular-section {
+        padding: 0rem 0 2rem;
+    }
+    .home-img {
+        -webkit-mask-image: linear-gradient(210deg, rgba(0, 0, 0, 1), transparent 86%);
+        mask-image: linear-gradient(210deg, rgba(0, 0, 0, 1), transparent 86%);
+    }
+    .categories-shows .container, .popular-section.container {
+        width: 94%; 
+    }
+
 }
-@media only screen and (device-width: 360px) and (device-height: 740px) {
+@media only screen and (device-width: 360px) and (device-height: 640px) {
     .continue-watching {
-        top: 29rem;
+        top: 23.4rem;
+        width: 92%;
+        left:1rem;
+    }
+    .container:not(.movies-wrapper,.bookmark-wrapper,.grid--footer,.wide-card) {
+        padding-left: 1rem!important;
+    }
+    .heading {
+        padding: 9px 0;
+    }
+    .categories-shows .container, .popular-section.container {
+        width: 94%; 
+    }
+    .container:not(.bookmarks .container,.popular-section,.grid--footer,.wide-card,.home-text,.featured-shows,.featured-movie,.heading,.home-category) {
+        padding-left: 1.1rem!important;
+    }
+    .home-description {
+        font-size: 0.9rem;
+    }
+    .home-links .btn {
+        font-size: 1rem;
+    }
+    .home-text {
+        gap: 0.5rem;
+        top: -6rem;
+    }
+    .popular-section {
+        padding: 0rem 0 2rem;
+    }
+    .home-img {
+        -webkit-mask-image: linear-gradient(210deg, rgba(0, 0, 0, 1), transparent 86%);
+        mask-image: linear-gradient(210deg, rgba(0, 0, 0, 1), transparent 86%);
     }
     
 }
@@ -876,7 +928,27 @@
 }
 @media only screen and (device-width: 393px) and (device-height: 851px) {
     .continue-watching {
-        top: 34rem;
+        top: 34.6rem;
+    }
+    .categories-shows .container, .popular-section.container {
+        width: 94%; 
+    }
+    .home-description {
+        font-size: 1rem;
+    }
+    .home-links .btn {
+        font-size: 1.8rem;
+    }
+    .home-text {
+        gap: 1.3rem;
+        top: -6rem;
+    }
+    .popular-section {
+        padding: 0rem 0 2rem;
+    }
+    .home-img {
+        -webkit-mask-image: linear-gradient(210deg, rgba(0, 0, 0, 1), transparent 86%);
+        mask-image: linear-gradient(210deg, rgba(0, 0, 0, 1), transparent 86%);
     }
     .sidebar {
         padding-bottom: 0;
@@ -955,18 +1027,22 @@ and (max-height: 600px) {
     }
     .home-text {
         left: 8%;
+        gap: 1rem;
     }
     .wide-card.container {
-        width: 87%;
-        margin-right: 5rem;
+        width: 80%;
+        margin-right: 10rem
     }
     .header {
         padding: 2rem 0rem 2rem 0rem!important;
     }
     .continue-watching {
-        top: 35rem;
+        top: 34rem;
         left: 8rem;
     }
+    /* .popular-section {
+        padding: 0 0 2rem;
+    } */
     .container:not(.bookmark-wrapper,.grid--footer,.wide-card) {
         padding-left: 0!important;
     }
@@ -975,8 +1051,14 @@ and (max-height: 600px) {
 @media only screen and (device-width: 820px) and (device-height: 1180px) {
     .continue-watching {
         top: 45rem;
-        left: 30%;
+        left: 2%;
         width: 100%;
+    }
+    .heading {
+        padding: 21px 0;
+    }
+    .continue-watching .heading h2 {
+        font-size: 2rem;
     }
    .continue-watching .swiper-slide.swiper-slide-active {
         width: 539px!important;
@@ -998,8 +1080,15 @@ and (max-height: 600px) {
     .continue-watching .card-box {
         height: 320px;
     }
+    .home-description {
+        font-size: 1.1rem;
+    }
+    .home-links .btn {
+        font-size: 2rem;
+    }
     .home-text {
-        gap: 0.6rem;
+        top: -13.2rem;
+        gap: 2.3rem;
     }
     .header {
         width: 92%;
@@ -1012,10 +1101,18 @@ and (max-height: 600px) {
 }
 @media only screen and (device-width: 768px) and (device-height: 1024px) {
     .continue-watching {
-        top: 37rem; 
+        top: 36.5rem;
+        left: 2%;
+        width: 100%;
     }
     .continue-watching .swiper-slide.swiper-slide-active {
         width: 539px!important;
+    }
+    .heading {
+        padding: 21px 0;
+    }
+    .continue-watching .heading h2 {
+        font-size: 1.8rem;
     }
     .sidebar {
         top: 96.2%;
@@ -1033,9 +1130,16 @@ and (max-height: 600px) {
     }
     .continue-watching .card-box {
         height: 320px;
+    } 
+    .home-description {
+        font-size: 1.1rem;
+    }
+    .home-links .btn {
+        font-size: 2rem;
     }
     .home-text {
-        gap: 0.6rem;
+        top: -11.2rem;
+        gap: 2.3rem;
     }
     .header {
         width: 91%;
@@ -1087,7 +1191,7 @@ and (max-height: 600px) {
 }
 @media only screen and (device-width: 412px) and (device-height: 914px) {
     .continue-watching {
-        top: 33rem;
+        top: 32rem;
         left: 6%;
         width: 88%;
     } 
@@ -1106,16 +1210,27 @@ and (max-height: 600px) {
         width: 86%;
         margin-right: 2rem;
     }
-    .continue-watching .card-box {
-        height: 296px;
-        width: 100%;
+    .home-description {
+        font-size: 1.1rem;
+    }
+    .home-links .btn {
+        font-size: 2rem;
     }
     .home-img {
         -webkit-mask-image: linear-gradient(210deg, rgba(0, 0, 0, 1), transparent 86%);
         mask-image: linear-gradient(210deg, rgba(0, 0, 0, 1), transparent 86%);
     }
+    .continue-watching .card-box {
+        height: 296px;
+        width: 100%;
+    }
+
     .home-text {
-        gap: 0.6rem;
+        gap: 1.6rem;
+        top: -10.2rem;
+    }
+    .popular-section {
+        padding: 0rem 0 2rem;
     }
     .header {
         width: 91%;

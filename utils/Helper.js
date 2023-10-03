@@ -50,8 +50,9 @@ async function fileUploadSI (pathname,file,showname) {
 }
 
 // Updating the files in multi inputs
-async function fileUpdate(model,pathname,files,body) {
-	const media = await model.findOne({_id: body.episodeID})
+async function fileUpdate(model,pathname,files,id) {
+	const media = await model.findOne({_id: id})
+	console.log(media)
 	let uploadPaths = {}	
 	   Object.keys(files).forEach(async (file) => { 
 		let uploadedImage = files[file]

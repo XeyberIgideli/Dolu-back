@@ -28,6 +28,7 @@ class showController {
         showTitle: show.title,
         showID,
         episodeData:episode,
+        roleData: req.role,
         currentPage: page,
         totalPage: Math.ceil(totalPost / postPerPage)
         })
@@ -35,12 +36,12 @@ class showController {
      
     async getAddNewEpisodePage(req,res) {
       const show = await Show.findOne({_id:req.params.id}) 
-      res.render('dashboard/add-new-episode',{pageName:'shows', showData:show})
+      res.render('dashboard/add-new-episode',{pageName:'shows', showData:show,roleData: req.role})
      }
 
     async getEditEpisodePage(req,res) {
       const episode = await Episode.findOne({_id:req.params.id}).populate('show') 
-      res.render('dashboard/edit-episode',{pageName:'shows', episodeData:episode})
+      res.render('dashboard/edit-episode',{pageName:'shows', episodeData:episode,roleData: req.role})
      }
 
   // Post operations 
@@ -156,7 +157,7 @@ class showController {
         let updatingFile
         if(req.files) {
           let files = req.files
-          updatingFile = await fileUpdate(Episode,`show/${show.title}`,files,body)
+          updatingFile = await fileUpdate(Episode,`show/${show.title}`,files,body.episodeID)
         }
         await Episode.updateOne({_id: body.episodeID},{...body,...updatingFile,embed},{ runValidators: true })  
         res.redirect(`../${body.showID}`)
