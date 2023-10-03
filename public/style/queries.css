@@ -187,8 +187,8 @@
         padding-left: 0!important;
     } */
     .continue-watching {
-        top: 22rem;  
-        width: 70%;
+        top: 21.3rem;   
+        left: 39%;
     }
     .home-text {
         top: -5.2rem;
@@ -254,9 +254,6 @@
     }
     .toggle {
         display: block;
-    }
-    .continue-watching {
-        left: 27%;
     }
     .logo:not(.homepage-logo) {
         display: block;

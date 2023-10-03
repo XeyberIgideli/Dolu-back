@@ -181,7 +181,6 @@ class home_Pages {
      }
 
      async addContinueList(req,res) {  
-      console.log(req.body)
       const {time,duration,mediaTitle,image,timeSeconds} = req.body
       try {
          const existData = await User.findOne({_id: req.user.userId})  

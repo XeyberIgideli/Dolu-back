@@ -72,7 +72,10 @@ checkboxs.forEach(item => {
 bookmarkBtns?.forEach(item => {
   item.addEventListener('click', (e) => {
     bookmarksTab.classList.toggle('hidden-tab')
-    const homeTitle = e.target.parentNode.parentNode.parentNode.querySelectorAll('.home-title')[0]
+    let homeTitle = e.target.parentNode.parentNode.parentNode.querySelectorAll('.home-title')[0]
+    if(e.target.tagName === "I") {
+      homeTitle = e.target.parentNode.parentNode.parentNode.parentNode.querySelectorAll('.home-title')[0]
+    }
     if(homeTitle) {
       data.title = homeTitle.innerText
     }
