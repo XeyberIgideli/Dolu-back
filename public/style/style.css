@@ -474,7 +474,7 @@ section {
 .continue-watching .swiper-slide {
     transition: all .3s;
 }
-.continue-watching .swiper-slide:hover {  
+.continue-watching:has(.already-w) .swiper-slide:hover {  
    transform: translateY(2rem);
    border: 1px solid var(--hover-color);
    border-radius: 0.4rem;
@@ -573,13 +573,13 @@ section {
 .your-list .box-content {
     gap: 0.2rem;
 }
-.watching-list .content-title {
+.watching-list:has(.already-w) .content-title {
     font-size: 0.9rem;
     padding-bottom: 0.5rem;
 }
-.watching-list .content-type,
-.watching-list .content-rate,
-.watching-list .content-duration {
+.watching-list:has(.already-w) .content-type,
+.watching-list:has(.already-w) .content-rate,
+.watching-list:has(.already-w) .content-duration {
     font-size: 0.7rem;
 } 
 .watchedMediaSeason {

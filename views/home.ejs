@@ -44,41 +44,66 @@
 
         <div class="continue-watching">
             <div class="heading">
-                <h2 class="heading-title">Continue <span class="main-span">Watching</span></h2>
+                <% if (user.continueList.length > 0) { %>
+                    <h2 class="heading-title">Continue <span class="main-span">Watching</span></h2>
+                <% } else { %>
+                    <h2 class="heading-title">Empty watchlist?<span class="main-span"> Time for a binge!</span></h2>
+                <% } %>
             </div>
             <!-- Continue watching sliders -->
             
             <div class="watching-list swiper">
                 
                 <div class="swiper-wrapper">
+                    <% if (user.continueList.length > 0) { %>
+                     
+                        <% for( let i = 0; i < user.continueList.length; i++ ) { %> 
+                        <% const mapped = allMedia.filter(item => item.title.toLowerCase().split(' ').join('-') === user.continueList[i]?.mediaTitle.split('&')[0])%>
+                            <% mapped.forEach(item => { %>
+                                <% const seasonData = user.continueList[i]?.mediaTitle.split('&')[1] %>
+                                <div class="swiper-slide">
+                                    <div class="card-box already-w">
+                                        <img src="<%=  user.continueList[i].image %>" class="card-box-img" alt="">
+                                        <div class="box-content">
+                                            <h2 class="content-title"><%= item.title %></h2>
+                                            <span class="watchedMediaSeason"><%= user.continueList[i]?.mediaTitle.split('&')[1] ?  'S' + seasonData.split('/')[0] + '/E' + seasonData.split('/')[1]  : '' %></span>
 
-                    <% for( let i = 0; i < user.continueList.length; i++ ) { %> 
-                       <% const mapped = allMedia.filter(item => item.title.toLowerCase().split(' ').join('-') === user.continueList[i]?.mediaTitle.split('&')[0])%>
-                       <% mapped.forEach(item => { %>
-                        <% const seasonData = user.continueList[i]?.mediaTitle.split('&')[1] %>
-                        <div class="swiper-slide">
-                            <div class="card-box">
-                                <img src="<%=  user.continueList[i].image %>" class="card-box-img" alt="">
-                                <div class="box-content">
-                                    <h2 class="content-title"><%= item.title %></h2>
-                                    <span class="watchedMediaSeason"><%= user.continueList[i]?.mediaTitle.split('&')[1] ?  'S' + seasonData.split('/')[0] + '/E' + seasonData.split('/')[1]  : '' %></span>
-
-                                    <a href="watch/<%= item.slug %>" class="play-btn hidden">
-                                        <i class="bx bx-right-arrow"></i>
-                                    </a>
-                                    <div class="timeleft">
-                                        <div class="times">
-                                            <span><%= user.continueList[i].time < 60 ? user.continueList[i].time + ' min' : (user.continueList[i].time / 60).toFixed(2) %></span>
-                                            <span><%= user.continueList[i].duration < 60 ? user.continueList[i].duration + ' min' : Math.floor(user.continueList[i].duration / 60) + '.' +(user.continueList[i].duration % 60) %></span>
+                                            <a href="watch/<%= item.slug %>" class="play-btn hidden">
+                                                <i class="bx bx-right-arrow"></i>
+                                            </a>
+                                            <div class="timeleft">
+                                                <div class="times">
+                                                    <span><%= user.continueList[i].time < 60 ? user.continueList[i].time + ' min' : (user.continueList[i].time / 60).toFixed(2) %></span>
+                                                    <span><%= user.continueList[i].duration < 60 ? user.continueList[i].duration + ' min' : Math.floor(user.continueList[i].duration / 60) + '.' +(user.continueList[i].duration % 60) %></span>
+                                                </div>
+                                                <div class="timeline" style="width:<%= ((Math.floor(user.continueList[i].timeSeconds / 60) * 100)) / user.continueList[i].duration %>%"></div>
+                                            </div>
                                         </div>
-                                        <div class="timeline" style="width:<%= ((Math.floor(user.continueList[i].timeSeconds / 60) * 100)) / user.continueList[i].duration %>%"></div>
+                                    </div>
+                                </div> 
+                            <% }) %>
+                        <% } %>
+
+                   <% } else { %>
+                    <% allMedia.filter(item => { %>
+                        <% if (item.rating >= 7) { %>
+                            <div class="swiper-slide">
+                                <div class="card-box">
+                                    <img src="<%= item.landscapeImage %>" class="card-box-img" alt="">
+                                    <div class="box-content">
+                                        <h2 class="content-title"><a href="watch/<%= item.slug %>"><%= item.title %></a></h2>
+                                        <span class="content-type"><%= item.genres.slice(0,3) %></span>
+                                        <span class="content-duration"><%= item.duration %> min</span>
+                                        <span class="content-rate">Imdb: <%= item.rating %></span>
+                                        <a href="watch/<%= item.slug %>" class="play-btn hidden">
+                                            <i class="bx bx-right-arrow"></i>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
-                        </div> 
-                        <% }) %>
-                    <% } %>
-
+                        <% } %>
+                    <% }) %>
+                   <% }  %>
                 </div>
             </div> 
             

@@ -33,7 +33,7 @@
     .continue-watching {
         top: 33rem!important;
         left: 2rem!important;
-        width: 100%!important;
+        width: 92%!important;
     }
 }
 @media (max-width: 590px) and (min-height:810px) { 
@@ -42,8 +42,8 @@
     }
     .continue-watching {
         top: 32rem!important;
-        left: 1rem!important;
-        width: 55%!important;
+        left: 3rem!important;
+        width: 83%!important;
     }
 }
 @media (min-width: 1350px) {
