@@ -11,7 +11,6 @@ router.get('/bookmarks',verifyToken,homePages.getBookmarksPage)
 router.get('/stream/:slug',verifyToken,homePages.streamFile)
 router.get('/watch/:slug',verifyToken,homePages.getWatchPage)
 router.get('/watch/getEpisodes/:slug',verifyToken,homePages.getEpisodes) 
-router.post('/watch/addContinueList',verifyToken,homePages.addContinueList)
-router.get('/search', torrentSearch)
+router.post('/watch/addContinueList',verifyToken,homePages.addContinueList) 
 
 export default router

@@ -6,8 +6,7 @@ import * as https from 'https';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import {Readable} from 'stream'
 import got from 'got'
-
-const agent =  new HttpsProxyAgent('http://15.204.161.192:18080');
+ 
 
 const router = express.Router()
 
@@ -164,15 +163,14 @@ async function getShow (req, res) {
 }
 
 async function getId(mediaName,lang,type) {
-    const searchUrl = `https://www.opensubtitles.org/en/search2/moviename-${mediaName}/sublanguageid-all`;
+    const searchUrl = `https://www.opensubtitles.org/en/search2/sublanguageid-all/moviename-${mediaName}`;
     try {
       
       const searchResponse = await axios.get(searchUrl,{
         headers: {
           'Access-Control-Allow-Origin': '*',
           'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3' // Buradaki User-Agent bilgisini, tarayıcınıza uygun şekilde değiştirebilirsiniz
-        },
-        httpsAgent: agent
+        }
       }); 
       const $ = cheerio.load(searchResponse.data);
       const mediaLink = $('.bnone').attr('href');  
