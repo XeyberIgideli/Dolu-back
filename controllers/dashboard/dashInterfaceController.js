@@ -5,14 +5,14 @@ class userInterface {
     async getHomeSectionsPage(req,res) {
       const interfaceSetting = await InterfaceSetting.find()
       const interfacedata = interfaceSetting[0].homeSections
-      res.render('dashboard/home-sections', {pageName: 'userInterface',interfacedata})
+      res.render('dashboard/home-sections', {pageName: 'userInterface',interfacedata,roleData: req.role})
      }
     async getLogoFaviconPage(req,res) {
       const interfaceSetting = await InterfaceSetting.find() 
-      res.render('dashboard/logo-favicon', {pageName: 'userInterface',data:interfaceSetting})
+      res.render('dashboard/logo-favicon', {pageName: 'userInterface',data:interfaceSetting,roleData: req.role})
      }
      async updateHomeSections(req,res) {
-        const update = await InterfaceSetting.create({homeSections: req.body}) 
+        const update = await InterfaceSetting.updateMany({homeSections: req.body}) 
         res.redirect('back')
      }
      async updateLogoFavicon(req,res) {
@@ -21,7 +21,7 @@ class userInterface {
        const update = await InterfaceSetting.updateMany({logo: obj.logo, favicon: obj.favicon}) 
 
 
-        // res.redirect('back')
+        res.redirect('back')
      }
  }
  

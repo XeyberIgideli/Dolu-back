@@ -1,7 +1,8 @@
 import TorrentSearchApi from 'torrent-search-api'
+const activeProviders = TorrentSearchApi.getActiveProviders();
 TorrentSearchApi.enableProvider('1337x')
 
-async function torrentSearch(title,index) { 
+async function torrentSearch(title,index) {  
       const torrents = await TorrentSearchApi.search(title, 'All', 5)
       if(torrents.length === 0) {
             console.log('No torrent found!')
@@ -14,7 +15,8 @@ async function torrentSearch(title,index) {
           }
            return torrent.seeds > -1 && sizeInMB < 1300 
       })
-      const magnet = await TorrentSearchApi.getMagnet(torrentFiltered[index])
+      const magnet = await TorrentSearchApi.getMagnet(torrentFiltered[index]) 
+
       return magnet
 } 
 

@@ -3,12 +3,47 @@
         top: 35rem!important; 
     }  
 }
+
 @media (min-width: 1590px) {
     .continue-watching {
         top: 40rem!important; 
     }  
     .continue-watching .card-box {
         height: 221px;
+    }
+}
+@media (min-height: 810px) {
+    .continue-watching {
+        top: 35rem!important; 
+        left: 5rem!important;
+    }   
+}
+@media (min-width: 840px) and (min-height:810px) {
+    .sidebar {
+        height: 100%;
+    }
+    .sidebar .menu {
+        gap: 4rem;
+    }
+}
+@media (max-width: 840px) and (min-height:810px) {
+    .sidebar {
+        top: 95%!important;
+    }
+    .continue-watching {
+        top: 33rem!important;
+        left: 2rem!important;
+        width: 100%!important;
+    }
+}
+@media (max-width: 590px) and (min-height:810px) { 
+    .sidebar {
+       height: 4rem!important; 
+    }
+    .continue-watching {
+        top: 32rem!important;
+        left: 1rem!important;
+        width: 55%!important;
     }
 }
 @media (min-width: 1350px) {
@@ -297,15 +332,17 @@
 
 @media (max-width: 758px) {
     section:not(.featured-movie,.fav-list,.bookmark-wrapper,.top-three-of-day) .card-box {
-        height: 430px;
-        width: 99%;
+        /* height: 430px; */
+        width: 63%;
     } 
     .top-three-of-day {
         width: 95%;
     }
     .home-img {
         height: 65vh;
-        object-position: 80%;
+        object-position: center;
+        -webkit-mask-image: linear-gradient(185deg, rgba(0, 0, 0, 1), transparent 66%);
+        mask-image: linear-gradient(185deg, rgba(0, 0, 0, 1), transparent 66%);
     }
     .top-three-of-day .content-title {
         font-size: 2.5rem;
@@ -313,6 +350,9 @@
     .home-title {
         font-size: 1.9rem;
     } 
+    .home-text {
+        gap: 1rem;
+    }
     /* .movie-title {
         font-size: 1.285rem;
         width: 20rem;
@@ -370,6 +410,9 @@
         width: 95%;
         padding-left: 0rem!important;
     }
+    section:not(.featured-movie,.fav-list,.bookmark-wrapper,.top-three-of-day) .card-box {
+        width: 98%;
+    } 
     .wide-card.container {
         width: 100%;
         margin-left: 0rem;

@@ -97,7 +97,7 @@ class home_Pages {
 
      async streamFile(req,res) {
          const title = req.params.slug
-         let torrentId =  await torrentSearch(title,0)
+         let torrentId = await torrentSearch(title,0)
 
          client.on('error' , (err) => {
             console.log(err)
@@ -169,10 +169,17 @@ class home_Pages {
 
                fileStream.on('end', () => {
                      res.end()
+                     // console.log('ended')
                });   
                res.on('close', () => {
                   // Destroy stream when browser connection lost 
-                  fileStream.destroy(); 
+                  fileStream.destroy();  
+                  
+               }) 
+               res.on('end', () => {
+                  // Destroy stream when browser connection lost 
+                  fileStream.destroy();  
+                  
                }) 
                
          })  

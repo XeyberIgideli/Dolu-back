@@ -508,7 +508,7 @@ section {
 .card-box {
     position: relative;
     width: 100%;
-    height: 380px;
+    height: 22rem; 
     overflow: hidden;  
     border-radius: 0.4rem;
 
@@ -527,7 +527,7 @@ section {
     top: 40%;
 }
 .popular-section .card-box {
-    height: 27rem;
+    height: 22rem;
 }
 .card-box-img {
     width: 100%;
@@ -960,7 +960,7 @@ section .content-rate:not(.top-three-of-day) {
     flex-wrap: wrap; 
     top: 25%;
     left: 10%;
-    gap: 3.1rem;
+    gap: 4.2rem;
     overflow-x: hidden;
 }
 .movie-card-box {

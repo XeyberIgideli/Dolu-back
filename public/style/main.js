@@ -306,7 +306,7 @@ async function getEpisodes (seasonIn) {
     })
   })
 }
-
+console.log(slugUrl)
 function getMoviePlay() {
   const movieServerLinks = document.querySelectorAll('.movie-tab-list li a')
   const moviePlayer = document.querySelector('.moviePlayer')
@@ -320,28 +320,30 @@ movieServerLinks.forEach(item => {
       vdsrc: `https://vidsrc.to/embed/movie/${tmdbID}`,
       smash: `https://embed.smashystream.com/playere.php?tmdb=${tmdbID}`
     }  
+    console.log(e.target)
     moviePlayer.classList.remove('player-hidden')
     document.querySelector('.movie-detail').style.display = 'none'
     document.querySelector('.sidebar').style.display = 'none'
     document.querySelector('.header').style.display = 'none' 
     const serverName = e.target.classList[0] || e.target.parentElement.classList[0]
+    console.log(serverName)
     let player
     let iframe
     if(serverName === 'dolusrc') {
-      const allowedLangs = ['eng','tur','ara','rus']
-      const response = await axios.get(`../api/search/movie/${allowedLangs.join(',')}/${movieName}?totalLink=6`, {
-        headers: {
-          'Accept': 'application/json'
-        }
-      })
-      const downloadLinks = response.data.links
-      let linkArr = []
-      downloadLinks.forEach((link,index) => {
-        linkArr.push(`[${link.downloadLink.split('-')[0].toUpperCase()}]../api/${slugUrl}/${link.downloadLink.split('-')[0]}/${downloadLinks.length}/${index}/readMovieSubtitle?subtitle.srt`)
-      })
-      const subtitles = linkArr.join(',')
+      // const allowedLangs = ['eng','tur','ara','rus']
+      // const response = await axios.get(`../api/search/movie/${allowedLangs.join(',')}/${movieName}?totalLink=6`, {
+      //   headers: {
+      //     'Accept': 'application/json'
+      //   }
+      // })
+      // const downloadLinks = response.data.links
+      // let linkArr = []
+      // downloadLinks.forEach((link,index) => {
+      //   linkArr.push(`[${link.downloadLink.split('-')[0].toUpperCase()}]../api/${slugUrl}/${link.downloadLink.split('-')[0]}/${downloadLinks.length}/${index}/readMovieSubtitle?subtitle.srt`)
+      // })
+      // const subtitles = linkArr.join(',')
       moviePlayer.insertAdjacentHTML('afterbegin', `<div style="width:100%;height:100%;" id="${usID.value}-${slugUrl}"></div>`)
-      player = new Playerjs({id:`${usID.value}-${slugUrl}`, file:`[720p]../stream/${slugUrl}`,subtitle: subtitles,autoplay:1,default_quality:'720p'}) 
+      player = new Playerjs({id:`${usID.value}-${slugUrl}`, file:`[720p]../stream/${slugUrl}`,autoplay:1,default_quality:'720p'}) 
 
       await addContinueList(movieName)
 
