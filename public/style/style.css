@@ -1204,7 +1204,7 @@ section .content-rate:not(.top-three-of-day) {
 /* Side Tab */
 .side-tab {
     background: #262829;
-    width: 450px;
+    width: 400px;
     height: 100%;
     position: fixed;
     right: 0;
@@ -1212,7 +1212,20 @@ section .content-rate:not(.top-three-of-day) {
     z-index: 100;
     transition: all .3s;
     overflow-y: auto;
+    outline: none;
 
+}
+a:has(.languageTab) {
+    justify-content: space-between;
+}
+.languageList {
+    margin-right: 1.5rem; 
+}
+#languageLi {
+    justify-content: space-between;
+} 
+.selectedLang {
+    font-weight: 600;
 }
 #createBookmark .modal-content {
     margin: 27% auto;
@@ -1273,45 +1286,98 @@ input[type="submit"] {
 .model-content::-webkit-scrollbar-thumb:hover {
     background: #515364;
   }
-  .tab-title{ 
+.tab-title { 
     font-family: 'Segoe UI',sans-serif;
-    font-weight: 400;
-    padding-left: 2rem;
+    font-weight: 400; 
     font-size: 2.5rem;
 }
+.tab-head {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    align-items: center;
+
+}
+.backBtn {
+    background: none;
+    outline:none;
+    border:none;
+}
+.tab-head i {
+    background: none;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    color: white;
+} 
 .tab-inside {
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    padding: 1.2rem 0;
+    padding: 3rem 0;
 }
-
 .tab-list {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    /* padding-top: 2rem; */
-    padding-top: 0.9rem;
+    padding-top: 1rem;
+}
+.param-title {
+    padding-left: 1.7rem;
+    color: #6f6f6f;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+.tabInput {
+    padding: 0.8rem;
+    margin-bottom: 10px;
+    border: 1px solid #2f2f2c;
+    border-radius: 3px;
+    outline: none;
+    width: 81%;
+    color:white;
+    background-color: #20201e;
+}
+.tabChange {
+    display: flex;
+    gap: 1rem; 
+    justify-content: center;
+    align-items: center;
+}
+.testHidden {
+    display: flex!important;
+}
+.tabSaveBtn {
+    align-self: start;
+    background: none;
+    outline: none;
+    padding-top: 0.3rem;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+.showLink {
+    display: flex!important;
 }
 .tab-list a {
     color: var(--text-color);
-    padding: 1.5rem; 
+    padding-left: 1.5rem;
+    padding-top: 1.2rem;
+    padding-bottom: 1.2rem;
     width: 100%;
-    font-family: 'Segoe UI',sans-serif;
     display: block;
     transition: all .3s;
     font-size: 1.4rem;
     display: flex;
     flex-direction: row;
+    font-family: 'Segoe UI';
     gap: 1rem;
     align-items: center;
 }
-.side-tab:not(.sidebar,.settings-tab) i {
+.side-tab:not(.sidebar) i {
     font-size: 1.7rem;
-}
-.settings-tab i {
-    font-size: 2.3rem;
-}
+} 
 .tab-list a:hover,
 .tab-list a:focus{
   background-color: #584a4c94;
