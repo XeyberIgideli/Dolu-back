@@ -282,7 +282,7 @@ async function getEpisodes (seasonIn) {
 
       embedOptions.forEach(data => {
         data.addEventListener('click', async (e) => {
-          const embedName = e.target.classList[0] || e.target.parentElement.classList[0]
+          const embedName = e.target.id || e.target.parentElement.id
           if(embedName === 'dolusrc') {
             
             tvPlayer.insertAdjacentHTML('afterbegin', `<div style="width:100%;height:100%;" id="${usID.value}-${showName}"></div>`)
@@ -319,14 +319,12 @@ movieServerLinks.forEach(item => {
       aembed: `https://autoembed.to/movie/tmdb/${tmdbID}`,
       vdsrc: `https://vidsrc.to/embed/movie/${tmdbID}`,
       smash: `https://embed.smashystream.com/playere.php?tmdb=${tmdbID}`
-    }  
-    console.log(e.target)
+    }   
     moviePlayer.classList.remove('player-hidden')
     document.querySelector('.movie-detail').style.display = 'none'
     document.querySelector('.sidebar').style.display = 'none'
     document.querySelector('.header').style.display = 'none' 
-    const serverName = e.target.classList[0] || e.target.parentElement.classList[0]
-    console.log(serverName)
+    const serverName = e.target.id || e.target.parentElement.id 
     let player
     let iframe
     if(serverName === 'dolusrc') {

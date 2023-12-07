@@ -8,6 +8,7 @@ let index = -1;
 
 // WATCH BUTTON CLICK EVENT
 watchBtn?.addEventListener('click', (e) => {
+    setTabFocusing(streamTab)
     streamTab.classList.toggle('hidden-tab')
     e.stopPropagation();
     e.preventDefault();
@@ -16,7 +17,6 @@ watchBtn?.addEventListener('click', (e) => {
 const backServers = document.querySelector('.backServers')
 
 backServers?.addEventListener('click', (e) => {
-    setTabFocusing(streamTab)
     streamTab.classList.toggle('hidden-tab')
     e.stopPropagation();
     e.preventDefault();
@@ -43,13 +43,15 @@ let arrayedCheckboxs = Array.from(checkboxs)
 
 const checkBackBtn = document.querySelector('.backBtn')
 
+//  Set focus on tab links
+
 function setTabFocusing (tab,el = 'a') {
   setTimeout(() => {
     tab.focus() 
     tab.querySelector(el).focus() 
     index++
     // index = tab.querySelectorAll(el).length -1
-  }, 100);
+  }, 40);
 } 
 
 // Add Bookmark functionality
@@ -87,6 +89,7 @@ checkboxs.forEach(item => {
 // BOOKMARK BUTTON CLICK EVENT
 bookmarkBtns?.forEach(item => {
   item.addEventListener('click', (e) => {
+    setTabFocusing(bookmarksTab,'label')
     bookmarksTab.classList.toggle('hidden-tab')
     let homeTitle = e.target.parentNode.parentNode.parentNode.querySelectorAll('.home-title')[0]
     if(e.target.tagName === "I") {
@@ -354,10 +357,11 @@ function keyNavigateList(e) {
     switch (key) {
       case "ArrowUp":
           // Up pressed
-          if(index > 0) {
+          if(index >= 0) {
+            console.log(aTags)
             index--;
           }
-          aTags[index].focus();
+          aTags[index]?.focus();
           break;
       case "ArrowDown":
           // Down pressed

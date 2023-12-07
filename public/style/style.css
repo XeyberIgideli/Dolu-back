@@ -1290,11 +1290,11 @@ input[type="submit"] {
     font-family: 'Segoe UI',sans-serif;
     font-weight: 400; 
     font-size: 2.5rem;
+    padding-left: 1rem;
 }
 .tab-head {
     display: flex;
     justify-content: space-between;
-    padding-left: 2rem;
     padding-right: 2rem;
     align-items: center;
 
@@ -1398,6 +1398,9 @@ input[type="submit"] {
     flex-direction: column;
     gap: 0.5rem;
 }
+.trailer-text span:nth-child(1) {
+    font-size: 1rem;
+} 
 .trailer-text span:nth-child(2) {
     font-size: 0.8rem;
     color: var(--light-gray-color);

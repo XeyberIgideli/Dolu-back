@@ -254,7 +254,7 @@
             <div class="server-tab">
                 <h3 class="tab-title">Servers</h3>
                 <ul class="tab-list movie-tab-list"> 
-                        <li tabindex="1" ><a class="dolusrc" tabindex='0'  href="javascript:void(0)"><i class="bx bx-play-circle"></i> <span><span class="main-span" style="font-weight: bolder;">Dolu</span> Player</span></a></li>
+                        <li tabindex="1" ><a id="dolusrc" tabindex='0'  href="javascript:void(0)"><i class="bx bx-play-circle"></i> <span><span class="main-span" style="font-weight: bolder;">Dolu</span> Player</span></a></li>
                         <!-- <li tabindex="1" ><a class="vdsrc" tabindex='0'  href="javascript:void(0)"><i class="bx bx-play-circle"></i> <span>Server 1</span></a></li>
                         <li tabindex="1" ><a class="spembed" tabindex='0' href="javascript:void(0)"><i class="bx bx-play-circle"></i> <span>Server 2</span></a></li>
                         <li tabindex="1" ><a class="gomo" tabindex='0' href="javascript:void(0)"><i class="bx bx-play-circle"></i> <span>Server 3</span></a></li>
@@ -488,20 +488,51 @@
     </div>
     <% } %>
 
-    <!-- Settings Tab -->
-    <div class="side-tab hidden-tab settings-tab">
-        <div class="tab-inside" tabindex="0">
+<!-- Settings TAB -->
+<div tabindex="-1" class="side-tab settings-tab hidden-tab">
+    <div class="tab-inside">
+        <div class="tab-head">
             <h1 class="tab-title">Settings</h1>
-            <div class="menu-tab">
-                <ul class="tab-list">
-                    <li tabindex="1" ><a tabindex='0' href=""><i class="bx bx-user"></i> <span>Account</span></a></li>
-                    <li tabindex="2" ><a tabindex="0" href=""><i class="bx bxs-layout"></i> <span>Interface</span></a></li>
-                    <li tabindex="3" ><a tabindex="0" href=""><i class="bx bx-play-circle"></i> <span>Player</span></a></li> 
-                </ul>
-            </div> 
+             <button class="backBtn" style="display: none;"><i class='bx bx-left-arrow-alt'></i></button>
         </div>
+        <div class="menu-tab">
+            <ul class="tab-list " data-tab-type="Main">
+                <li tabindex="1" class="tab-li" data-sub-name="Account" ><a tabindex='0' href="#"><i class="bx bx-user"></i> <span>Account</span></a></li>
+                <li tabindex="2" class="tab-li" data-sub-name="Interface" ><a tabindex="0" href="#"><i class="bx bxs-layout"></i> <span>Interface</span></a></li>
+                <li tabindex="3" class="tab-li" ><a tabindex="0" href="#"><i class="bx bx-play-circle"></i> <span>Player</span></a></li> 
+            </ul>
 
+            <!-- Account Details -->
+            <ul class="tab-list"  style="display: none;" data-tab-name="Account">
+                <li tabindex="1" class="tab-li"><a class="subTabLink" tabindex='0' href="javascript:void(0)"><span>Logged as Igidali</span></a></li>
+                <p class="param-title">Account details</p> 
+                <li tabindex="1" class="tab-li" data-sub-name="Username" ><a class="subTabLink" tabindex='0' href="javascript:void(0)"><span>Username</span></a></li>
+                <li tabindex="1" class="tab-li" data-sub-name="Email" ><a class="subTabLink" tabindex='0' href="javascript:void(0)"><span>Email</span></a></li>
+                <li tabindex="1" class="tab-li" data-sub-name="Password" ><a class="subTabLink" tabindex='0' href="javascript:void(0)"><span>Password</span></a></li>
+                <li tabindex="1" class="tab-li" data-sub-name="Avatar" ><a class="subTabLink" tabindex='0' href="javascript:void(0)"><span>Avatar</span></a></li>
+             </ul>  
+
+            <!-- Interface -->                
+            <ul class="tab-list" style="display: none;" data-tab-name="Interface">
+                <li tabindex="1" class="tab-li" data-sub-name="Interface Language" >
+                    <a class="subTabLink" id="languageLi" tabindex='0' href="javascript:(void)">
+                        <span>Interface Language</span>
+                        <ul class="languageList">
+                            <li data-lang="English" >English</li>
+                            <li data-lang="Turkish" style="display: none;">Turkish</li>
+                            <li data-lang="Azerbaijani" style="display: none;">Azerbaijani</li>
+                            <li data-lang="Russian" style="display: none;">Russian</li>
+                        </ul>
+
+                    </a>
+                  
+                </li>
+            </ul> 
+             
+        </div> 
     </div>
+
+</div>
 
     <!-- Bookmarks Tab -->
     <div class="side-tab hidden-tab bookmarks-tab">
@@ -512,7 +543,7 @@
 
                     <% for( let i = 0; i < user.bookmarks.length; i++ ) { %>
                         <li tabindex="1" >
-                            <label class="label-container" tabindex='0' href="#">
+                            <label class="label-container" tabindex='0'>
                                 <span id="<%= user.bookmarks[i].bookmark %>"><%= user.bookmarks[i].bookmark.split('-')[0] %></span>
                                 <% for( let k = 0; k < bookmarks.length; k++ ) { %>
                                     <% if (bookmarks[k].bookmark === user.bookmarks[i].bookmark) { %>
