@@ -11,12 +11,15 @@
     .continue-watching .card-box {
         height: 221px;
     }
-}
-@media (min-height: 810px) {
+} 
+@media (max-height: 745px) {
     .continue-watching {
-        top: 35rem!important; 
-        left: 5rem!important;
+        top: 31rem!important; 
+        left: 6rem!important;
     }   
+    .sidebar {
+       gap:8.3rem
+    }
 }
 @media (min-width: 840px) and (min-height:810px) {
     .sidebar {
@@ -57,8 +60,8 @@
 
 @media (max-width: 1349px) {
     .wide-card.container {
-        width: 80%;
-        margin-right: 8rem;
+        width: 84%;
+        margin-left: 6rem;
     }
 }
 
@@ -78,13 +81,13 @@
     .bookmark .play-btn {
         top: 35%!important;
     }
-    .wide-card.container {
+    /* .wide-card.container {
         width: 77%;
         margin-right: 7rem;
-    }
-    .top-three-of-day .container:nth-child(1) {
+    } */
+    /* .top-three-of-day .container:nth-child(1) {
         width: 85%;
-    }
+    } */
     .header {
         padding: 2rem 0rem 2rem 7rem!important;
     }
@@ -233,7 +236,7 @@
         padding-left: 0;
     }
     .wide-card.container {
-        width: 91%;        
+        width: 89%;        
         margin-left: 3rem;
     }
     .top-three-of-day .content-title {
@@ -336,7 +339,7 @@
         width: 63%;
     } 
     .top-three-of-day {
-        width: 95%;
+        width: 99%;
     }
     .home-img {
         height: 65vh;
@@ -416,6 +419,9 @@
     .wide-card.container {
         width: 100%;
         margin-left: 0rem;
+    }
+    .wide-card .card-box {
+        border-radius: 0;
     }
     .top-three-of-day {
         width: 100%!important;
@@ -872,6 +878,26 @@
     }
 }
 /* Device-specified scaling */
+
+@media(min-height: 908px) and (max-height:1200px) { 
+    .continue-watching {
+        top: 41rem!important;
+        left: 10%!important;  
+    } 
+    .continue-watching .card-box {
+        width: 300px;
+    }
+    .home-text {
+        gap: 1.5rem;
+    } 
+    .sidebar {
+        padding-top: 1rem;
+    }
+    .nav-link img {
+        width: 2rem;
+    }
+}
+
 @media only screen and (device-width: 390px) and (device-height: 844px) {
     .continue-watching {
         top: 34rem;
@@ -940,7 +966,8 @@
 }
 @media only screen and (device-width: 414px) and (device-height: 896px) {
     .continue-watching {
-        top: 34rem;
+        top: 34rem!important;
+        left: 2.3rem!important;
     }
     .continue-watching .card-box {
         height: 236px;
@@ -954,6 +981,22 @@
         padding-bottom: 0;
     }
 }
+@media only screen and (device-width: 414px) and (device-height: 846px) {
+    section.popular-section {
+        padding: 0!important;
+    }
+    .continue-watching {
+        top: 34rem!important;
+        left: 2.4rem!important;
+    }
+}    
+@media only screen and (device-width: 375px) and (device-height: 812px) {
+    .continue-watching {
+        top: 32rem!important;
+        left: 2.2rem!important;
+    }
+} 
+
 @media only screen and (device-width: 412px) and (device-height: 915px) {
     .continue-watching {
         top: 37rem;
@@ -1026,6 +1069,7 @@
         margin-top: -9rem;
     }
 }
+ 
 
 /* Special Queries */
 
@@ -1042,7 +1086,10 @@ and (max-height: 600px) {
        left: 6%;
     }
     .continue-watching {
+        /* top: 22rem; */
+        left: 29%;
         top: 22rem;
+        width: 90%;
     }
     .home-wrapper::after {
         height: 54vh!important;
@@ -1055,6 +1102,7 @@ and (max-height: 600px) {
     }
     .sidebar {
         gap: 3.8rem;
+        padding-top: 1rem;
     }
 }
 

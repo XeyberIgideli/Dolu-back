@@ -425,8 +425,8 @@ section {
 /* Continue Watching */
 .continue-watching {
     position: absolute;
-    top: 24rem; 
-    left: 24rem;
+    top: 35rem; 
+    left: 6rem;
     z-index: 100; 
     width: 100vw;
     transition: all .3s;
@@ -675,7 +675,7 @@ section .content-rate:not(.top-three-of-day) {
 
 .grid-content {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(247px, 1fr));
+    grid-template-columns: repeat(10, minmax(247px, 1fr));
     gap: 1.5rem;
 }
 .card-box-img {
@@ -764,7 +764,7 @@ section .content-rate:not(.top-three-of-day) {
 /* TOP THREE OF DAY SECTION */
  
 .top-three-of-day .container:nth-child(1) {
-    width: 1100px;
+    /* width: 1100px; */
 }
 .special-content { 
     width: 100%;
