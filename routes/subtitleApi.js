@@ -282,7 +282,7 @@ async function getSubtitleInfo(mediaId,lang,totalLink,type) {
       
         
     } catch (error) {  
-      console.log(error)
+      // console.log(error)
       throw new Error('Failed to fetch movie page')
     }
 }

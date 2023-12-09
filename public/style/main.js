@@ -24,6 +24,8 @@ const pageName = window.location.href.split('/')[3]
 const showName = slugUrl.split('-').slice(0,-1).join('-')
 const mediaType = slugUrl.split('-').slice(-1)[0] === 'show' ? 'tv' : 'movie';
 const usID = document.querySelector('.uid') 
+const allowedLangs = ['eng','tur','ara','rus']
+
 const siteUrl = window.location.hostname + ':' + window.location.port + '/watch/' + slugUrl
 let tmdbID;
 let trailerList = document.getElementById('trailer-list')
@@ -252,7 +254,6 @@ async function getEpisodes (seasonIn) {
       tvPlayer.classList.remove('player-hidden')
       const iframe = document.querySelector('#iframe') 
 
-      const allowedLangs = ['eng','tur','ara','rus']
 
       const response = await axios.get(`../api/${showName}/${seasonIn ? seasonIn : 1}/${Number(item.dataset.episode)}/${allowedLangs.join(',')}/8/0/readShowSubtitle?listData=6`, {
         headers: {
@@ -263,7 +264,6 @@ async function getEpisodes (seasonIn) {
       const downloadLinks = response.data
       const langs = response.data.langsShort
       let linkArr = [] 
-
       downloadLinks.forEach((link,index) => {
         linkArr.push(`[${link.downloadLink.split('-')[0].toUpperCase()}]../api/${showName}/${seasonIn ? seasonIn : 1}/${Number(item.dataset.episode)}/${link.downloadLink.split('-')[0]}/${downloadLinks.length}/${index}/readShowSubtitle?subtitle.srt`)
       })
@@ -306,7 +306,7 @@ async function getEpisodes (seasonIn) {
     })
   })
 }
-
+// Movie player
 function getMoviePlay() {
   const movieServerLinks = document.querySelectorAll('.movie-tab-list li a')
   const moviePlayer = document.querySelector('.moviePlayer')
@@ -320,6 +320,12 @@ movieServerLinks.forEach(item => {
       vdsrc: `https://vidsrc.to/embed/movie/${tmdbID}`,
       smash: `https://embed.smashystream.com/playere.php?tmdb=${tmdbID}`
     }   
+    
+    loader.style.display = 'flex';
+    loader.style.visibility = 'visible';
+    document.body.classList.add('loading');
+    streamTab.classList.add('hidden-tab')
+
     moviePlayer.classList.remove('player-hidden')
     document.querySelector('.movie-detail').style.display = 'none'
     document.querySelector('.sidebar').style.display = 'none'
@@ -328,26 +334,37 @@ movieServerLinks.forEach(item => {
     let player
     let iframe
     if(serverName === 'dolusrc') {
-      const allowedLangs = ['eng','tur','ara','rus']
+
       const response = await axios.get(`../api/search/movie/${allowedLangs.join(',')}/${movieName}?totalLink=6`, {
         headers: {
           'Accept': 'application/json'
         }
-      })
-      const downloadLinks = response.data.links
-      let linkArr = []
-      downloadLinks.forEach((link,index) => {
-        linkArr.push(`[${link.downloadLink.split('-')[0].toUpperCase()}]../api/${slugUrl}/${link.downloadLink.split('-')[0]}/${downloadLinks.length}/${index}/readMovieSubtitle?subtitle.srt`)
-      })
-      const subtitles = linkArr.join(',')
+      }).catch(err => err)  
+
+      let subtitles 
+      if(response.status === 200) {
+        const downloadLinks = response.data.links
+        let linkArr = []
+        
+        Array.from(downloadLinks).forEach((link,index) => {
+          linkArr.push(`[${link.downloadLink.split('-')[0].toUpperCase()}]../api/${slugUrl}/${link.downloadLink.split('-')[0]}/${downloadLinks.length}/${index}/readMovieSubtitle?subtitle.srt`)
+        })
+  
+        subtitles = linkArr.join(',')
+      } else {
+        subtitles = null
+      }
+      
       moviePlayer.insertAdjacentHTML('afterbegin', `<div style="width:100%;height:100%;" id="${usID.value}-${slugUrl}"></div>`)
+      
       player = new Playerjs({id:`${usID.value}-${slugUrl}`, file:`[720p]../stream/${slugUrl}`,subtitle:subtitles, autoplay:1,default_quality:'720p'}) 
 
       await addContinueList(movieName)
 
       if(iframe) {
-        document.querySelector('#iframe').remove()
+          document.querySelector('#iframe').remove()
       }
+
     } else {
 
       if(player) {
@@ -364,8 +381,8 @@ movieServerLinks.forEach(item => {
       iframe.src = movieServers[serverName] 
       iframe.setAttribute("sandbox", "allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation");
      }  
-
-     streamTab.classList.add('hidden-tab')
+ 
+     hideLoader()
 
   }, true)
 })
@@ -374,37 +391,36 @@ movieServerLinks.forEach(item => {
 // Adding media's time datas to database
 
 async function addContinueList (title) { 
+  const video = document.querySelector('video')
+
   window.onbeforeunload = function () {
-    const durationInSeconds = localStorage.getItem('pljsplayfrom_' + `${usID.value}-${title + siteUrl}`).split('--')[1]
-    const watchedTimeInSeconds = localStorage.getItem('pljsplayfrom_' + `${usID.value}-${title + siteUrl}`).split('--')[0]
-    const timeMin = Math.floor(watchedTimeInSeconds / 60);
-    const watchedTime = timeMin > 59 ? Number(Math.floor(timeMin / 60) + '.' + (timeMin % 60).toString()) : timeMin
-    const duration = Math.floor(durationInSeconds / 60)
 
-    if(watchedTime > 3) {
+      const durationInSeconds = localStorage.getItem('pljsplayfrom_' + `${usID.value}-${title + siteUrl}`).split('--')[1]
+      const watchedTimeInSeconds = localStorage.getItem('pljsplayfrom_' + `${usID.value}-${title + siteUrl}`).split('--')[0]
+      const timeMin = Math.floor(watchedTimeInSeconds / 60);
+      const watchedTime = timeMin > 59 ? Number(Math.floor(timeMin / 60) + '.' + (timeMin % 60).toString()) : timeMin
+      const duration = Math.floor(durationInSeconds / 60) 
 
-      const video = document.querySelector('video')
-      
-        const canvas = document.createElement("canvas")
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-        const context = canvas.getContext('2d')
-  
-        function captureScreenshot() {
-          context.drawImage(video,0,0,canvas.width,canvas.height)
-  
-          const imageDataUrl = canvas.toDataURL("image/jpeg")
-  
-          return imageDataUrl
-        }
+      const canvas = document.createElement("canvas")
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const context = canvas.getContext('2d')
 
-        const screenshot = captureScreenshot()
-  
+      function captureScreenshot() {
+        context.drawImage(video,0,0,canvas.width,canvas.height)
+
+        const imageDataUrl = canvas.toDataURL("image/jpeg")
+
+        return imageDataUrl
+      }
+
+       const screenshot = captureScreenshot() 
+
+       if(watchedTime > 3) {
          axios.post('../watch/addContinueList', {time: watchedTime,duration, mediaTitle: title, image: screenshot, timeSeconds: watchedTimeInSeconds})
+       }
 
-    }
-
-  }; 
+}; 
 }
 
 if(pageName === 'watch' && slugUrl.split('-').slice(-1)[0] === 'show') {
