@@ -10,8 +10,7 @@ import Storage from 'memory-chunk-store'
 import { torrentSearch } from "../utils/torrent.js"
 import WebTorrent from "webtorrent"
 import torrentStream from 'torrent-stream'
-import {Transform} from 'stream' 
-// import { next } from "cheerio/lib/api/traversing.js"
+import {Transform} from 'stream'   
 
 const client = new WebTorrent() 
 
@@ -100,67 +99,76 @@ class home_Pages {
 
      async streamFile(req,res) {
          const title = req.params.slug
-         let torrentId = `magnet:?xt=urn:btih:2F4B1EB59283C6B5653060096D59C382747A2A24&dn=X-Men+First+Class+%282011%29+720p+BrRip+x264+-+800mb+-+YIFY&tr=http%3A%2F%2F9.rarbg.com%3A2710%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80&tr=udp%3A%2F%2Ftracker.ccc.de%3A80&tr=udp%3A%2F%2Ftracker.publicbt.com%3A80&tr=udp%3A%2F%2Ftracker.istole.it%3A80&tr=udp%3A%2F%2Ftracker.1337x.org%3A80%2Fannounce&tr=http%3A%2F%2Ftracker.ilibr.org%2Fannounce&tr=http%3A%2F%2Ftracker.ilibr.org%3A6969%2Fannounce&tr=http%3A%2F%2Fpow7.com%2Fannounce&tr=http%3A%2F%2Fopentracker.umunu.com%2Fannounce&tr=http%3A%2F%2Fexodus.desync.com%2Fannounce&tr=http%3A%2F%2F9.rarbg.com%3A2710%2Fannounce&tr=http%3A%2F%2Ft1.pow7.com%2Fannounce&tr=http%3A%2F%2F10.rarbg.com%2Fannounce&tr=udp%3A%2F%2Ftracker.zer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fcoppersurfer.tk%3A6969%2Fannounce` // await torrentSearch(title,0)
+         let torrentIdIndex = 0
+         let torrentId = await torrentSearch(title,0)
 
-         res.setHeader("Content-Type","video/mp4") 
+         res.setHeader("Content-Type","video/webm") 
 
          const existingTorrent = await client.get(torrentId)
 
          if(existingTorrent) {
             existingTorrent.destroy()
          }
-     
-         client.add(torrentId,{destroyStoreOnDestroy:true,store: Storage}, torrent => {
-            // Got torrent metadata!
-            let file = torrent.files.find(function (file) {
-                return file.name.endsWith('.mp4')
-            })   
-
-           // ****
-                // Doing this for sending stream data as piece, so preventing memory problems
-                // Also for enabling seeking
+         
+         function addTorrent () {
+            client.add(torrentId,{destroyStoreOnDestroy:true,store: Storage}, async torrent => {
+               // Got torrent metadata!
+               let file = torrent.files.find(function (file) {
+                  return file.name.endsWith('.mp4') || file.name.endsWith('.mkv')
+               })   
+   
+               if (!file || file.name.endsWith('.avi')) {
+                  torrentId = await torrentSearch(title,torrentIdIndex++)  
+                  addTorrent()
+                  return
+               } 
+   
+               // Doing this for sending stream data as piece, so preventing memory problems
+               // Also for enabling seeking
+   
                let range = req.headers.range
                if(!range) {
                   range = 'bytes=0-'
                }
                const positions = range.replace(/bytes=/, '').split('-')
-
+   
                const start = parseInt(positions[0],10)
                const end = positions[1] ? parseInt(positions[1], 10) : file.length - 1
                const chunksize = (end - start) + 1
-
+   
                res.statusCode = 206
                res.setHeader('Content-Range', `bytes ${start}-${end}/${file.length}`)
                res.setHeader('Accept-Ranges', 'bytes')
                res.setHeader('Cache-Control', 'no-store')
-               res.setHeader('Content-Length', chunksize)
-          // ****   
-
-            const fileStream = file.createReadStream({start,end})  
-    
-            fileStream.pipe(res,{end:false});  
-    
-            res.on('close', () => {
-               // Destroy stream when browser connection lost
-               fileStream.destroy();
-            }) 
-            
-
-            client.removeAllListeners('error'); 
-            fileStream.removeAllListeners('error');
-            torrent.removeAllListeners('error'); 
-            // Error handling
-
-            fileStream.on('error', (error) => {
-               res.end() // Close the response when error appeared
-            });
-
-            // torrent.on('error', (err) => {
-            //    console.log(err,'test')
-            // })
-  
-         })
+               res.setHeader('Content-Length', chunksize) 
+   
+               const fileStream = file.createReadStream({start,end})  
+       
+               fileStream.pipe(res,{end:false});  
+       
+               res.on('close', () => {
+                  // Destroy stream when browser connection lost
+                  fileStream.destroy();
+               }) 
+                
+               client.removeAllListeners('error'); 
+               fileStream.removeAllListeners('error');
+               torrent.removeAllListeners('error'); 
+   
+               // Error handling
+   
+               fileStream.on('error', (error) => {
+                  res.end() // Close the response when error appeared
+               });
+   
+               // torrent.on('error', (err) => {
+               //    console.log(err,'test')
+               // })
      
+            })
+         }
+     
+         addTorrent()
          // client.on('error',  (err) => {
          //    console.log(err)
          // }) 
