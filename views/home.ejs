@@ -52,13 +52,12 @@
             </div>
             <!-- Continue watching sliders -->
             
-            <div class="watching-list swiper">
-                
+            <div class="watching-list swiper"> 
                 <div class="swiper-wrapper">
                     <% if (user.continueList.length > 0) { %>
                      
                         <% for( let i = 0; i < user.continueList.length; i++ ) { %> 
-                        <% const mapped = allMedia.filter(item => item.title.toLowerCase().split(' ').join('-') === user.continueList[i]?.mediaTitle.split('&')[0])%>
+                        <% const mapped = allMedia.filter(item => item.slug === user.continueList[i]?.mediaTitle.split('&')[0])%>
                             <% mapped.forEach(item => { %>
                                 <% const seasonData = user.continueList[i]?.mediaTitle.split('&')[1] %>
                                 <div class="swiper-slide">
@@ -74,7 +73,7 @@
                                             <div class="timeleft">
                                                 <div class="times">
                                                     <span><%= user.continueList[i].time < 60 ? user.continueList[i].time + ' min' : (user.continueList[i].time / 60).toFixed(2) %></span>
-                                                    <span><%= user.continueList[i].duration < 60 ? user.continueList[i].duration + ' min' : Math.floor(user.continueList[i].duration / 60) + '.' +(user.continueList[i].duration % 60) %></span>
+                                                    <span><%= user.continueList[i].duration < 60 ? user.continueList[i].duration + ' min' : Math.floor(user.continueList[i].duration / 60) + '.' + (user.continueList[i].duration % 60) + ' hours' %></span>
                                                 </div>
                                                 <div class="timeline" style="width:<%= ((Math.floor(user.continueList[i].timeSeconds / 60) * 100)) / user.continueList[i].duration %>%"></div>
                                             </div>

@@ -178,6 +178,18 @@ z-index: 1000;
     font-size: 4rem;
     transform: translate(-23%, 46%);
 }
+.loader-player-text {
+    visibility: hidden; 
+    position: fixed;
+    top: -52%;
+    left: 50%;
+    margin-top: -35px;
+    margin-left: -35px;
+    z-index: 1000;
+    color: var(--main-color); 
+    font-size: 4rem;
+    transform: translate(-23%, 46%);
+}
 .center {
 display: flex;
 align-items: center;
@@ -498,7 +510,7 @@ section {
     justify-content: space-between;
     margin-bottom: 2rem; 
 } 
-.loading {
+.loaded {
     visibility: hidden;
 }
 .heading-title {

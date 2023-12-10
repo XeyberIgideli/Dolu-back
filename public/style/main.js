@@ -1,14 +1,14 @@
 // LOADER
 let loaderLogo = document.querySelector('.loader-logo');
+let loaderWrapper = document.querySelector('.loaderWrapper')
 let loader = document.querySelector('#loader');
+let loaderPlayerText = document.querySelector('.loader-player-text')
 loader.style.visibility = 'visible';
 loaderLogo.style.visibility = 'visible';
 
-function hideLoader() {
-  loader.style.display = 'none';
-  loader.style.visibility = 'hidden';
-  loaderLogo.style.display = 'none';
-  document.body.classList.remove('loading');
+function hideLoader() { 
+  loaderWrapper.remove()
+  document.body.classList.remove('loaded');
 }
 
 window.onload = function() {
@@ -306,6 +306,18 @@ async function getEpisodes (seasonIn) {
     })
   })
 }
+
+function loadPlayer () { 
+  document.body.classList.add('loaded');
+  const loader = document.createElement('div')
+  loader.id = 'loader'
+  loader.classList.add('center')
+  loader.style.visibility = 'visible'
+  document.body.appendChild(loader)
+  streamTab.classList.add('hidden-tab') 
+  // loaderPlayerText.style.visibility = 'visible' 
+}
+
 // Movie player
 function getMoviePlay() {
   const movieServerLinks = document.querySelectorAll('.movie-tab-list li a')
@@ -321,18 +333,17 @@ movieServerLinks.forEach(item => {
       smash: `https://embed.smashystream.com/playere.php?tmdb=${tmdbID}`
     }   
     
-    loader.style.display = 'flex';
-    loader.style.visibility = 'visible';
-    document.body.classList.add('loading');
-    streamTab.classList.add('hidden-tab')
+    loadPlayer()
 
     moviePlayer.classList.remove('player-hidden')
     document.querySelector('.movie-detail').style.display = 'none'
     document.querySelector('.sidebar').style.display = 'none'
     document.querySelector('.header').style.display = 'none' 
+    
     const serverName = e.target.id || e.target.parentElement.id 
-    let player
     let iframe
+    let player
+
     if(serverName === 'dolusrc') {
 
       const response = await axios.get(`../api/search/movie/${allowedLangs.join(',')}/${movieName}?totalLink=6`, {
@@ -355,11 +366,11 @@ movieServerLinks.forEach(item => {
         subtitles = null
       }
       
-      moviePlayer.insertAdjacentHTML('afterbegin', `<div style="width:100%;height:100%;" id="${usID.value}-${slugUrl}"></div>`)
+      // moviePlayer.insertAdjacentHTML('afterbegin', `<div style="width:100%;height:100%;" id="${usID.value}-${slugUrl}"></div>`)
       
-      player = new Playerjs({id:`${usID.value}-${slugUrl}`, file:`[720p]../stream/${slugUrl}`,subtitle:subtitles, autoplay:1,default_quality:'720p'}) 
+      // player = new Playerjs({id:`${usID.value}-${slugUrl}`, file:`[720p]../stream/${slugUrl}`,subtitle:subtitles, autoplay:1,default_quality:'720p'}) 
 
-      await addContinueList(movieName)
+      // await addContinueList(movieName)
 
       if(iframe) {
           document.querySelector('#iframe').remove()
