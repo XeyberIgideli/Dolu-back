@@ -13,8 +13,8 @@ async function torrentSearch(title,index) {
            if (torrent.size.includes("GB")) {
             sizeInMB *= 1024; // 1 GB = 1024 MB
           }
-           return torrent.seeds > -1 && sizeInMB < 1300 
-      }) 
+           return torrent.seeds > -1 && sizeInMB <= 1300 && !torrent.title.match(/\bXviD\b/) 
+      })  
       const magnet = await TorrentSearchApi.getMagnet(torrentFiltered[index]) 
 
       return magnet
