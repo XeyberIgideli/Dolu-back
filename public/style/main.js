@@ -8,6 +8,12 @@ loaderLogo.style.visibility = 'visible';
 
 function hideLoader() { 
   loaderWrapper.remove()
+  document.querySelector('.playerLoader')?.remove()
+  document.body.classList.remove('loaded');
+}
+
+function hidePlayerLoader() { 
+  document.querySelector('.playerLoaderWrapper').remove() 
   document.body.classList.remove('loaded');
 }
 
@@ -17,7 +23,7 @@ window.onload = function() {
 
 // Request to TMDB API
 
-const apiKey = 'e8b3201ef028f52f8def6d5e7aeb2636';
+const apiKey = 'e8b3201ef028f52f8def6d5e7aeb2636'; // TMDB API KEY
 const slugUrl = window.location.href.split('/').pop()
 const movieName = slugUrl.split('-').slice(-1)[0] === 'show' ? slugUrl.split('-').slice(0,-1).join(' ') : slugUrl; 
 const pageName = window.location.href.split('/')[3]
@@ -308,14 +314,27 @@ async function getEpisodes (seasonIn) {
 }
 
 function loadPlayer () { 
-  document.body.classList.add('loaded');
+  document.body.classList.add('loaded')
+  const playerLoaderWrapper = document.createElement('div')
+  const playerLoaderText = document.createElement('p')
   const loader = document.createElement('div')
+
+  playerLoaderWrapper.classList.add('playerLoaderWrapper')
+
   loader.id = 'loader'
   loader.classList.add('center')
+  loader.classList.add('playerLoader')
   loader.style.visibility = 'visible'
-  document.body.appendChild(loader)
-  streamTab.classList.add('hidden-tab') 
-  // loaderPlayerText.style.visibility = 'visible' 
+  
+  playerLoaderText.innerText = 'Preparing the video and subtitles...'
+  playerLoaderText.classList.add('loader-player-text')
+  playerLoaderText.classList.add('center')
+
+  playerLoaderWrapper.appendChild(loader)
+  playerLoaderWrapper.appendChild(playerLoaderText)
+  document.body.appendChild(playerLoaderWrapper)
+
+  streamTab.classList.add('hidden-tab')  
 }
 
 // Movie player
@@ -346,31 +365,31 @@ movieServerLinks.forEach(item => {
 
     if(serverName === 'dolusrc') {
 
-      const response = await axios.get(`../api/search/movie/${allowedLangs.join(',')}/${movieName}?totalLink=6`, {
-        headers: {
-          'Accept': 'application/json'
-        }
-      }).catch(err => err)  
+      // const response = await axios.get(`../api/search/movie/${allowedLangs.join(',')}/${movieName}?totalLink=6`, {
+      //   headers: {
+      //     'Accept': 'application/json'
+      //   }
+      // })
 
-      let subtitles 
-      if(response.status === 200) {
-        const downloadLinks = response.data.links
-        let linkArr = []
+      // let subtitles 
+      // if(response.status === 200) {
+      //   const downloadLinks = response.data.links
+      //   let linkArr = []
         
-        Array.from(downloadLinks).forEach((link,index) => {
-          linkArr.push(`[${link.downloadLink.split('-')[0].toUpperCase()}]../api/${slugUrl}/${link.downloadLink.split('-')[0]}/${downloadLinks.length}/${index}/readMovieSubtitle?subtitle.srt`)
-        })
+      //   Array.from(downloadLinks).forEach((link,index) => {
+      //     linkArr.push(`[${link.downloadLink.split('-')[0].toUpperCase()}]../api/${slugUrl}/${link.downloadLink.split('-')[0]}/${downloadLinks.length}/${index}/readMovieSubtitle?subtitle.srt`)
+      //   })
   
-        subtitles = linkArr.join(',')
-      } else {
-        subtitles = null
-      }
+      //   subtitles = linkArr.join(',')
+      // } else {
+      //   subtitles = null
+      // }
       
-      // moviePlayer.insertAdjacentHTML('afterbegin', `<div style="width:100%;height:100%;" id="${usID.value}-${slugUrl}"></div>`)
+      moviePlayer.insertAdjacentHTML('afterbegin', `<div style="width:100%;height:100%;" id="${usID.value}-${slugUrl}"></div>`)
       
-      // player = new Playerjs({id:`${usID.value}-${slugUrl}`, file:`[720p]../stream/${slugUrl}`,subtitle:subtitles, autoplay:1,default_quality:'720p'}) 
+      player = new Playerjs({id:`${usID.value}-${slugUrl}`, file:`[720p]../stream/${slugUrl}`, autoplay:1,default_quality:'720p'}) 
 
-      // await addContinueList(movieName)
+      await addContinueList(movieName)
 
       if(iframe) {
           document.querySelector('#iframe').remove()
@@ -393,7 +412,7 @@ movieServerLinks.forEach(item => {
       iframe.setAttribute("sandbox", "allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation");
      }  
  
-     hideLoader()
+     hidePlayerLoader()
 
   }, true)
 })

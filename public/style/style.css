@@ -178,16 +178,16 @@ z-index: 1000;
     font-size: 4rem;
     transform: translate(-23%, 46%);
 }
-.loader-player-text {
-    visibility: hidden; 
+.loader-player-text { 
+    visibility: visible;
     position: fixed;
-    top: -52%;
+    top: -34%;
     left: 50%;
     margin-top: -35px;
-    margin-left: -35px;
+    margin-left: -60px;
     z-index: 1000;
-    color: var(--main-color); 
-    font-size: 4rem;
+    color: var(--gray-color); 
+    font-size: 1rem;
     transform: translate(-23%, 46%);
 }
 .center {

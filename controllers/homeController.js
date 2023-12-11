@@ -102,6 +102,7 @@ class home_Pages {
          let torrentIdIndex = 0
          let torrentId = await torrentSearch(title,0)
 
+         res.setHeader('Connection', 'keep-alive')
          res.setHeader("Content-Type","video/webm") 
 
          const existingTorrent = await client.get(torrentId)
@@ -117,12 +118,11 @@ class home_Pages {
                   return file.name.endsWith('.mp4') || file.name.endsWith('.mkv')
                })   
    
-               if (!file || file.name.endsWith('.avi')) {
-                  torrentId = await torrentSearch(title,torrentIdIndex++)  
-                  addTorrent()
-                  return
-               } 
-   
+               // if (!file || file.name.endsWith('.avi')) {
+               //    torrentId = await torrentSearch(title,torrentIdIndex++)  
+               //    addTorrent()
+               //    return
+               // }  
                // Doing this for sending stream data as piece, so preventing memory problems
                // Also for enabling seeking
    
