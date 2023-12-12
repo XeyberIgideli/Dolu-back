@@ -4,14 +4,11 @@ import Movie from "../models/Movie.js"
 import Show from "../models/Show.js"
 import Episode from "../models/Episode.js"
 import InterfaceSetting from "../models/Interface.js" 
-import {NotFoundError} from '../utils/Error.js'
-import fs from 'fs'  
+import {NotFoundError} from '../utils/Error.js' 
+
 import Storage from 'memory-chunk-store'
 import { torrentSearch } from "../utils/torrent.js"
-import WebTorrent from "webtorrent"
-import torrentStream from 'torrent-stream'
-import {Transform} from 'stream'   
-
+import WebTorrent from "webtorrent"   
 const client = new WebTorrent() 
 
 async function interfaceData () {
@@ -102,28 +99,7 @@ class home_Pages {
          let torrentIdIndex = 0
          let torrentId = await torrentSearch(title,0)
 
-         const trackerUrls = [
-            "udp://tracker.opentrackr.org:1337/announce",
-            "udp://opentracker.i2p.rocks:6969/announce",
-            "udp://open.demonii.com:1337/announce",
-            "http://tracker.openbittorrent.com:80/announce",
-            "udp://open.stealth.si:80/announce",
-            "udp://tracker.torrent.eu.org:451/announce",
-            "udp://exodus.desync.com:6969/announce",
-            "udp://tracker.tiny-vps.com:6969/announce",
-            "udp://explodie.org:6969/announce",
-            "udp://uploads.gamecoast.net:6969/announce",
-            "udp://tracker1.bt.moack.co.kr:80/announce",
-            "udp://tracker.theoks.net:6969/announce",
-            "udp://tracker.moeking.me:6969/announce",
-            "udp://tracker.dump.cl:6969/announce",
-            "udp://tracker.4.babico.name.tr:3131/announce",
-            "udp://retracker01-msk-virt.corbina.net:80/announce",
-            "udp://open.free-tracker.ga:6969/announce",
-            "udp://movies.zsw.ca:6969/announce",
-            "udp://isk.richardsw.club:6969/announce",
-            "udp://epider.me:6969/announce"
-          ];
+
 
          res.setHeader('Connection', 'keep-alive')
          res.setHeader("Content-Type","video/webm") 
@@ -135,7 +111,7 @@ class home_Pages {
          }
          
          function addTorrent () {
-            client.add(torrentId,{destroyStoreOnDestroy:true,store: Storage, urlList:trackerUrls}, async torrent => {
+            client.add(torrentId,{destroyStoreOnDestroy:true,store: Storage}, async torrent => {
                // Got torrent metadata!
                let file = torrent.files.find(function (file) {
                   return file.name.endsWith('.mp4') || file.name.endsWith('.mkv')
