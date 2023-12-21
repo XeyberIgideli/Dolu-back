@@ -5,7 +5,7 @@ import Show from "../models/Show.js"
 import Episode from "../models/Episode.js"
 import InterfaceSetting from "../models/Interface.js" 
 import {NotFoundError} from '../utils/Error.js' 
-
+import axios from 'axios'
 import Storage from 'memory-chunk-store'
 import { torrentSearch } from "../utils/torrent.js"
 import WebTorrent from "webtorrent"   
@@ -91,6 +91,32 @@ class home_Pages {
       if(showData) {
          const episodes = await Episode.find({show:showData._id})
          res.json(episodes)
+      }
+     }
+     async getMediaData(req,res) {
+      const {mediaName, mediaType} = req.params 
+      const apiKey = 'e8b3201ef028f52f8def6d5e7aeb2636'
+      const apiUrl = `https://api.themoviedb.org/3/search/${mediaType}?api_key=${apiKey}&query=${mediaName}`
+      try {
+         const response = await axios.get(apiUrl, {headers: {'Accept': 'application/json'}})
+         const media = response.data.results
+         let tmdbID = media[0].id 
+
+         if(media) { 
+            const castUrl = `https://api.themoviedb.org/3/${mediaType}/${tmdbID}/credits?api_key=${apiKey}`;
+            const videoUrl = `https://api.themoviedb.org/3/${mediaType}/${tmdbID}/videos?api_key=${apiKey}`;
+      
+            const castResponse = await axios.get(castUrl)
+            const videoResponse = await axios.get(videoUrl)
+
+            const trailerData = videoResponse.data.results
+            const cast = castResponse.data.cast
+            const crew = castResponse.data.crew
+
+            res.json({trailerData, cast, crew, id: tmdbID})
+         }
+      } catch (err) {
+         console.log(err)
       }
      }
 

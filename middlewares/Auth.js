@@ -23,7 +23,7 @@ function verifyRole(req,res,next) {
 // Verifying token for user login
 function verifyToken(req,res,next) {
     const authHeader = req.cookies.token 
-    // console.log(req.cookies)
+   
     if(!authHeader || !authHeader.startsWith("Bearer")) {
        return res.redirect('../auth')
     }

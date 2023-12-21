@@ -1,8 +1,9 @@
 // LOADER
 let loaderLogo = document.querySelector('.loader-logo');
-let loaderWrapper = document.querySelector('.loaderWrapper')
-let loader = document.querySelector('#loader');
-let loaderPlayerText = document.querySelector('.loader-player-text')
+    loaderWrapper = document.querySelector('.loaderWrapper')
+    loader = document.querySelector('#loader');
+    loaderPlayerText = document.querySelector('.loader-player-text')
+
 loader.style.visibility = 'visible';
 loaderLogo.style.visibility = 'visible';
 
@@ -21,42 +22,35 @@ window.onload = function() {
   setTimeout(hideLoader, 1600);
 };
 
-// Request to TMDB API
+// Getting media data
 
-const apiKey = 'e8b3201ef028f52f8def6d5e7aeb2636'; // TMDB API KEY
 const slugUrl = window.location.href.split('/').pop()
-const movieName = slugUrl.split('-').slice(-1)[0] === 'show' ? slugUrl.split('-').slice(0,-1).join(' ') : slugUrl; 
-const pageName = window.location.href.split('/')[3]
-const showName = slugUrl.split('-').slice(0,-1).join('-')
-const mediaType = slugUrl.split('-').slice(-1)[0] === 'show' ? 'tv' : 'movie';
-const usID = document.querySelector('.uid') 
-const allowedLangs = ['eng','tur','ara','rus']
+      mediaName = slugUrl.split('-').slice(-1)[0] === 'show' ? slugUrl.split('-').slice(0,-1).join(' ') : slugUrl; 
+      pageName = window.location.href.split('/')[3]
+      showName = slugUrl.split('-').slice(0,-1).join('-')
+      mediaType = slugUrl.split('-').slice(-1)[0] === 'show' ? 'tv' : 'movie';
+      usID = document.querySelector('.uid') 
+      allowedLangs = ['eng','tur','ara','rus']
+      siteUrl = window.location.hostname + ':' + window.location.port + '/watch/' + slugUrl
 
-const siteUrl = window.location.hostname + ':' + window.location.port + '/watch/' + slugUrl
 let tmdbID;
-let trailerList = document.getElementById('trailer-list')
-let castWrapper = document.getElementById('cast-wrapper')
-let producerWrapper = document.getElementById('producer-wrapper')
+    trailerList = document.getElementById('trailer-list')
+    castWrapper = document.getElementById('cast-wrapper')
+    producerWrapper = document.getElementById('producer-wrapper')
  
 async function getMediaData() { 
-  const apiUrl = `https://api.themoviedb.org/3/search/${mediaType}?api_key=${apiKey}&query=${encodeURIComponent(movieName)}`;
-  try {
-    const response = await axios.get(apiUrl);
-    const media = response.data.results;
-    tmdbID = media[0].id
-    if (media) {
-      const mediaData = media[0]; 
+  const request = await fetch(`../data/getMediaData/${mediaType}/${mediaName}`, {method: 'get'})
+  const response = await request.json() 
+  tmdbID = response.id 
+   try {  
+    if (request.ok) { 
+      const trailerData = response.trailerData;
+      const cast = response.cast; 
+      const crew = response.crew; 
+      
+      const trailerFiltered = trailerData.filter(item => item.site === 'YouTube')
 
-      const castUrl = `https://api.themoviedb.org/3/${mediaType}/${mediaData.id}/credits?api_key=${apiKey}`;
-      const videoUrl = `https://api.themoviedb.org/3/${mediaType}/${mediaData.id}/videos?api_key=${apiKey}`;
-
-      const castResponse = await axios.get(castUrl);
-      const videoResponse = await axios.get(videoUrl);
-      const trailerData = videoResponse.data.results;
-      const cast = castResponse.data.cast; 
-      const crew = castResponse.data.crew;
-      const trailer = trailerData.filter(item => item.site === 'YouTube')
-      trailer.forEach(item => {
+      trailerFiltered.forEach(item => {
         trailerList.insertAdjacentHTML('beforeend', `
         <li>
         <a href="" tabindex='0'>
@@ -68,6 +62,7 @@ async function getMediaData() {
          </a>
      </li>`)
       });
+
       if (cast) {
 
         const castList = cast.map(actor => ({
@@ -123,6 +118,7 @@ if(pageName === 'watch'){
 var modals = document.querySelectorAll(".modal");
 var notificationModal = document.getElementById("notificationModal");
 var createBookmarkModal = document.getElementById("createBookmark");
+
 // Get the button that opens the modal
 var btn = document.querySelector(".nav-notification"); 
 var btnCreate = document.querySelector(".create-bookmark-list"); 
@@ -346,7 +342,7 @@ movieServerLinks.forEach(item => {
   item.addEventListener('click', async (e) => {   
     const movieServers = {
       spembed: `https://multiembed.mov/?video_id=${tmdbID}&tmdb=1`,
-      gomo: `https://gomo.to/movie/${movieName}`,
+      gomo: `https://gomo.to/movie/${mediaName}`,
       aembed: `https://autoembed.to/movie/tmdb/${tmdbID}`,
       vdsrc: `https://vidsrc.to/embed/movie/${tmdbID}`,
       smash: `https://embed.smashystream.com/playere.php?tmdb=${tmdbID}`
@@ -365,31 +361,31 @@ movieServerLinks.forEach(item => {
 
     if(serverName === 'dolusrc') {
 
-      // const response = await axios.get(`../api/search/movie/${allowedLangs.join(',')}/${movieName}?totalLink=6`, {
-      //   headers: {
-      //     'Accept': 'application/json'
-      //   }
-      // })
+      const response = await axios.get(`../api/search/movie/${allowedLangs.join(',')}/${mediaName}?totalLink=6`, {
+        headers: {
+          'Accept': 'application/json'
+        }
+      })
 
-      // let subtitles 
-      // if(response.status === 200) {
-      //   const downloadLinks = response.data.links
-      //   let linkArr = []
+      let subtitles 
+      if(response.status === 200) {
+        const downloadLinks = response.data.links
+        let linkArr = []
         
-      //   Array.from(downloadLinks).forEach((link,index) => {
-      //     linkArr.push(`[${link.downloadLink.split('-')[0].toUpperCase()}]../api/${slugUrl}/${link.downloadLink.split('-')[0]}/${downloadLinks.length}/${index}/readMovieSubtitle?subtitle.srt`)
-      //   })
+        Array.from(downloadLinks).forEach((link,index) => {
+          linkArr.push(`[${link.downloadLink.split('-')[0].toUpperCase()}]../api/${slugUrl}/${link.downloadLink.split('-')[0]}/${downloadLinks.length}/${index}/readMovieSubtitle?subtitle.srt`)
+        })
   
-      //   subtitles = linkArr.join(',')
-      // } else {
-      //   subtitles = null
-      // }
+        subtitles = linkArr.join(',')
+      } else {
+        subtitles = null
+      }
       
       moviePlayer.insertAdjacentHTML('afterbegin', `<div style="width:100%;height:100%;" id="${usID.value}-${slugUrl}"></div>`)
       
-      player = new Playerjs({id:`${usID.value}-${slugUrl}`, file:`[720p]../stream/${slugUrl}`, autoplay:1,default_quality:'720p'}) 
+      player = new Playerjs({id:`${usID.value}-${slugUrl}`, file:`[720p]../stream/${slugUrl}`, autoplay:1,default_quality:'720p', subtitle:subtitles}) 
 
-      await addContinueList(movieName)
+      await addContinueList(mediaName)
 
       if(iframe) {
           document.querySelector('#iframe').remove()
