@@ -497,50 +497,50 @@
     <% } %>
 
 <!-- Settings TAB -->
-<div tabindex="-1" class="side-tab settings-tab hidden-tab">
-    <div class="tab-inside">
-        <div class="tab-head">
-            <h1 class="tab-title">Settings</h1>
-             <button class="backBtn" style="display: none;"><i class='bx bx-left-arrow-alt'></i></button>
+    <div tabindex="-1" class="side-tab settings-tab hidden-tab">
+        <div class="tab-inside">
+            <div class="tab-head">
+                <h1 class="tab-title">Settings</h1>
+                <button class="backBtn" style="display: none;"><i class='bx bx-left-arrow-alt'></i></button>
+            </div>
+            <div class="menu-tab">
+                <ul class="tab-list " data-tab-type="Main">
+                    <li tabindex="1" class="tab-li" data-sub-name="Account" ><a tabindex='0' href="#"><i class="bx bx-user"></i> <span>Account</span></a></li>
+                    <li tabindex="2" class="tab-li" data-sub-name="Interface" ><a tabindex="0" href="#"><i class="bx bxs-layout"></i> <span>Interface</span></a></li>
+                    <li tabindex="3" class="tab-li" ><a tabindex="0" href="#"><i class="bx bx-play-circle"></i> <span>Player</span></a></li> 
+                </ul>
+
+                <!-- Account Details -->
+                <ul class="tab-list"  style="display: none;" data-tab-name="Account">
+                    <li tabindex="1" class="tab-li"><a class="subTabLink" tabindex='0' href="javascript:void(0)"><span>Logged as Igidali</span></a></li>
+                    <p class="param-title">Account details</p> 
+                    <li tabindex="1" class="tab-li" data-sub-name="Username" ><a class="subTabLink" tabindex='0' href="javascript:void(0)"><span>Username</span></a></li>
+                    <li tabindex="1" class="tab-li" data-sub-name="Email" ><a class="subTabLink" tabindex='0' href="javascript:void(0)"><span>Email</span></a></li>
+                    <li tabindex="1" class="tab-li" data-sub-name="Password" ><a class="subTabLink" tabindex='0' href="javascript:void(0)"><span>Password</span></a></li>
+                    <li tabindex="1" class="tab-li" data-sub-name="Avatar" ><a class="subTabLink" tabindex='0' href="javascript:void(0)"><span>Avatar</span></a></li>
+                </ul>  
+
+                <!-- Interface -->                
+                <ul class="tab-list" style="display: none;" data-tab-name="Interface">
+                    <li tabindex="1" class="tab-li" data-sub-name="Interface Language" >
+                        <a class="subTabLink" id="languageLi" tabindex='0' href="javascript:(void)">
+                            <span>Interface Language</span>
+                            <ul class="languageList">
+                                <li data-lang="English" >English</li>
+                                <li data-lang="Turkish" style="display: none;">Turkish</li>
+                                <li data-lang="Azerbaijani" style="display: none;">Azerbaijani</li>
+                                <li data-lang="Russian" style="display: none;">Russian</li>
+                            </ul>
+
+                        </a>
+                    
+                    </li>
+                </ul> 
+                
+            </div> 
         </div>
-        <div class="menu-tab">
-            <ul class="tab-list " data-tab-type="Main">
-                <li tabindex="1" class="tab-li" data-sub-name="Account" ><a tabindex='0' href="#"><i class="bx bx-user"></i> <span>Account</span></a></li>
-                <li tabindex="2" class="tab-li" data-sub-name="Interface" ><a tabindex="0" href="#"><i class="bx bxs-layout"></i> <span>Interface</span></a></li>
-                <li tabindex="3" class="tab-li" ><a tabindex="0" href="#"><i class="bx bx-play-circle"></i> <span>Player</span></a></li> 
-            </ul>
 
-            <!-- Account Details -->
-            <ul class="tab-list"  style="display: none;" data-tab-name="Account">
-                <li tabindex="1" class="tab-li"><a class="subTabLink" tabindex='0' href="javascript:void(0)"><span>Logged as Igidali</span></a></li>
-                <p class="param-title">Account details</p> 
-                <li tabindex="1" class="tab-li" data-sub-name="Username" ><a class="subTabLink" tabindex='0' href="javascript:void(0)"><span>Username</span></a></li>
-                <li tabindex="1" class="tab-li" data-sub-name="Email" ><a class="subTabLink" tabindex='0' href="javascript:void(0)"><span>Email</span></a></li>
-                <li tabindex="1" class="tab-li" data-sub-name="Password" ><a class="subTabLink" tabindex='0' href="javascript:void(0)"><span>Password</span></a></li>
-                <li tabindex="1" class="tab-li" data-sub-name="Avatar" ><a class="subTabLink" tabindex='0' href="javascript:void(0)"><span>Avatar</span></a></li>
-             </ul>  
-
-            <!-- Interface -->                
-            <ul class="tab-list" style="display: none;" data-tab-name="Interface">
-                <li tabindex="1" class="tab-li" data-sub-name="Interface Language" >
-                    <a class="subTabLink" id="languageLi" tabindex='0' href="javascript:(void)">
-                        <span>Interface Language</span>
-                        <ul class="languageList">
-                            <li data-lang="English" >English</li>
-                            <li data-lang="Turkish" style="display: none;">Turkish</li>
-                            <li data-lang="Azerbaijani" style="display: none;">Azerbaijani</li>
-                            <li data-lang="Russian" style="display: none;">Russian</li>
-                        </ul>
-
-                    </a>
-                  
-                </li>
-            </ul> 
-             
-        </div> 
     </div>
-
-</div>
 
     <!-- Bookmarks Tab -->
     <div class="side-tab hidden-tab bookmarks-tab">

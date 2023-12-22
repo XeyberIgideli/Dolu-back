@@ -206,7 +206,7 @@ seasonList?.addEventListener('change', (e) => {
 
 })
 async function getEpisodes (seasonIn) {
-  const inserted = document.querySelectorAll('.inserted')
+  const inserted = document.querySelectorAll('inserted')
   
   const response = await axios.get(`../watch/getEpisodes/${slugUrl}`, {
     headers: {
@@ -219,7 +219,7 @@ async function getEpisodes (seasonIn) {
     data.filter(item => {
       if(item.season === 1) {
         showEpisodes.insertAdjacentHTML('beforeend', ` 
-        <li class="inserted" tabindex="1" ><a data-episode="${item.episode}" class="playEpisode" tabindex='0' href="javascript:void(0)"><i class="bx bx-play-circle"></i><span>${item.title} / ${item.episode}</span></a></li>
+        <li class="inserted" tabindex="1" ><a data-episode="${item.episode}" id="playEpisode" tabindex='0' href="javascript:void(0)"><i class="bx bx-play-circle"></i><span>${item.title} / ${item.episode}</span></a></li>
         `)
       }
     })
@@ -228,7 +228,7 @@ async function getEpisodes (seasonIn) {
   data.forEach(item => {
     if(seasonIn === item.season) {
       showEpisodes.insertAdjacentHTML('beforeend', ` 
-      <li class="inserted" tabindex="1" ><a class="playEpisode" data-episode="${item.episode}" tabindex='0' href="javascript:void(0)"><i class="bx bx-play-circle"></i><span>${item.title} / ${item.episode}</span></a></li>
+      <li class="inserted" tabindex="1" ><a id="playEpisode" data-episode="${item.episode}" tabindex='0' href="javascript:void(0)"><i class="bx bx-play-circle"></i><span>${item.title} / ${item.episode}</span></a></li>
       `)
     } else {
       inserted.forEach(item => {
@@ -238,7 +238,7 @@ async function getEpisodes (seasonIn) {
 
   })
 
-  const playEpisodes = document.querySelectorAll('.playEpisode')
+  const playEpisodes = document.querySelectorAll('#playEpisode')
   const tvPlayer = document.querySelector('.tvPlayer')
 
   let embedLinks;
@@ -253,7 +253,8 @@ async function getEpisodes (seasonIn) {
         aembed: `https://autoembed.to/tv/tmdb/${tmdbID}-${seasonIn || 1}-${item.dataset.episode}`,
         vdsrc: `https://vidsrc.to/embed/tv/${tmdbID}/${seasonIn || 1}/${item.dataset.episode}`
       }
-      
+      loadPlayer()
+
       tvPlayer.classList.remove('player-hidden')
       const iframe = document.querySelector('#iframe') 
 
@@ -264,14 +265,19 @@ async function getEpisodes (seasonIn) {
       }) 
 
       const downloadLinks = response.data
-      const langs = response.data.langsShort
+      
       let linkArr = [] 
+
       downloadLinks.forEach((link,index) => {
         linkArr.push(`[${link.downloadLink.split('-')[0].toUpperCase()}]../api/${showName}/${seasonIn ? seasonIn : 1}/${Number(item.dataset.episode)}/${link.downloadLink.split('-')[0]}/${downloadLinks.length}/${index}/readShowSubtitle?subtitle.srt`)
       })
+
       const subtitles = linkArr.join(',') 
+      
       tvPlayer.insertAdjacentHTML('afterbegin', `<div style="width:100%;height:100%;" id="${usID.value}-${showName}&${seasonIn ? seasonIn : 1}/${Number(item.dataset.episode)}"></div>`)
+      
       let player = new Playerjs({id:`${usID.value}-${showName}&${seasonIn ? seasonIn : 1}/${Number(item.dataset.episode)}`, file:`[720p]../stream/${showName}-S0${seasonIn ? seasonIn : 1}E0${Number(item.dataset.episode)}`,autoplay:1,default_quality:'720p',subtitle:subtitles})
+      
       const season = seasonIn ? seasonIn : 1
 
       await addContinueList(showName + "&" + season + '/' + item.dataset.episode)
@@ -304,7 +310,8 @@ async function getEpisodes (seasonIn) {
         }
         })
       }) 
-      // streamTab.classList.add('hidden-tab')
+      hidePlayerLoader()
+      streamTab.classList.add('hidden-tab')
     })
   })
 }

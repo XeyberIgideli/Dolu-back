@@ -357,9 +357,9 @@ function keyNavigateList(e) {
     switch (key) {
       case "ArrowUp":
           // Up pressed
-          if(index >= 0) {
-            console.log(aTags)
+          if(index > 0) {
             index--;
+            console.log(index)
           }
           aTags[index]?.focus();
           break;
