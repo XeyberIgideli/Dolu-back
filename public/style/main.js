@@ -242,6 +242,7 @@ async function getEpisodes (seasonIn) {
   const tvPlayer = document.querySelector('.tvPlayer')
 
   let embedLinks;
+
   // Opening player for watching the show
   playEpisodes.forEach(item => {
     item.addEventListener('click', async (event) => { 
@@ -255,7 +256,6 @@ async function getEpisodes (seasonIn) {
       
       tvPlayer.classList.remove('player-hidden')
       const iframe = document.querySelector('#iframe') 
-
 
       const response = await axios.get(`../api/${showName}/${seasonIn ? seasonIn : 1}/${Number(item.dataset.episode)}/${allowedLangs.join(',')}/8/0/readShowSubtitle?listData=6`, {
         headers: {
@@ -271,7 +271,7 @@ async function getEpisodes (seasonIn) {
       })
       const subtitles = linkArr.join(',') 
       tvPlayer.insertAdjacentHTML('afterbegin', `<div style="width:100%;height:100%;" id="${usID.value}-${showName}&${seasonIn ? seasonIn : 1}/${Number(item.dataset.episode)}"></div>`)
-      let player = new Playerjs({id:`${usID.value}-${showName}&${seasonIn ? seasonIn : 1}/${Number(item.dataset.episode)}`, file:`[720p]../stream/${showName}-S0${seasonIn ? seasonIn : 1}E0${Number(item.dataset.episode)}`,subtitle:subtitles,autoplay:1,default_quality:'720p'})
+      let player = new Playerjs({id:`${usID.value}-${showName}&${seasonIn ? seasonIn : 1}/${Number(item.dataset.episode)}`, file:`[720p]../stream/${showName}-S0${seasonIn ? seasonIn : 1}E0${Number(item.dataset.episode)}`,autoplay:1,default_quality:'720p',subtitle:subtitles})
       const season = seasonIn ? seasonIn : 1
 
       await addContinueList(showName + "&" + season + '/' + item.dataset.episode)
@@ -288,7 +288,7 @@ async function getEpisodes (seasonIn) {
           if(embedName === 'dolusrc') {
             
             tvPlayer.insertAdjacentHTML('afterbegin', `<div style="width:100%;height:100%;" id="${usID.value}-${showName}"></div>`)
-            let player = new Playerjs({id:`${usID.value}-${showName}`, file:`[720p]../stream/${showName}-S0${seasonIn ? seasonIn : 1}E0${Number(item.dataset.episode)}`,subtitle: subtitles,autoplay:1,default_quality:'720p'})
+            let player = new Playerjs({id:`${usID.value}-${showName}`, file:`[720p]../stream/${showName}-S0${seasonIn ? seasonIn : 1}E0${Number(item.dataset.episode)}`,autoplay:1,default_quality:'720p',subtitle: subtitles})
             if(iframe) {
               iframe.remove()
             }
@@ -304,7 +304,7 @@ async function getEpisodes (seasonIn) {
         }
         })
       }) 
-      streamTab.classList.add('hidden-tab')
+      // streamTab.classList.add('hidden-tab')
     })
   })
 }
