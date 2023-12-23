@@ -31,8 +31,7 @@ const slugUrl = window.location.href.split('/').pop()
       mediaType = slugUrl.split('-').slice(-1)[0] === 'show' ? 'tv' : 'movie';
       usID = document.querySelector('.uid') 
       allowedLangs = ['eng','tur','ara','rus']
-      siteUrl = window.location.hostname + ':' + window.location.port + '/watch/' + slugUrl
-
+      siteUrl = window.location.hostname + ':' + window.location.port + '/watch/' + slugUrl 
 let tmdbID;
     trailerList = document.getElementById('trailer-list')
     castWrapper = document.getElementById('cast-wrapper')
@@ -429,7 +428,7 @@ movieServerLinks.forEach(item => {
 })
 }
 
-// Adding media's time datas to database
+// Adding media's time and screenshot data to database
 
 async function addContinueList (title) { 
   const video = document.querySelector('video')

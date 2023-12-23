@@ -179,14 +179,19 @@ Array.from(allTabLi).forEach(item => {
 
 // Showing inputs for Account sub tab in Settings
 
-function showInput() { 
+async function showInput() { 
   const selectedLi = currentTab.querySelector(`[data-sub-name="${currentLi.dataset.subName}"]`)
   let saveTabBtn
   if(selectedLi) {
     let limit = 1
-    const selectedA = selectedLi.querySelector('a')
 
-    selectedLi.insertAdjacentHTML('afterbegin', `<div class="tabChange"><input type="text" class="tabInput subTabLink"><button class="tabSaveBtn"><i aria-colspan="" class="bx bx-check"></i></button></div>`)
+    const response = await fetch('../user/userData')
+    const userData = await response.json() 
+
+    const selectedA = selectedLi.querySelector('a')
+    const selectedFieldName = selectedA.parentNode.dataset.subName.toLowerCase()
+    
+    selectedLi.insertAdjacentHTML('afterbegin', `<div class="tabChange"><input type="${selectedFieldName === 'password' ? 'password' : 'text'}" value="${userData[selectedFieldName]}" class="tabInput subTabLink"><button class="tabSaveBtn"><i aria-colspan="" class="bx bx-check"></i></button></div>`)
     saveTabBtn = selectedLi.querySelector('.tabSaveBtn')
     selectedA.style.display = 'none'
     selectedA.removeAttribute('class')
@@ -199,6 +204,9 @@ function showInput() {
     // Save and close button
     if(selectedA) {
       saveTabBtn.addEventListener('click', (e) => { 
+        const inputValue = selectedLi.querySelector('input').value
+        const post = fetch('../user/updateUserData', {method: 'POST', headers: {
+          "Content-Type": "application/json"}, body: JSON.stringify({[selectedFieldName]: inputValue})}) 
         selectedA.classList.add('testHidden')
         selectedLi.querySelector('div').remove()
         limit = 0

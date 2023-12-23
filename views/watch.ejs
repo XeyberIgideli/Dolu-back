@@ -5,7 +5,6 @@
     <% if (media.mediaType) { %>
      <!-- Single movie page -->
     <div class="movie-detail" id="">
-        <input type="hidden" class="uid" value="<%= user.id %>">
         <div class="movie-image-full">
             <img src="<%= media.landscapeImage %>" alt="<%= media.title %>" class="movie-img">
         </div>
@@ -285,7 +284,6 @@
     <% } else {%>
     <!-- Single show page -->
     <div class="movie-detail" id="">
-        <input type="hidden" class="uid" value="<%= user.id %>">
         <div class="movie-image-full">
             <img src="<%= media.landscapeImage %>" alt="<%= media.title %>" class="movie-img">
         </div>

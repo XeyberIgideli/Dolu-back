@@ -20,6 +20,7 @@ import homeRoute from './routes/homeRoute.js'
 import authRoute from './routes/authRoute.js'
 import bookmarkRoute from './routes/bookmarkRoute.js'
 import subtitleApi from './routes/subtitleApi.js'
+import userRoute from './routes/userRoute.js'
 
 // Dashboard routes
 import dashboardAuthRoute from './routes/dashboard/dashAuthRoute.js'
@@ -94,9 +95,13 @@ app.use('/dashboard', [dashPageRoute,dashMovieRoute,dashShowRoute,dashUserRoute,
 app.use('/admin', dashboardAuthRoute) 
 // General routes
 app.use('/',pageRoute,subtitleApi) // Index,auth,admin pages route handling
-app.use('/', homeRoute) // Home pages route handling
 app.use('/auth',authRoute)
-app.use('/bookmarks',verifyToken, bookmarkRoute)
+
+app.use(verifyToken)
+
+app.use('/', homeRoute) // Home pages route handling
+app.use('/user', userRoute)
+app.use('/bookmarks', bookmarkRoute)
 
 
 app.use(notFound)

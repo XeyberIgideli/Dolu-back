@@ -47,6 +47,7 @@ class bookmarks {
         res.render('bookmark-list', {
             media,
             bookmarks,
+            user: req.user.userId,
             bookmarkTitle,
             interfaceSettingData: await interfaceData(),
             title: bookmarkTitle

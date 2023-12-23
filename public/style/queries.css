@@ -171,11 +171,11 @@
     .logo:not(.homepage-logo,.loader-logo) {
         display: none;
     } 
-    .continue-watching {
+    /* .continue-watching {
         left: 40%;
         top: 24rem;
         width: 90%;
-    }
+    } */
     .movie-details {
         flex-direction: column;
     }

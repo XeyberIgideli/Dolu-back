@@ -56,6 +56,7 @@ class home_Pages {
          res.render('bookmarks',{
             bookmarks: user.bookmarks,
             interfaceSettingData: await interfaceData(),
+            user,
             title:'Bookmarks'
          })
      }
