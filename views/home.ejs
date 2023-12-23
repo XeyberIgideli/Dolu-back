@@ -12,15 +12,20 @@
                         <img src="<%= allMedia[i].landscapeImage %>" alt="<%= allMedia[i].title %>" class="home-img">
                     </div>
                     <div class="home-text container">
-                        <% if (allMedia[i].season) { %>
-                            <div class="tv-details">
-                                <img src="img/companies/netflix.png" class="company" alt=""> 
+                        <div class="tv-details">
+                            <%allMedia[i].production.map(item => { %>
+                                 <p style="color:var(--main-color); font-weight: bold;"><%= item %></p> 
+                                <!-- <div class="brand">
+                                    <img src="https://cdn.jsdelivr.net/npm/simple-icons@v10/icons/<%= item.toLowerCase() %>.svg" alt="<%= item %>"> 
+                                </div> -->
+                            <% }) %>
+                            <% if (allMedia[i].season) { %>
                                 <p>Season <%= allMedia[i].season %></p>
-                            </div>
-                        <% } %>
+                            <% } %>
+                        </div>
                         <h1 class="home-title"><%= allMedia[i].title %></h1>
                         <p class="home-imdb"><i class="bx bx-star"></i> <%= allMedia[i].rating %>/10</p>
-                        <p class="home-description"><%= allMedia[i].description %></p>
+                        <p class="home-description"><%= allMedia[i].description.substr(0,220) %>...</p>
                         <div class="home-links">
                             <div class="home-watch">
                                 <a href="watch/<%= allMedia[i].slug %>" class="btn btn-primary"> Watch Now
@@ -62,7 +67,7 @@
                                 <% const seasonData = user.continueList[i]?.mediaTitle.split('&')[1] %>
                                 <div class="swiper-slide">
                                     <div class="card-box already-w">
-                                        <img src="<%=  user.continueList[i].image %>" class="card-box-img" alt="">
+                                        <img src="<%=  user.continueList[i].image %>" class="card-box-img" alt="<%= item.title %>">
                                         <div class="box-content">
                                             <h2 class="content-title"><%= item.title %></h2>
                                             <span class="watchedMediaSeason"><%= user.continueList[i]?.mediaTitle.split('&')[1] ?  'S' + seasonData.split('/')[0] + '/E' + seasonData.split('/')[1]  : '' %></span>

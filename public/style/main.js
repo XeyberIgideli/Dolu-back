@@ -253,9 +253,16 @@ async function getEpisodes (seasonIn) {
         aembed: `https://autoembed.to/tv/tmdb/${tmdbID}-${seasonIn || 1}-${item.dataset.episode}`,
         vdsrc: `https://vidsrc.to/embed/tv/${tmdbID}/${seasonIn || 1}/${item.dataset.episode}`
       }
+
+      // Load player
+      
       loadPlayer()
 
-      tvPlayer.classList.remove('player-hidden')
+      tvPlayer.classList.remove('player-hidden') 
+      document.querySelector('.movie-detail').style.display = 'none'
+      document.querySelector('.sidebar').style.display = 'none'
+      document.querySelector('.header').style.display = 'none'
+
       const iframe = document.querySelector('#iframe') 
 
       const response = await axios.get(`../api/${showName}/${seasonIn ? seasonIn : 1}/${Number(item.dataset.episode)}/${allowedLangs.join(',')}/8/0/readShowSubtitle?listData=6`, {
@@ -281,10 +288,8 @@ async function getEpisodes (seasonIn) {
       const season = seasonIn ? seasonIn : 1
 
       await addContinueList(showName + "&" + season + '/' + item.dataset.episode)
-
-      document.querySelector('.movie-detail').style.display = 'none'
-      document.querySelector('.sidebar').style.display = 'none'
-      document.querySelector('.header').style.display = 'none' 
+ 
+      // Third-party links tab
 
       const embedOptions = document.querySelectorAll('.embed-options button')
 
@@ -310,8 +315,11 @@ async function getEpisodes (seasonIn) {
         }
         })
       }) 
+
+      // Hide player loader
+
       hidePlayerLoader()
-      streamTab.classList.add('hidden-tab')
+      
     })
   })
 }

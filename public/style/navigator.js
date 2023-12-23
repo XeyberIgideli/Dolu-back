@@ -1,44 +1,46 @@
 // HIDDEN TAB //
 
-let watchBtn = document.querySelector('.watch');
-let tabInside = document.querySelectorAll('.tab-inside');
-let streamTab = document.querySelector('.streamTab'); 
-let sideTabs = document.querySelectorAll('.side-tab'); 
-let index = -1;
+let watchBtn = document.querySelector('.watch')
+let tabInside = document.querySelectorAll('.tab-inside')
+let streamTab = document.querySelector('.streamTab')
+let sideTabs = document.querySelectorAll('.side-tab') 
+let index = -1
 
 // WATCH BUTTON CLICK EVENT
-watchBtn?.addEventListener('click', (e) => {
+watchBtn?.addEventListener('click', (e) => {  
     setTabFocusing(streamTab)
     streamTab.classList.toggle('hidden-tab')
-    e.stopPropagation();
-    e.preventDefault();
+    e.stopPropagation()
+    e.preventDefault()
 })
 
 const backServers = document.querySelector('.backServers')
 
 backServers?.addEventListener('click', (e) => {
-    streamTab.classList.toggle('hidden-tab')
-    e.stopPropagation();
-    e.preventDefault();
+    index = -1
+    streamTab.classList.toggle('hidden-tab') 
+    setTabFocusing(streamTab)
+    e.stopPropagation()
+    e.preventDefault()
 })  
 
-let settingsTab = document.querySelector('.settings-tab'); 
-let settingsBtn = document.querySelector('.settings');
+let settingsTab = document.querySelector('.settings-tab')
+let settingsBtn = document.querySelector('.settings')
 
 // SETTINGS BUTTON CLICK EVENT
 settingsBtn?.addEventListener('click', (e) => { 
     const tab = Array.from(document.querySelectorAll('.settings-tab .tab-list')).filter(item => item.style.display !== 'none')
     setTabFocusing(tab[0])
-    settingsTab.classList.toggle('hidden-tab');
-    e.stopPropagation();
-    e.preventDefault();
+    settingsTab.classList.toggle('hidden-tab')
+    e.stopPropagation()
+    e.preventDefault()
 })
 
-let bookmarksTab = document.querySelector('.bookmarks-tab'); 
-let bookmarkBtns = document.querySelectorAll('.bookmark-btn');
-let bookmarkBtn = document.querySelector('.bookmark-btn');
-let checkboxs = document.querySelectorAll('.bookmarks-tab input');
-let checkbox = document.querySelector('.bookmarks-tab input');
+let bookmarksTab = document.querySelector('.bookmarks-tab')
+let bookmarkBtns = document.querySelectorAll('.bookmark-btn')
+let bookmarkBtn = document.querySelector('.bookmark-btn')
+let checkboxs = document.querySelectorAll('.bookmarks-tab input')
+let checkbox = document.querySelector('.bookmarks-tab input')
 let arrayedCheckboxs = Array.from(checkboxs)
 
 const checkBackBtn = document.querySelector('.backBtn')
@@ -50,20 +52,19 @@ function setTabFocusing (tab,el = 'a') {
     tab.focus() 
     tab.querySelector(el).focus() 
     index++
-    // index = tab.querySelectorAll(el).length -1
-  }, 40);
+  }, 100)
 } 
 
 // Add Bookmark functionality
 
-const slug = slugUrl;
-let data = {} ;
+const slug = slugUrl
+let data = {}
  
 async function addBookmark(data) { 
   const mediaData = await axios.get(window.location.href)
-  const parser = new DOMParser();
-  const htmlDocument = parser.parseFromString(mediaData.data, 'text/html'); 
-  const mediaTitle = htmlDocument.querySelector('.movie-title')?.innerText; 
+  const parser = new DOMParser()
+  const htmlDocument = parser.parseFromString(mediaData.data, 'text/html')
+  const mediaTitle = htmlDocument.querySelector('.movie-title')?.innerText
   if(mediaTitle) {
     data.title = mediaTitle
   } 
@@ -98,8 +99,8 @@ bookmarkBtns?.forEach(item => {
     if(homeTitle) {
       data.title = homeTitle.innerText
     }
-    e.stopPropagation();
-    e.preventDefault();
+    e.stopPropagation()
+    e.preventDefault()
 })
 })
 
@@ -113,7 +114,7 @@ function tabOutsideClicks(tabname,tabBtn) {
       index = -1
       tabname.classList.add('hidden-tab')
     }
-    return;
+    return
   } 
 }
 
@@ -124,7 +125,7 @@ document.body.addEventListener("click", tabOutsideClicks.bind(event, bookmarksTa
 // Tab inside stop propagation
 sideTabs.forEach(item => {
   item.addEventListener("click", (e) => { 
-    e.stopPropagation();
+    e.stopPropagation()
   })
 })
  
@@ -258,7 +259,7 @@ settingsTab.addEventListener('keydown', (e) => {
 
 // Language selecting setting
 
-const languageAElement = document.querySelector('#languageLi');
+const languageAElement = document.querySelector('#languageLi')
 const languageList = document.querySelector('.languageList') 
 const defaultLanguage = languageList.querySelector('[data-lang="English"]')
 
@@ -278,7 +279,7 @@ if(selectedStorage) {
 languageAElement.addEventListener('click', function(event) { 
       // Selecting ul and li elements 
       const ulElement = languageAElement.parentNode.querySelector('ul') || languageAElement.parentNode
-      const liElements = ulElement?.querySelectorAll('li'); 
+      const liElements = ulElement?.querySelectorAll('li')
 
       if(liElements) {
         Array.from(liElements).map(item => {
@@ -299,7 +300,7 @@ languageAElement.addEventListener('click', function(event) {
         const selectedLanguage = Array.from(liElements).map(item => item.style.display) 
         const siblings = Array.from(liElements).filter(item => item !== liElements[clickedIndex]).map(item => item.style.display = 'none')
       }
-      event.preventDefault();   
+      event.preventDefault() 
 });
 
 // HIDDEN TAB, KEY NAVIGATION
@@ -314,12 +315,12 @@ function keyNavigateList(e) {
   // all a tag in tabInside
   // let sideTabs = document.querySelectorAll('.side-tab') 
   let insideTabs = document.querySelectorAll('.tab-inside')
-  let key = e.key; 
+  let key = e.key
  
   /* Bunu ona gore edirem ki, tab acilib,scroll edende body 
   hereket etmesin,amma tab bagli olanda body scroll aktiv olsun */
   if(e.target !== body) {
-    e.preventDefault();
+    e.preventDefault()
   } 
   // Open and close tabs
   for(let i =0; i < insideTabs.length; i++) {
@@ -338,7 +339,7 @@ function keyNavigateList(e) {
             if(sideTabs[i].classList.contains('hidden-tab') && sideTabs[i].classList.contains('streamTab')) {
               sideTabs[i].classList.remove('hidden-tab')
           }
-            break;
+            break
     }
   } 
 
@@ -358,26 +359,25 @@ function keyNavigateList(e) {
       case "ArrowUp":
           // Up pressed
           if(index > 0) {
-            index--;
-            console.log(index)
+            index--
           }
-          aTags[index]?.focus();
-          break;
+          aTags[index]?.focus()
+          break
       case "ArrowDown":
           // Down pressed
-          if (index < aTags.length -1) {
-            index++;
+          if (index < aTags.length - 1) {
+            index++
           } else {
-            index = 0;
+            index = 0
           }
           aTags[index].focus();
-          break;
+          break
           case "Enter": 
           if(aTags[index]) {
-            aTags[index].click();
-            aTags[index]?.focus();
+            aTags[index].click()
+            aTags[index]?.focus()
           }
-          break;  
+          break
   } 
   }
 

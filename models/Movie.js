@@ -84,17 +84,7 @@ const movieSchema = new mongoose.Schema({
     landscapeImage: {
         type: String,
         trim:true,
-    },
-    // trailer: {
-    //     type: [String],
-    //     required: [true,"Please provide the media's trailer link!"],
-    //     validate: {
-    //         validator: function(array) {
-    //           return array.every((v) => typeof v === 'string');
-    //         }, 
-    //     },
-    //     trim:true,
-    // },
+    }, 
     embed: {
         type: Array,
         required: [true,"Please provide the media's embed link!"],

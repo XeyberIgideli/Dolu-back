@@ -80,14 +80,7 @@
     }
     .bookmark .play-btn {
         top: 35%!important;
-    }
-    /* .wide-card.container {
-        width: 77%;
-        margin-right: 7rem;
-    } */
-    /* .top-three-of-day .container:nth-child(1) {
-        width: 85%;
-    } */
+    } 
     .header {
         padding: 2rem 0rem 2rem 7rem!important;
     }
@@ -104,7 +97,6 @@
         font-size: 1rem;
     }
     .movie-card {
-        padding-left: 2rem;
         width: 90%;
     }
     .movie-text {
@@ -254,8 +246,8 @@
         padding-top: 0;  
         justify-content: center;
         background: rgb(28 20 14 / 80%);
-        backdrop-filter: blur( px );
-        -webkit-backdrop-filter: blur( 0px ); 
+        background: rgb(11 11 11 / 60%);
+        backdrop-filter: blur(20px);
     }
     .sidebar .menu {
         flex-direction: row;
@@ -298,6 +290,9 @@
     }
     .movie-second-title {
         font-size: 0.8rem;
+    }
+    .movie-card {
+        padding-left: 2rem;
     }
     .movie-card-box-img {
         height: 90%;
@@ -768,6 +763,12 @@
     }
     .similar-content-wrap,.recommendation-content-wrap,.episode-content-wrap {
         width: 820px;
+    }
+    .detail-text {
+        margin-top: 1rem;
+    }
+    .detail-description {
+        margin: 0;
     }
     .item-title {
         font-size: 0.8rem;

@@ -7,10 +7,10 @@
     <div class="movie-detail" id="">
         <input type="hidden" class="uid" value="<%= user.id %>">
         <div class="movie-image-full">
-            <img src="<%= media.landscapeImage %>" alt="" class="movie-img">
+            <img src="<%= media.landscapeImage %>" alt="<%= media.title %>" class="movie-img">
         </div>
         <div class="res-image" >
-            <img src="<%= media.portraitImage %>" class="" alt="">
+            <img src="<%= media.portraitImage %>" class="" alt="<%= media.title %>">
         </div>
         <div class="movie-card">
                 <div class="movie-card-box">
@@ -287,10 +287,10 @@
     <div class="movie-detail" id="">
         <input type="hidden" class="uid" value="<%= user.id %>">
         <div class="movie-image-full">
-            <img src="<%= media.landscapeImage %>" alt="" class="movie-img">
+            <img src="<%= media.landscapeImage %>" alt="<%= media.title %>" class="movie-img">
         </div>
         <div class="res-image" >
-            <img src="<%= media.portraitImage %>" class="" alt="">
+            <img src="<%= media.portraitImage %>" class="<%= media.title %>" alt="">
         </div>
         <div class="movie-card">
                 <div class="movie-card-box">
@@ -376,7 +376,7 @@
                             </div>
                 </div>
                 
-                <div class="similar-content">
+                <!-- <div class="similar-content">
                     <div class="similar-content-wrap swiper" id="scroll-content">
                         <h3>Similar Movies</h3>
                         <div class="swiper-wrapper">
@@ -446,7 +446,7 @@
 
                         </div>
                     </div>
-                </div>
+                </div> -->
         </div>
 
         
