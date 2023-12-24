@@ -6,7 +6,7 @@ import flash from 'connect-flash'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import fileUpload from 'express-fileupload'
-
+import helmet from 'helmet'
 // Path
 import path from 'path'
 import { fileURLToPath } from 'url'
@@ -85,8 +85,18 @@ app.use((req,res,next) => {
 // Security
 app.use(cors({
     origin: 'https://localhost:8300',
-	credentials: true
+	credentials: true, 
 }))
+// app.use(
+//     helmet.contentSecurityPolicy({
+//       useDefaults: true,
+//       directives: {
+//         "img-src": ["'self'", "https: data:"],
+//         "script-src": ["'self'", "https: data:"], 
+
+//       }
+//     })
+//   )
 
 // Dashboard routes
 app.use('/dashboard', [dashPageRoute,dashMovieRoute,dashShowRoute,dashUserRoute,dashInterfaceRoute])

@@ -40,7 +40,7 @@ let tmdbID;
 
 
 async function setRememberedTime() {
-  const response = await fetch('../user/userData')
+  const response = await fetch('../user/userData',{headers: {"Referrer-Policy": 'no-referrer'}})
   const userData = await response.json()   
   userData.continueList.forEach(item => {
     if(item.mediaTitle === mediaName) {

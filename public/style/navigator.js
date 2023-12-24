@@ -4,8 +4,7 @@ let watchBtn = document.querySelector('.watch')
 let tabInside = document.querySelectorAll('.tab-inside')
 let streamTab = document.querySelector('.streamTab')
 let sideTabs = document.querySelectorAll('.side-tab') 
-let index = -1
-
+let index = -1 
 // WATCH BUTTON CLICK EVENT
 watchBtn?.addEventListener('click', (e) => {  
     setTabFocusing(streamTab)
@@ -185,7 +184,7 @@ async function showInput() {
   if(selectedLi) {
     let limit = 1
 
-    const response = await fetch('../user/userData')
+    const response = await fetch('../user/userData', {headers: {"Referrer-Policy": 'no-referrer'}})
     const userData = await response.json() 
 
     const selectedA = selectedLi.querySelector('a')
@@ -206,7 +205,8 @@ async function showInput() {
       saveTabBtn.addEventListener('click', (e) => { 
         const inputValue = selectedLi.querySelector('input').value
         const post = fetch('../user/updateUserData', {method: 'POST', headers: {
-          "Content-Type": "application/json"}, body: JSON.stringify({[selectedFieldName]: inputValue})}) 
+          "Content-Type": "application/json",
+          "Referrer-Policy": 'no-referrer'}, body: JSON.stringify({[selectedFieldName]: inputValue})}) 
         selectedA.classList.add('testHidden')
         selectedLi.querySelector('div').remove()
         limit = 0
