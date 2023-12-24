@@ -6,9 +6,9 @@ const router = express.Router()
 
 router.get('/userData', async (req,res) => {
     if(req.user) {
-        let {username, email, password} = await User.findOne({_id:req.user.userId})
-        password = password.substr(0,13)
-        res.json({username,email,password})
+        let {username, email, password, continueList} = await User.findOne({_id:req.user.userId})
+        password = password.substr(0,13) 
+        res.json({username,email,password,continueList})
     }
 })
 router.post('/updateUserData', async (req,res) => {

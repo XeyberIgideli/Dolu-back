@@ -37,6 +37,21 @@ let tmdbID;
     castWrapper = document.getElementById('cast-wrapper')
     producerWrapper = document.getElementById('producer-wrapper')
  
+
+
+async function setRememberedTime() {
+  const response = await fetch('../user/userData')
+  const userData = await response.json()   
+  userData.continueList.forEach(item => {
+    if(item.mediaTitle === mediaName) {
+      const mediaKey = 'pljsplayfrom_' + `${usID.value}-${item.mediaTitle + siteUrl}`
+      const getItem = localStorage.getItem(mediaKey) 
+      localStorage.setItem(mediaKey, `${item.timeSeconds}--${getItem.split('--')[1]}--${getItem.split('--')[2]}`)
+    }
+  })
+}
+
+
 async function getMediaData() { 
   const request = await fetch(`../data/getMediaData/${mediaType}/${mediaName}`, {method: 'get'})
   const response = await request.json() 
@@ -109,7 +124,8 @@ async function getMediaData() {
 }
 
 if(pageName === 'watch'){
-    getMediaData();
+    getMediaData()
+    setRememberedTime()
 }
 
 // When you have leisure time, make inifinite scroll functionality
@@ -433,8 +449,7 @@ movieServerLinks.forEach(item => {
 async function addContinueList (title) { 
   const video = document.querySelector('video')
 
-  window.onbeforeunload = function () {
-
+  window.onbeforeunload = function () { 
       const durationInSeconds = localStorage.getItem('pljsplayfrom_' + `${usID.value}-${title + siteUrl}`).split('--')[1]
       const watchedTimeInSeconds = localStorage.getItem('pljsplayfrom_' + `${usID.value}-${title + siteUrl}`).split('--')[0]
       const timeMin = Math.floor(watchedTimeInSeconds / 60);
