@@ -86,17 +86,7 @@ app.use((req,res,next) => {
 app.use(cors({
     origin: 'https://localhost:8300',
 	credentials: true, 
-}))
-// app.use(
-//     helmet.contentSecurityPolicy({
-//       useDefaults: true,
-//       directives: {
-//         "img-src": ["'self'", "https: data:"],
-//         "script-src": ["'self'", "https: data:"], 
-
-//       }
-//     })
-//   )
+})) 
 
 // Dashboard routes
 app.use('/dashboard', [dashPageRoute,dashMovieRoute,dashShowRoute,dashUserRoute,dashInterfaceRoute])

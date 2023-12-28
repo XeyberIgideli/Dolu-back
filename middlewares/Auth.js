@@ -22,21 +22,23 @@ function verifyRole(req,res,next) {
 
 // Verifying token for user login
 function verifyToken(req,res,next) {
-    const authHeader = req.cookies.token 
+    const authHeader = req.cookies.accessToken 
    
     if(!authHeader || !authHeader.startsWith("Bearer")) {
        return res.redirect('../auth')
     }
 
-    const token = authHeader.split(' ')[1] 
+    const accessToken = authHeader.split(' ')[1] 
 
     try {
-        const payload = jwt.verify(token, process.env.JWT_SECRET)
-        req.user = {userId:payload.userId,username: payload.username}
-        
+        const payload = jwt.verify(accessToken, process.env.JWT_SECRET) 
+        req.user = {userId:payload.userId,username: payload.username} 
         next()
     } catch(err) {
-        throw new UnauthenticatedError('Invalid Authentication!')
+        if(err.name === "TokenExpiredError") {
+            res.redirect('../auth/token/refresh')
+         }
+        // throw new UnauthenticatedError('Invalid Authentication!',err)
     }
 }
 
@@ -50,7 +52,7 @@ function adminRedirect(req,res,next) {
 }
 
 function userRedirect(req,res,next) {
-    const authHeader = req.cookies.token 
+    const authHeader = req.cookies.accessToken 
     if(authHeader) {
        res.redirect('home')
     } else {

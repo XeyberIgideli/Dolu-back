@@ -21,7 +21,9 @@ async function register (req,res,next) {
             }]
         const user = await User.create({...req.body,bookmarks: obj})
         const token = user.createJWT() 
-        res.cookie('token',`Bearer: ${token}`, {maxAge: 1000*60*60*24,httpOnly:true,secure:true})
+        const refreshToken = user.createRefreshToken()
+        res.cookie('accessToken',`Bearer: ${token}`, {maxAge: 1000*60*60*24,httpOnly:true,sameSite:'none',secure:true})
+        res.cookie('refToken',`${refreshToken}`, {maxAge: 1000*60*60*24,sameSite: 'none', httpOnly:true,secure:true})
         res.redirect('../home')
     } catch(err) {
         next(err)
@@ -50,8 +52,12 @@ async function login(req,res,next) {
         }
 
         const token = user.createJWT()  
+        const refreshToken = user.createRefreshToken()
+        await User.updateOne({username}, {refreshToken})
 
-        res.cookie('token',`Bearer: ${token}`, {maxAge: 1000*60*60*24,httpOnly:true,secure:true})
+        res.cookie('accessToken',`Bearer: ${token}`, {maxAge: 1000*60*60*24,sameSite: 'none', httpOnly:true,secure:true})
+        res.cookie('refToken',`${refreshToken}`, {maxAge: 1000*60*60*24,sameSite: 'none', httpOnly:true,secure:true})
+
         res.redirect('../home')
     } catch (err) {
         next(err)
@@ -59,9 +65,10 @@ async function login(req,res,next) {
 }
 
 async function logout(req,res) {
-    const authHeader = req.cookies.token
+    const authHeader = req.cookies.accessToken
     if(authHeader) {
-        res.clearCookie('token')
+        res.clearCookie('accessToken')
+        res.clearCookie('refToken')
         res.redirect('/auth')
     }
 }
