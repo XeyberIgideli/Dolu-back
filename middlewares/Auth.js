@@ -52,8 +52,8 @@ function adminRedirect(req,res,next) {
 }
 
 function userRedirect(req,res,next) {
-    const authHeader = req.cookies.accessToken 
-    if(authHeader) {
+    const accessToken = req.cookies.accessToken 
+    if(accessToken) {
        res.redirect('home')
     } else {
        next()

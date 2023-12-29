@@ -65,8 +65,10 @@ async function login(req,res,next) {
 }
 
 async function logout(req,res) {
-    const authHeader = req.cookies.accessToken
-    if(authHeader) {
+    const accessToken = req.cookies.accessToken
+    const refreshToken = req.cookies.refToken
+    const user = await User.updateOne({refreshToken}, {$unset: {refreshToken:null}})
+    if(accessToken && refreshToken) {
         res.clearCookie('accessToken')
         res.clearCookie('refToken')
         res.redirect('/auth')
