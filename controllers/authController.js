@@ -1,6 +1,6 @@
-import User from '../models/User.js'
-import Bookmark from '../models/Bookmark.js' 
+import User from '../models/User.js' 
 import {uniqueID} from '../utils/Helper.js'
+import jwt from 'jsonwebtoken'
 import { BadRequestError,UnauthenticatedError } from '../utils/Error.js'
 
 async function register (req,res,next) {
@@ -63,7 +63,44 @@ async function login(req,res,next) {
         next(err)
     }
 }
-
+async function refreshToken (req,res) {
+    {
+        const accessToken = req.cookies.token
+        const refreshToken = req.cookies.refToken
+    
+        if (!refreshToken) {
+            res.clearCookie('accessToken')
+            return res.redirect('../auth')
+        }
+    
+        const user = await User.findOne({refreshToken})
+    
+        if (!user) {
+           res.clearCookie('accessToken')
+           return res.redirect('../auth')
+        }
+    
+        // Verify and generate a new access token
+        jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET, async (err, decoded) => {
+            if (err) {
+                res.clearCookie('accessToken')
+                return res.redirect('../auth')
+            }
+          
+           const newAccessToken = user.createJWT()
+           const newRefreshToken = user.createRefreshToken()
+           
+           await user.updateOne({refreshToken: newRefreshToken})
+            
+           res.cookie('accessToken',`Bearer: ${newAccessToken}`, {maxAge: 1000*60*60*24,httpOnly:true,sameSite:'none',secure:true})
+           res.cookie('refToken',`${newRefreshToken}`, {maxAge: 1000*60*60*24,httpOnly:true,sameSite:'none',secure:true})
+        
+           res.redirect('back')
+    
+        });
+    
+    }
+}
 async function logout(req,res) {
     const accessToken = req.cookies.accessToken
     const refreshToken = req.cookies.refToken
@@ -75,4 +112,4 @@ async function logout(req,res) {
     }
 }
 
-export {register,login,logout}
+export {register,login,logout, refreshToken}

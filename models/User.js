@@ -71,13 +71,16 @@ userSchema.pre('save', function (next){
 
 // Creating JWT
 userSchema.methods.createJWT = function () {
-    // if(!process.env.JWT_SECRET) {
-    //     process.env.JWT_SECRET = crypto.randomBytes(32).toString('hex')
-    // }
+    if(!process.env.JWT_SECRET) {
+        process.env.JWT_SECRET = crypto.randomBytes(32).toString('hex')
+    }
     return jwt.sign({userId:this.id,username:this.username},process.env.JWT_SECRET,{expiresIn:  process.env.JWT_LIFETIME})
 }
 // Creating Refresh Token
 userSchema.methods.createRefreshToken = function () { 
+    if(!process.env.JWT_REFRESH_SECRET) {
+        process.env.JWT_REFRESH_SECRET = crypto.randomBytes(32).toString('hex')
+    }
     return jwt.sign({userId:this.id,username:this.username},process.env.JWT_REFRESH_SECRET,{expiresIn: process.env.JWT_REFRESH_LIFETIME})
 }
 
