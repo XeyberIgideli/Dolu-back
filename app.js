@@ -3,10 +3,14 @@ import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import session from 'express-session'
 import flash from 'connect-flash'
-import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import fileUpload from 'express-fileupload'
+
+import cors from 'cors'
 import helmet from 'helmet'
+import { RateLimiterMemory } from "rate-limiter-flexible"
+import crypto from 'crypto'
+
 // Path
 import path from 'path'
 import { fileURLToPath } from 'url'
@@ -67,15 +71,19 @@ app.use(fileUpload())
 
 app.use(express.static('public')) 
 
-// Connect Flash Messages
+// Express cookie session
 app.set('trust proxy', 1)
 app.use(session({
-    secret:'bookworm',   
+    secret:'cpa901sX',   
     resave: false,
     saveUninitialized: true,  
-    cookie: {maxAge: Date().now + (60 * 1000 * 30) }
+    cookie: {
+        secure:true,
+        httpOnly: true,
+        maxAge: Date().now + (60 * 1000 * 30) 
+    }
 }));
-
+// Connect Flash Messages
 app.use(flash())
 app.use((req,res,next) => {
     res.locals.flashMessages = req.flash()
@@ -83,10 +91,42 @@ app.use((req,res,next) => {
 })
 
 // Security
+const opts = {
+    points: 6, // 6 points
+    duration: 1, // Per second
+};
+
+const rateLimiter = new RateLimiterMemory(opts);
+const rateLimiterMiddleware = (req, res, next) => {
+    rateLimiter.consume(req.ip) // Track requests based on IP address
+    .then(() => {
+     next(); // Request within the rate limit, proceed to the next middleware
+    })
+    .catch(() => {
+     res.status(429).send('Too Many Requests'); // Request exceeded the rate limit
+    });
+}
+app.disable("x-powered-by");
+app.use(rateLimiterMiddleware)
 app.use(cors({
     origin: 'https://localhost:8300',
 	credentials: true, 
 })) 
+app.use((req, res, next) => {
+    res.locals.cspNonce = crypto.randomBytes(16).toString("hex");
+    next();
+});
+// app.use(
+//     helmet({
+//       contentSecurityPolicy: {
+//         directives: {
+//           "img-src": ["'self'", "https: data:"],
+//           "scriptSrc": ["'self'", (req, res) => `'nonce-${res.locals.cspNonce}'`],
+//         },
+//       },
+//       xFrameOptions:true
+//     }),
+//   );
 
 // Dashboard routes
 app.use('/dashboard', [dashPageRoute,dashMovieRoute,dashShowRoute,dashUserRoute,dashInterfaceRoute])

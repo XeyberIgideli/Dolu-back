@@ -5,7 +5,7 @@ import bcrypt from 'bcryptjs'
 const router = express.Router()
 
 router.get('/userData', async (req,res) => {
-    const referer = req.headers['referer']; 
+    const referer = req.headers['referer'];  
     if (referer && req.user) {
         let {username, email, password, continueList} = await User.findOne({_id:req.user.userId})
         password = password.substr(0,13) 

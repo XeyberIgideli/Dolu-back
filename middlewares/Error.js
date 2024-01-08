@@ -8,6 +8,7 @@ function errorHandlerMiddleware (err,req,res,next) {
         customErr.statusCode = 400
         customErr.msg = Object.values(err.errors).map(item => item.message).join(',')
     }
+ 
 
     if(err.name === 'CastError') {
         customErr.statusCode = 404
