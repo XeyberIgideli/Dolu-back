@@ -83,6 +83,7 @@ app.use(session({
         maxAge: Date().now + (60 * 1000 * 30) 
     }
 }));
+
 // Connect Flash Messages
 app.use(flash())
 app.use((req,res,next) => {
@@ -106,6 +107,7 @@ const rateLimiterMiddleware = (req, res, next) => {
      res.status(429).send('Too Many Requests'); // Request exceeded the rate limit
     });
 }
+
 app.disable("x-powered-by");
 app.use(rateLimiterMiddleware)
 app.use(cors({
@@ -116,6 +118,7 @@ app.use((req, res, next) => {
     res.locals.cspNonce = crypto.randomBytes(16).toString("hex");
     next();
 });
+
 // app.use(
 //     helmet({
 //       contentSecurityPolicy: {
